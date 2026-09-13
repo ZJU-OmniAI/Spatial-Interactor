@@ -1,0 +1,14 @@
+# Tested environment snapshot. Install EasyR1's own dependencies first, then
+# align these versions where practical.
+torch==2.8.0
+transformers==4.57.6
+accelerate==1.12.0
+deepspeed==0.19.2
+datasets==4.0.0
+ray==2.53.0
+vllm==0.11.0
+flash-attn==2.8.3.post1
+qwen-vl-utils==0.0.14
+pandas
+pyarrow
+tensorboard==2.20.0
