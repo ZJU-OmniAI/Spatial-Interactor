@@ -1,0 +1,1490 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Spatial-Interactor learns spatial reasoning through observable interactions. Explore LSI-108K, the three-level curriculum, on-policy distillation, and results across four vision-language models."
+    />
+    <meta name="theme-color" content="#ffffff" />
+    <meta property="og:title" content="Spatial-Interactor" />
+    <meta
+      property="og:description"
+      content="Learning Spatial Reasoning through Interaction with the Observable Physical World"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="assets/paradigm.webp" />
+    <title>Spatial-Interactor | ZJU OmniAI</title>
+    <link rel="icon" href="assets/zju.png" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="data.js" defer></script>
+    <script src="app.js" defer></script>
+    <script src="media.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="nav-inner">
+        <a class="brand" href="#top"
+          ><img
+            src="assets/zju.png"
+            alt="Zhejiang University"
+            width="32"
+            height="32"
+          /><span>Spatial-Interactor</span></a
+        >
+        <button
+          class="icon-button mobile-menu"
+          id="menu-toggle"
+          aria-label="Open navigation"
+          aria-expanded="false"
+          aria-controls="site-nav"
+          title="Open navigation"
+        >
+          <img src="assets/icons/menu.svg" alt="" width="20" height="20" />
+        </button>
+        <nav id="site-nav" aria-label="Main navigation">
+          <a href="#demos">Demos</a><a href="#motivation">Motivation</a
+          ><a href="#dataset">LSI-108K</a><a href="#method">Method</a
+          ><a href="#results">Results</a><a href="#analysis">Analysis</a
+          ><a href="#release">Resources</a
+          ><a
+            class="nav-paper"
+            href="assets/paper.pdf"
+            target="_blank"
+            rel="noopener"
+            >Paper
+            <img
+              src="assets/icons/arrow-up-right.svg"
+              alt=""
+              width="16"
+              height="16"
+          /></a>
+        </nav>
+      </div>
+      <div class="reading-progress" aria-hidden="true">
+        <span id="reading-progress"></span>
+      </div>
+    </header>
+
+    <main id="main">
+      <header class="masthead wrap" id="top">
+        <p class="lab-line">
+          OmniAI Group of ZJU ACES Lab
+          <span aria-hidden="true">&middot;</span> SAP
+        </p>
+        <h1 class="project-title">
+          <img
+            src="assets/spatial-interactor-icon.png"
+            alt=""
+            width="72"
+            height="72"
+            aria-hidden="true"
+          />
+          <span>Spatial-Interactor</span>
+        </h1>
+        <p class="paper-title">
+          Learning Spatial Reasoning through Interaction<br
+            class="desktop-break"
+          />
+          with the Observable Physical World
+        </p>
+        <ul class="authors" aria-label="Authors">
+          <li>Kaixiang Yao<sup>1,*</sup></li>
+          <li>Xu Wang<sup>1,*</sup></li>
+          <li>Miao Pan<sup>1</sup></li>
+          <li>Hu Xiyue<sup>1</sup></li>
+          <li>Weishi Wang<sup>2</sup></li>
+          <li>Daniel Dahlmeier<sup>2</sup></li>
+          <li>Jintao Chen<sup>1</sup></li>
+          <li>Yongliang Shen<sup>1</sup></li>
+          <li>Xuhong Zhang<sup>1</sup></li>
+          <li>Wenqi Zhang<sup>1</sup></li>
+        </ul>
+        <p class="affiliations">
+          <span><sup>1</sup> Zhejiang University</span
+          ><span><sup>2</sup> SAP</span
+          ><span><sup>*</sup> Equal contribution</span>
+        </p>
+        <div class="resources">
+          <a
+            class="button primary"
+            href="assets/paper.pdf"
+            target="_blank"
+            rel="noopener"
+            ><img
+              src="assets/icons/file-text.svg"
+              alt=""
+              width="18"
+              height="18"
+            />
+            Paper</a
+          ><a
+            class="button"
+            href="https://github.com/ZJU-OmniAI/Spatial-Interactor"
+            target="_blank"
+            rel="noopener"
+            ><img
+              src="assets/icons/arrow-up-right.svg"
+              alt=""
+              width="18"
+              height="18"
+            />
+            Code</a
+          ><a
+            class="button"
+            href="https://huggingface.co/datasets/kagakouko/LSI-108K"
+            target="_blank"
+            rel="noopener"
+            ><img
+              src="assets/icons/database.svg"
+              alt=""
+              width="18"
+              height="18"
+            />
+            Dataset</a
+          ><a
+            class="button"
+            href="https://huggingface.co/collections/kagakouko/spatial-interactor-6aa6da1ead0d1b83bcf846de"
+            target="_blank"
+            rel="noopener"
+            ><img src="assets/icons/scan.svg" alt="" width="18" height="18" />
+            Models</a
+          ><a class="button" href="#demos"
+            ><img src="assets/icons/play.svg" alt="" width="18" height="18" />
+            Watch demos</a
+          >
+        </div>
+      </header>
+      <div class="wrap teaser-wrap">
+        <figure class="paper-figure teaser">
+          <a
+            href="assets/paradigm.webp"
+            data-paper-figure="2"
+            class="figure-link"
+            data-zoom
+            data-caption="From isolated spatial knowledge to coherent spatial states through interaction."
+            ><img
+              src="assets/paradigm.webp"
+              alt="Conventional spatial QA learns isolated knowledge. Spatial-Interactor learns state transitions from interactions to maintain coherent spatial states."
+              width="2600"
+              height="1226"
+              fetchpriority="high" /><span class="zoom-mark" aria-hidden="true"
+              ><img
+                src="assets/icons/maximize-2.svg"
+                alt=""
+                width="18"
+                height="18" /></span
+          ></a>
+          <figcaption>
+            Learn the change between observations. Integrate the changes across
+            a trajectory.
+          </figcaption>
+        </figure>
+        <div class="headline-stats">
+          <div>
+            <strong>108K</strong><span>Interaction-derived QA pairs</span>
+          </div>
+          <div>
+            <strong>3 levels</strong
+            ><span>From local changes to global paths</span>
+          </div>
+          <div>
+            <strong>4 backbones</strong><span>Qwen2.5-VL &amp; Qwen3-VL</span>
+          </div>
+        </div>
+      </div>
+
+      <section class="section demo-section" id="demos">
+        <div class="wrap">
+          <div class="section-title">
+            <p class="eyebrow">In motion</p>
+            <h2>From observation to spatial understanding</h2>
+            <p>
+              Follow local camera movements as they accumulate into a complete
+              route.
+            </p>
+          </div>
+          <div
+            class="demo-tabs"
+            role="tablist"
+            aria-label="Video demonstration"
+          >
+            <button
+              role="tab"
+              id="demo-trajectory"
+              aria-selected="true"
+              aria-controls="demo-panel"
+              data-demo="0"
+            >
+              Trajectory integration
+            </button>
+            <button
+              role="tab"
+              id="demo-path"
+              aria-selected="false"
+              aria-controls="demo-panel"
+              tabindex="-1"
+              data-demo="1"
+            >
+              Path shape
+            </button>
+          </div>
+          <div
+            id="demo-panel"
+            role="tabpanel"
+            aria-labelledby="demo-trajectory"
+          >
+            <div class="demo-stage" id="demo-stage">
+              <video
+                id="demo-video"
+                playsinline
+                preload="none"
+                poster="assets/videos/trajectory-integration.webp"
+                aria-label="Trajectory integration demonstration"
+              >
+                <a href="assets/videos/trajectory-integration.mp4"
+                  >Trajectory integration video</a
+                >
+              </video>
+              <button
+                class="demo-play"
+                id="demo-play"
+                aria-label="Play trajectory integration"
+                title="Play video"
+              >
+                <img
+                  src="assets/icons/play.svg"
+                  alt=""
+                  width="28"
+                  height="28"
+                />
+              </button>
+              <p class="demo-status" id="demo-status" role="status" hidden></p>
+            </div>
+            <div class="demo-caption">
+              <div>
+                <h3 id="demo-title">Trajectory integration</h3>
+                <p id="demo-description">
+                  Local transitions, traveled distance, and start-to-end
+                  displacement.
+                </p>
+              </div>
+              <div class="demo-meta">
+                <span id="demo-duration">0:29</span>
+                <a
+                  id="demo-download"
+                  class="icon-button"
+                  href="assets/videos/trajectory-integration.mp4"
+                  download
+                  title="Download video"
+                  aria-label="Download video"
+                  ><img
+                    src="assets/icons/download.svg"
+                    alt=""
+                    width="18"
+                    height="18"
+                /></a>
+              </div>
+            </div>
+            <p class="demo-credit" id="demo-credit">
+              Illustrative walkthrough. Scene assets:
+              <a href="https://revsi.site/" target="_blank" rel="noopener"
+                >ReVSI</a
+              >.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section pale" id="motivation">
+        <div class="wrap">
+          <div class="section-title">
+            <p class="eyebrow">01 / Motivation</p>
+            <h2>
+              Seeing a scene is not the same<br class="desktop-break" />
+              as understanding how it changes.
+            </h2>
+            <p>
+              Spatial reasoning in the physical world requires two abilities:
+              identifying local state transitions and integrating them over a
+              complete trajectory. Our diagnostics expose a gap in both.
+            </p>
+          </div>
+          <figure class="paper-figure">
+            <a
+              class="figure-link"
+              href="assets/diagnostics.webp"
+              data-paper-figure="1"
+              data-zoom
+              data-caption="Two diagnostics: sensitivity to frame order, and the gap between local and long-horizon reasoning."
+              ><img
+                src="assets/diagnostics.webp"
+                alt="Frame shuffling barely changes Base performance. Adding transition descriptions improves long-horizon performance."
+                width="2600"
+                height="683"
+                loading="lazy" /><span class="zoom-mark" aria-hidden="true"
+                ><img
+                  src="assets/icons/maximize-2.svg"
+                  alt=""
+                  width="18"
+                  height="18" /></span
+            ></a>
+          </figure>
+          <div class="insights">
+            <div>
+              <span class="insight-index">01</span>
+              <div>
+                <h3>Little sensitivity to temporal order</h3>
+                <p>
+                  Shuffling the same video frames changes Base accuracy by only
+                  0.9 and 0.8 points for Qwen2.5-VL-3B and 7B.
+                </p>
+              </div>
+            </div>
+            <div>
+              <span class="insight-index">02</span>
+              <div>
+                <h3>Local evidence helps long-horizon reasoning</h3>
+                <p>
+                  On camera displacement, explicit transition descriptions raise
+                  the strong VLM's score from 23.9 to 35.5.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="dataset">
+        <div class="wrap">
+          <div class="section-title">
+            <p class="eyebrow">02 / LSI-108K</p>
+            <h2>A curriculum of spatial interaction</h2>
+            <p>
+              From changes in the world, to changes in the observer, to the
+              integration of a complete path. Each question is grounded in
+              actions, states, or geometric trajectories.
+            </p>
+          </div>
+          <div
+            class="curriculum-tabs"
+            role="tablist"
+            aria-label="Curriculum level"
+          >
+            <button
+              role="tab"
+              id="tab-l1"
+              aria-selected="true"
+              aria-controls="curriculum-panel"
+              data-level="l1"
+            >
+              <span class="level-number">L1</span
+              ><span
+                ><strong>Passive world</strong
+                ><small>World-state transitions</small></span
+              ></button
+            ><button
+              role="tab"
+              id="tab-l2"
+              aria-selected="false"
+              aria-controls="curriculum-panel"
+              tabindex="-1"
+              data-level="l2"
+            >
+              <span class="level-number">L2</span
+              ><span
+                ><strong>Active self</strong
+                ><small>Self-state transitions</small></span
+              ></button
+            ><button
+              role="tab"
+              id="tab-l3"
+              aria-selected="false"
+              aria-controls="curriculum-panel"
+              tabindex="-1"
+              data-level="l3"
+            >
+              <span class="level-number">L3</span
+              ><span
+                ><strong>Long horizon</strong
+                ><small>Trajectory integration</small></span
+              >
+            </button>
+          </div>
+          <div
+            id="curriculum-panel"
+            role="tabpanel"
+            aria-labelledby="tab-l1"
+            data-level="l1"
+          >
+            <div class="level-summary">
+              <div>
+                <h3 id="level-title">Passive world-state transitions</h3>
+                <p id="level-description">
+                  The world changes; the viewpoint stays approximately fixed.
+                  Learn object motion, state changes, and single- or multi-step
+                  operations.
+                </p>
+              </div>
+              <p class="level-count">
+                <strong id="level-count">15,109</strong> QA pairs
+              </p>
+            </div>
+            <ul class="task-types" id="task-types" aria-label="Task types"></ul>
+            <div class="example-tool">
+              <div class="example-toolbar">
+                <div>
+                  <span class="tool-label">Task</span
+                  ><label class="sr-only" for="example-select"
+                    >Task example</label
+                  ><select id="example-select"></select>
+                </div>
+                <div class="example-pager">
+                  <span id="example-position" aria-live="polite">01 / 04</span
+                  ><button
+                    class="icon-button"
+                    id="previous-example"
+                    title="Previous example"
+                    aria-label="Previous example"
+                    data-tooltip="Previous example"
+                  >
+                    <img
+                      src="assets/icons/chevron-left.svg"
+                      alt=""
+                      width="18"
+                      height="18"
+                    /></button
+                  ><button
+                    class="icon-button"
+                    id="next-example"
+                    title="Next example"
+                    aria-label="Next example"
+                    data-tooltip="Next example"
+                  >
+                    <img
+                      src="assets/icons/chevron-right.svg"
+                      alt=""
+                      width="18"
+                      height="18"
+                    />
+                  </button>
+                </div>
+              </div>
+              <div class="example-body">
+                <figure class="example-visual">
+                  <a
+                    id="example-zoom"
+                    class="figure-link"
+                    href="assets/E02.webp"
+                    data-zoom
+                    data-caption="Open / close: two observations from ProcTHOR."
+                    ><img
+                      id="example-image"
+                      src="assets/E02.webp"
+                      alt="Open / close: two observations from ProcTHOR"
+                      width="1294"
+                      height="480"
+                      loading="lazy" /><span
+                      class="zoom-mark"
+                      aria-hidden="true"
+                      ><img
+                        src="assets/icons/maximize-2.svg"
+                        alt=""
+                        width="18"
+                        height="18" /></span
+                  ></a>
+                  <figcaption>
+                    <span id="example-domain">Simulated</span
+                    ><span id="example-source">ProcTHOR</span
+                    ><span id="example-id">E02</span>
+                  </figcaption>
+                </figure>
+                <div class="example-qa">
+                  <p class="eyebrow">Question</p>
+                  <h3 id="example-question">
+                    What state change occurred between the two views?
+                  </h3>
+                  <div id="example-options"></div>
+                  <details id="answer-details" class="answer-details">
+                    <summary>
+                      Reference answer
+                      <img
+                        src="assets/icons/chevron-right.svg"
+                        alt=""
+                        width="16"
+                        height="16"
+                      />
+                    </summary>
+                    <p id="example-answer">
+                      C. An object was opened or closed.
+                    </p>
+                  </details>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="curriculum-overview">
+            <h3>The complete curriculum</h3>
+            <figure class="paper-figure">
+              <a
+                class="figure-link"
+                href="assets/curriculum.webp"
+                data-paper-figure="4"
+                data-zoom
+                data-caption="LSI-108K: 15,109 L1, 69,487 L2, and 22,922 L3 examples."
+                ><img
+                  src="assets/curriculum.webp"
+                  alt="Full LSI-108K source distribution and taxonomy. Multi-step operations are in L1."
+                  width="2600"
+                  height="1485"
+                  loading="lazy" /><span class="zoom-mark" aria-hidden="true"
+                  ><img
+                    src="assets/icons/maximize-2.svg"
+                    alt=""
+                    width="18"
+                    height="18" /></span
+              ></a>
+              <figcaption>
+                Data sources, task families, and representative examples across
+                L1, L2, and L3.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="section pale" id="construction">
+        <div class="wrap">
+          <div class="section-title">
+            <p class="eyebrow">03 / Data Construction</p>
+            <h2>
+              Physical interactions.<br class="desktop-break" />
+              Verifiable supervision.
+            </h2>
+            <p>
+              Simulated environments and real trajectories supply the state
+              changes. Geometry determines the target; deterministic templates
+              turn it into a question and answer.
+            </p>
+          </div>
+          <figure class="paper-figure">
+            <a
+              class="figure-link"
+              href="assets/construction.webp"
+              data-paper-figure="3"
+              data-zoom
+              data-caption="Interaction records are converted into geometry-derived targets, then filtered and verified QA pairs."
+              ><img
+                src="assets/construction.webp"
+                alt="Simulated object interactions, ego-motion, real camera trajectories, and robot trajectories feed a ground-truth-to-QA pipeline with quality filtering and visual verification."
+                width="2600"
+                height="1414"
+                loading="lazy" /><span class="zoom-mark" aria-hidden="true"
+                ><img
+                  src="assets/icons/maximize-2.svg"
+                  alt=""
+                  width="18"
+                  height="18" /></span
+            ></a>
+          </figure>
+          <div class="pipeline-notes">
+            <div>
+              <span>01</span>
+              <h3>Collect interactions</h3>
+              <p>
+                Execute controlled actions or recover changes from camera poses,
+                robot states, and object tracks.
+              </p>
+            </div>
+            <div>
+              <span>02</span>
+              <h3>Derive the target</h3>
+              <p>
+                Use action and geometry metadata to determine direction,
+                magnitude, order, or trajectory structure.
+              </p>
+            </div>
+            <div>
+              <span>03</span>
+              <h3>Generate &amp; verify</h3>
+              <p>
+                Render QA with deterministic templates, filter ambiguous
+                transitions, and check visual answerability.
+              </p>
+            </div>
+          </div>
+          <div class="source-line">
+            <span><strong>55,338</strong> simulated</span
+            ><span><strong>42,180</strong> real camera</span
+            ><span><strong>10,000</strong> real robot</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="method">
+        <div class="wrap">
+          <div class="section-title">
+            <p class="eyebrow">04 / Method</p>
+            <h2>
+              Learn local transitions.<br class="desktop-break" />
+              Then learn to integrate them.
+            </h2>
+            <p>
+              Two complementary training stages connect observable physical
+              changes to long-horizon spatial reasoning.
+            </p>
+          </div>
+          <div class="training-stages">
+            <div class="stage">
+              <span class="stage-label"
+                >Stage 1 <span class="stage-levels">L1 + L2</span></span
+              >
+              <h3>Supervised Fine-Tuning</h3>
+              <p>
+                Associate differences between observations with object
+                operations and ego-motion, learning reusable local
+                state-transition representations.
+              </p>
+            </div>
+            <span class="stage-arrow" aria-hidden="true"
+              ><img
+                src="assets/icons/arrow-right.svg"
+                alt=""
+                width="28"
+                height="28"
+            /></span>
+            <div class="stage">
+              <span class="stage-label"
+                >Stage 2 <span class="stage-levels">L3</span></span
+              >
+              <h3>On-Policy Distillation</h3>
+              <p>
+                Use training-only transition descriptions to guide reasoning
+                over complete trajectories, alongside verifiable final-answer
+                rewards.
+              </p>
+            </div>
+          </div>
+          <figure class="paper-figure method-figure">
+            <a
+              class="figure-link"
+              href="assets/opd.webp"
+              data-paper-figure="5"
+              data-zoom
+              data-caption="On-policy distillation with training-only privileged transition traces and same-prefix teacher supervision."
+              ><img
+                src="assets/opd.webp"
+                alt="A frozen annotator constructs ordered segment descriptions. Teacher and student evaluate the same student-generated prefix. Reasoning-only distillation and verifiable rewards jointly optimize the student."
+                width="2300"
+                height="808"
+                loading="lazy" /><span class="zoom-mark" aria-hidden="true"
+                ><img
+                  src="assets/icons/maximize-2.svg"
+                  alt=""
+                  width="18"
+                  height="18" /></span
+            ></a>
+          </figure>
+          <div class="method-points">
+            <p>
+              <strong>Same student prefix.</strong> The teacher reads the
+              privileged trace; the student does not.
+            </p>
+            <p>
+              <strong>Reasoning-only distillation.</strong> Answer correctness
+              is supervised by verifiable rewards.
+            </p>
+            <p>
+              <strong>No extra input at inference.</strong> The final model
+              receives only the visual input and question.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section pale" id="results">
+        <div class="wrap">
+          <div class="section-title">
+            <p class="eyebrow">05 / Results</p>
+            <h2>
+              Across backbones.<br class="desktop-break" />
+              Across spatial reasoning tasks.
+            </h2>
+            <p>
+              Consistent improvements on video and multi-view benchmarks, with
+              additional transfer to tasks outside the training mixture.
+            </p>
+          </div>
+          <div class="result-highlights">
+            <div>
+              <strong>+16.4&ndash;25.0</strong
+              ><span>Overall points over Base</span>
+            </div>
+            <div>
+              <strong>65.9</strong><span>Best reported Overall score</span>
+            </div>
+            <div>
+              <strong>+4.3&ndash;10.6</strong
+              ><span>Cross-benchmark Overall gain</span>
+            </div>
+          </div>
+          <div class="results-tables" id="results-tables">
+            <article class="results-table-block">
+              <div class="table-heading">
+                <div>
+                  <p class="table-kicker">Table 1</p>
+                  <h3>Main benchmarks</h3>
+                </div>
+                <div class="table-actions">
+                  <span id="main-row-count" role="status"></span>
+                  <button
+                    class="icon-button"
+                    data-download-results="main"
+                    title="Download main benchmark results as CSV"
+                    aria-label="Download main benchmark results as CSV"
+                    data-tooltip="Download CSV"
+                  >
+                    <img src="assets/icons/download.svg" alt="" width="19" height="19" />
+                  </button>
+                </div>
+              </div>
+              <div class="table-scroll" tabindex="0" role="region" aria-label="Main benchmark scores">
+                <table id="results-main-table" class="results-table" data-paper-table="1">
+                  <caption class="sr-only">Main spatial reasoning benchmark results reported in the paper</caption>
+                  <thead></thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+              <p id="main-results-note" class="table-note"></p>
+            </article>
+
+            <article class="results-table-block">
+              <div class="table-heading">
+                <div>
+                  <p class="table-kicker">Table 2</p>
+                  <h3>Cross-benchmark generalization</h3>
+                </div>
+                <div class="table-actions">
+                  <span id="generalization-row-count" role="status"></span>
+                  <button
+                    class="icon-button"
+                    data-download-results="generalization"
+                    title="Download generalization results as CSV"
+                    aria-label="Download generalization results as CSV"
+                    data-tooltip="Download CSV"
+                  >
+                    <img src="assets/icons/download.svg" alt="" width="19" height="19" />
+                  </button>
+                </div>
+              </div>
+              <div class="table-scroll" tabindex="0" role="region" aria-label="Cross-benchmark generalization scores">
+                <table id="results-generalization-table" class="results-table" data-paper-table="2">
+                  <caption class="sr-only">Cross-benchmark generalization results reported in the paper</caption>
+                  <thead></thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+              <p id="generalization-results-note" class="table-note"></p>
+            </article>
+
+            <article class="results-table-block">
+              <div class="table-heading">
+                <div>
+                  <p class="table-kicker">Table 3</p>
+                  <h3>Training ablation</h3>
+                </div>
+                <div class="table-actions">
+                  <span id="ablation-row-count" role="status"></span>
+                  <button
+                    class="icon-button"
+                    data-download-results="ablation"
+                    title="Download ablation results as CSV"
+                    aria-label="Download ablation results as CSV"
+                    data-tooltip="Download CSV"
+                  >
+                    <img src="assets/icons/download.svg" alt="" width="19" height="19" />
+                  </button>
+                </div>
+              </div>
+              <div class="table-scroll" tabindex="0" role="region" aria-label="Training ablation scores">
+                <table id="results-ablation-table" class="results-table" data-paper-table="3">
+                  <caption class="sr-only">Training ablation results reported in the paper</caption>
+                  <thead></thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+              <p id="ablation-results-note" class="table-note"></p>
+            </article>
+          </div>
+          <div class="insights results-insights">
+            <div>
+              <span class="insight-index">SFT</span>
+              <div>
+                <h3>Interaction data complements spatial QA</h3>
+                <p>
+                  On Qwen2.5-VL-7B, adding L1/L2 data to external-data SFT
+                  improves Overall from 56.0 to 58.4.
+                </p>
+              </div>
+            </div>
+            <div>
+              <span class="insight-index">OPD</span>
+              <div>
+                <h3>Process supervision supports longer horizons</h3>
+                <p>
+                  Compared with matched GRPO, OPD adds 5.1 points on Route
+                  Planning and 3.1 on Camera Displacement.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="analysis">
+        <div class="wrap">
+          <div class="section-title">
+            <p class="eyebrow">06 / Analysis</p>
+            <h2>
+              From local learning<br class="desktop-break" />
+              to temporal reasoning
+            </h2>
+            <p>
+              The curriculum, learning curves, and temporal diagnostics reveal
+              complementary aspects of learning from state transitions.
+            </p>
+          </div>
+
+          <article class="analysis-block">
+            <div class="analysis-heading">
+              <span>01</span>
+              <div>
+                <h3>Learning world changes, then self changes</h3>
+                <p>
+                  L1 and L2 contribute differently. Training them in sequence
+                  improves all four benchmarks over Base.
+                </p>
+              </div>
+            </div>
+            <figure class="paper-figure analysis-figure">
+              <a
+                class="figure-link"
+                href="assets/curriculum-ablation.webp"
+                data-zoom
+                data-paper-figure="6"
+                data-caption="Progressive local-transition learning: Base, L1 only, L2 only, and L1 then L2 on four benchmarks."
+              >
+                <img
+                  src="assets/curriculum-ablation.webp"
+                  alt="Grouped bars compare Base, L1 only, L2 only, and sequential L1 then L2 on MMSI, ViewSpatial, SAT-Real, SAT-Syn, and Average."
+                  width="2600"
+                  height="822"
+                  loading="lazy"
+                />
+                <span class="zoom-mark" aria-hidden="true"
+                  ><img
+                    src="assets/icons/maximize-2.svg"
+                    alt=""
+                    width="18"
+                    height="18"
+                /></span>
+              </a>
+              <figcaption>
+                Qwen2.5-VL-7B. Sequential L1 &rarr; L2 raises the average from
+                44.1 to 49.8.
+              </figcaption>
+            </figure>
+          </article>
+
+          <article class="analysis-block">
+            <div class="analysis-heading">
+              <span>02</span>
+              <div>
+                <h3>What changes during OPD?</h3>
+                <p>
+                  Across four backbones, task reward rises, rollout diversity
+                  gradually narrows, and divergence from the privileged teacher
+                  decreases.
+                </p>
+              </div>
+            </div>
+            <figure class="paper-figure analysis-figure">
+              <a
+                class="figure-link"
+                href="assets/training-dynamics.webp"
+                data-zoom
+                data-paper-figure="7"
+                data-caption="OPD optimization dynamics: task reward, rollout diversity, and process divergence across four backbones."
+              >
+                <img
+                  src="assets/training-dynamics.webp"
+                  alt="Three training curves show task reward, rollout entropy, and reasoning-token process divergence for Qwen2.5-VL-3B/7B and Qwen3-VL-4B/8B."
+                  width="2600"
+                  height="778"
+                  loading="lazy"
+                />
+                <span class="zoom-mark" aria-hidden="true"
+                  ><img
+                    src="assets/icons/maximize-2.svg"
+                    alt=""
+                    width="18"
+                    height="18"
+                /></span>
+              </a>
+              <figcaption>
+                Answer reward and reasoning alignment improve together; rollout
+                diversity remains nonzero.
+              </figcaption>
+            </figure>
+          </article>
+
+          <article class="analysis-block">
+            <div class="analysis-heading">
+              <span>03</span>
+              <div>
+                <h3>More observations. Better-ordered evidence.</h3>
+                <p>
+                  OPD retains its advantage across frame budgets. For the frozen
+                  SFT model, ordered segment descriptions help more than
+                  shuffled descriptions.
+                </p>
+              </div>
+            </div>
+            <figure class="paper-figure analysis-figure">
+              <a
+                class="figure-link"
+                href="assets/temporal-evidence.webp"
+                data-zoom
+                data-paper-figure="8"
+                data-caption="Frame-budget and privileged-trace diagnostics. Left: VSI-Bench Route Planning with 16, 32, and 64 frames. Right: VSTI-Bench Camera Displacement with no trace, ordered traces, and shuffled traces."
+              >
+                <img
+                  src="assets/temporal-evidence.webp"
+                  alt="Left, Base, SFT, GRPO, and OPD route-planning scores at 16, 32, and 64 frames. Right, no trace 32.6, ordered four segments 35.4, shuffled four segments 33.8, and ordered eight segments 35.3."
+                  width="2600"
+                  height="904"
+                  loading="lazy"
+                />
+                <span class="zoom-mark" aria-hidden="true"
+                  ><img
+                    src="assets/icons/maximize-2.svg"
+                    alt=""
+                    width="18"
+                    height="18"
+                /></span>
+              </a>
+              <figcaption>
+                Left: VSI-Bench Route Planning. Right: VSTI-Bench Camera
+                Displacement. Both use Qwen2.5-VL-7B.
+              </figcaption>
+            </figure>
+          </article>
+
+          <article class="analysis-block frame-order-block">
+            <div class="analysis-heading">
+              <span>04</span>
+              <div>
+                <h3>Temporal order becomes more important</h3>
+                <p>
+                  Shuffling identical frames reduces Spatial-Interactor scores
+                  by 6.6 and 7.0 points, compared with 0.9 and 0.8 for the
+                  corresponding Base models.
+                </p>
+              </div>
+            </div>
+            <figure class="paper-figure analysis-figure">
+              <a
+                class="figure-link"
+                href="assets/frame-order.webp"
+                data-zoom
+                data-paper-figure="9"
+                data-caption="Frame-order sensitivity: normal and shuffled VSTI-Bench results for Spatial-Interactor-3B and 7B, including the five task categories."
+              >
+                <img
+                  src="assets/frame-order.webp"
+                  alt="Average VSTI-Bench scores fall from 48.3 to 41.7 for Spatial-Interactor-3B and from 49.5 to 42.5 for 7B after frame shuffling. A radar chart shows the task breakdown."
+                  width="2600"
+                  height="900"
+                  loading="lazy"
+                />
+                <span class="zoom-mark" aria-hidden="true"
+                  ><img
+                    src="assets/icons/maximize-2.svg"
+                    alt=""
+                    width="18"
+                    height="18"
+                /></span>
+              </a>
+              <figcaption>
+                The largest changes appear in Camera Displacement and Camera
+                Motion.
+              </figcaption>
+            </figure>
+          </article>
+        </div>
+      </section>
+
+      <section class="section pale" id="interaction">
+        <div class="wrap">
+          <div class="section-title">
+            <p class="eyebrow">07 / Closed-Loop Interaction</p>
+            <h2>From observations to actions</h2>
+            <p>
+              When an action changes the next observation, spatial reasoning
+              must support repeated decisions. We evaluate this setting with the
+              Qwen2.5-VL-7B backbone.
+            </p>
+          </div>
+          <article class="interaction-results">
+            <div class="table-heading">
+              <div>
+                <h3>WalkerBench</h3>
+                <p>Standard-100</p>
+              </div>
+              <button
+                class="icon-button"
+                data-download-interaction="walker"
+                title="Download WalkerBench results"
+                aria-label="Download WalkerBench results"
+              >
+                <img
+                  src="assets/icons/download.svg"
+                  alt=""
+                  width="18"
+                  height="18"
+                />
+              </button>
+            </div>
+            <div
+              class="table-scroll"
+              tabindex="0"
+              role="region"
+              aria-label="WalkerBench task scores"
+            >
+              <table id="walker-table" data-paper-table="4">
+                <caption class="sr-only">
+                  Table 4. WalkerBench Standard-100 results
+                </caption>
+                <thead></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <p class="table-note">
+              Success rate (%). Steps: mean executed actions per task.
+            </p>
+          </article>
+          <article class="interaction-results">
+            <div class="table-heading">
+              <div>
+                <h3>ESI-Bench</h3>
+                <p>8 categories &middot; 30 matched questions each</p>
+              </div>
+              <button
+                class="icon-button"
+                data-download-interaction="esi"
+                title="Download ESI-Bench results"
+                aria-label="Download ESI-Bench results"
+              >
+                <img
+                  src="assets/icons/download.svg"
+                  alt=""
+                  width="18"
+                  height="18"
+                />
+              </button>
+            </div>
+            <div
+              class="table-scroll"
+              tabindex="0"
+              role="region"
+              aria-label="ESI-Bench task scores"
+            >
+              <table id="esi-table" data-paper-table="5">
+                <caption class="sr-only">
+                  Table 5. ESI-Bench interaction category results
+                </caption>
+                <thead></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <p class="table-note">
+              Success rate (%). Steps: mean interaction rounds among solved
+              episodes.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="examples">
+        <div class="wrap">
+          <div class="section-title">
+            <p class="eyebrow">08 / Qualitative Examples</p>
+            <h2>
+              Local correspondence.<br class="desktop-break" />
+              Long-horizon reasoning.
+            </h2>
+            <p>
+              Two cases from the paper show how spatial evidence can be
+              connected across viewpoints and across a longer motion sequence.
+            </p>
+          </div>
+          <div class="case-comparison">
+            <figure class="paper-figure">
+              <div class="case-heading">
+                <span>Multi-view / SAT-Real</span>
+                <h3>A shared spatial anchor</h3>
+              </div>
+              <a
+                class="figure-link"
+                href="assets/local-case.webp"
+                data-paper-figure="10"
+                data-zoom
+                data-caption="Illustrative SAT-Real attention case. Spatial-Interactor predicts the correct camera rotation from shared visual evidence."
+                ><img
+                  src="assets/local-case.webp"
+                  alt="Selected SAT-Real case with two input views and attention visualizations for Base and Spatial-Interactor."
+                  width="2600"
+                  height="1504"
+                  loading="lazy" /><span class="zoom-mark" aria-hidden="true"
+                  ><img
+                    src="assets/icons/maximize-2.svg"
+                    alt=""
+                    width="18"
+                    height="18" /></span
+              ></a>
+              <figcaption>
+                A shared object provides a reference for comparing viewpoints.
+                This selected attention case illustrates cross-view
+                correspondence.
+              </figcaption>
+            </figure>
+            <figure class="paper-figure">
+              <div class="case-heading">
+                <span>Video / VSTI-Bench</span>
+                <h3>One consistent account of motion</h3>
+              </div>
+              <a
+                class="figure-link"
+                href="assets/trajectory-case.webp"
+                data-paper-figure="11"
+                data-zoom
+                data-caption="VSTI-Bench qualitative case: sustained rightward camera movement over the queried interval."
+                ><img
+                  src="assets/trajectory-case.webp"
+                  alt="Video observations and reasoning comparison. Spatial-Interactor identifies rightward movement, while Base predicts forward movement."
+                  width="2367"
+                  height="2600"
+                  loading="lazy" /><span class="zoom-mark" aria-hidden="true"
+                  ><img
+                    src="assets/icons/maximize-2.svg"
+                    alt=""
+                    width="18"
+                    height="18" /></span
+              ></a>
+              <figcaption>
+                Stable office landmarks and sustained lateral parallax connect
+                local observations to the motion over the requested interval.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="section release-section" id="release">
+        <div class="wrap release-wrap">
+          <div class="section-title">
+            <p class="eyebrow">Open resources</p>
+            <h2>Code, data, and model weights</h2>
+            <p>
+              Reproduce the data pipeline and training procedure, or start
+              directly from one of four released checkpoints.
+            </p>
+          </div>
+          <div class="release-grid">
+            <div class="release-column">
+              <span class="release-label">Implementation</span>
+              <a
+                class="release-link"
+                href="https://github.com/ZJU-OmniAI/Spatial-Interactor"
+                target="_blank"
+                rel="noopener"
+                ><strong>Spatial-Interactor code</strong
+                ><span>Construction, SFT, and OPD</span
+                ><img
+                  src="assets/icons/arrow-up-right.svg"
+                  alt=""
+                  width="17"
+                  height="17"
+              /></a>
+            </div>
+            <div class="release-column">
+              <span class="release-label">Annotations</span>
+              <a
+                class="release-link"
+                href="https://huggingface.co/datasets/kagakouko/LSI-108K"
+                target="_blank"
+                rel="noopener"
+                ><strong>LSI-108K</strong><span>107,518 spatial QA pairs</span
+                ><img
+                  src="assets/icons/arrow-up-right.svg"
+                  alt=""
+                  width="17"
+                  height="17"
+              /></a>
+            </div>
+            <div class="release-column model-release-column">
+              <span class="release-label">Checkpoints</span>
+              <div class="model-release-links">
+                <a
+                  href="https://huggingface.co/kagakouko/Spatial-Interactor-Qwen2.5-VL-3B"
+                  target="_blank"
+                  rel="noopener"
+                  >Qwen2.5-VL-3B<img
+                    src="assets/icons/arrow-up-right.svg"
+                    alt=""
+                    width="15"
+                    height="15"
+                /></a>
+                <a
+                  href="https://huggingface.co/kagakouko/Spatial-Interactor-Qwen2.5-VL-7B"
+                  target="_blank"
+                  rel="noopener"
+                  >Qwen2.5-VL-7B<img
+                    src="assets/icons/arrow-up-right.svg"
+                    alt=""
+                    width="15"
+                    height="15"
+                /></a>
+                <a
+                  href="https://huggingface.co/kagakouko/Spatial-Interactor-Qwen3-VL-4B"
+                  target="_blank"
+                  rel="noopener"
+                  >Qwen3-VL-4B<img
+                    src="assets/icons/arrow-up-right.svg"
+                    alt=""
+                    width="15"
+                    height="15"
+                /></a>
+                <a
+                  href="https://huggingface.co/kagakouko/Spatial-Interactor-Qwen3-VL-8B"
+                  target="_blank"
+                  rel="noopener"
+                  >Qwen3-VL-8B<img
+                    src="assets/icons/arrow-up-right.svg"
+                    alt=""
+                    width="15"
+                    height="15"
+                /></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="citation">
+        <div class="wrap citation-wrap">
+          <div class="section-title">
+            <p class="eyebrow">Citation</p>
+            <h2>Spatial-Interactor</h2>
+            <p>
+              Learning Spatial Reasoning through Interaction with the Observable
+              Physical World
+            </p>
+            <a
+              class="text-link"
+              href="assets/paper.pdf"
+              target="_blank"
+              rel="noopener"
+              >Read the paper
+              <img
+                src="assets/icons/arrow-up-right.svg"
+                alt=""
+                width="18"
+                height="18"
+            /></a>
+          </div>
+          <div class="citation-tool">
+            <div class="citation-toolbar">
+              <span>BibTeX</span
+              ><button
+                class="icon-button"
+                id="copy-citation"
+                aria-label="Copy BibTeX"
+                title="Copy BibTeX"
+                data-tooltip="Copy BibTeX"
+              >
+                <img
+                  id="copy-icon"
+                  src="assets/icons/copy.svg"
+                  alt=""
+                  width="18"
+                  height="18"
+                />
+              </button>
+            </div>
+            <pre id="bibtex"><code>@misc{yao2026spatialinteractor,
+  title = {Spatial-Interactor: Learning Spatial Reasoning
+           through Interaction with the Observable
+           Physical World},
+  author = {Yao, Kaixiang and Wang, Xu and Pan, Miao
+            and Hu, Xiyue and Wang, Weishi
+            and Dahlmeier, Daniel and Chen, Jintao
+            and Shen, Yongliang and Zhang, Xuhong
+            and Zhang, Wenqi},
+  year = {2026},
+  note = {Preprint}
+}</code></pre>
+            <p
+              id="copy-status"
+              class="sr-only"
+              role="status"
+              aria-live="polite"
+            ></p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">
+        <div>
+          <strong>Spatial-Interactor</strong>
+          <p>
+            OmniAI Group of ZJU ACES Lab &middot; Zhejiang University &middot;
+            SAP
+          </p>
+        </div>
+        <div class="footer-links">
+          <a href="https://github.com/ZJU-OmniAI/Spatial-Interactor">Code</a
+          ><a href="https://huggingface.co/datasets/kagakouko/LSI-108K"
+            >Dataset</a
+          ><a href="mailto:slims3801@gmail.com">Contact</a
+          ><a
+            href="https://zju-omniai.github.io/ProVisE/"
+            target="_blank"
+            rel="noopener"
+            >Design inspiration: ProVisE
+            <img
+              src="assets/icons/arrow-up-right.svg"
+              alt=""
+              width="14"
+              height="14"
+          /></a>
+        </div>
+      </div>
+    </footer>
+    <button
+      class="icon-button back-to-top"
+      id="back-to-top"
+      aria-label="Back to top"
+      title="Back to top"
+      hidden
+    >
+      <img src="assets/icons/arrow-up.svg" alt="" width="20" height="20" />
+    </button>
+    <dialog id="figure-dialog" aria-labelledby="figure-dialog-caption">
+      <div class="dialog-toolbar">
+        <span id="figure-dialog-caption"></span
+        ><button
+          class="icon-button"
+          id="close-figure"
+          aria-label="Close figure"
+          title="Close figure"
+        >
+          <img src="assets/icons/x.svg" alt="" width="22" height="22" />
+        </button>
+      </div>
+      <div class="figure-controls">
+        <div class="figure-navigation" id="figure-navigation">
+          <button
+            class="icon-button"
+            id="previous-figure"
+            aria-label="Previous figure"
+            title="Previous figure"
+          >
+            <img
+              src="assets/icons/chevron-left.svg"
+              alt=""
+              width="18"
+              height="18"
+            />
+          </button>
+          <span id="figure-position" aria-live="polite"></span>
+          <button
+            class="icon-button"
+            id="next-figure"
+            aria-label="Next figure"
+            title="Next figure"
+          >
+            <img
+              src="assets/icons/chevron-right.svg"
+              alt=""
+              width="18"
+              height="18"
+            />
+          </button>
+        </div>
+        <div class="figure-zoom-controls">
+          <button
+            class="icon-button"
+            id="zoom-out"
+            aria-label="Zoom out"
+            title="Zoom out"
+          >
+            <img
+              src="assets/icons/zoom-out.svg"
+              alt=""
+              width="18"
+              height="18"
+            />
+          </button>
+          <span id="zoom-level">100%</span>
+          <button
+            class="icon-button"
+            id="zoom-in"
+            aria-label="Zoom in"
+            title="Zoom in"
+          >
+            <img src="assets/icons/zoom-in.svg" alt="" width="18" height="18" />
+          </button>
+          <button
+            class="icon-button"
+            id="fit-figure"
+            aria-label="Fit figure"
+            title="Fit figure"
+          >
+            <img src="assets/icons/scan.svg" alt="" width="18" height="18" />
+          </button>
+        </div>
+      </div>
+      <div
+        class="dialog-image-wrap"
+        id="figure-viewport"
+        tabindex="0"
+        aria-label="Figure image"
+      >
+        <img id="figure-dialog-image" alt="" />
+      </div>
+      <a
+        id="figure-original"
+        class="text-link"
+        href="#"
+        target="_blank"
+        rel="noopener"
+        >Open image
+        <img
+          src="assets/icons/arrow-up-right.svg"
+          alt=""
+          width="16"
+          height="16"
+      /></a>
+    </dialog>
+    <noscript
+      ><p class="noscript-note">
+        The complete results and all examples are available in the
+        <a href="assets/paper.pdf">paper PDF</a>.
+      </p></noscript
+    >
+  </body>
+</html>
