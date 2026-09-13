@@ -22,18 +22,16 @@ PRIVATE_PATTERN = re.compile(
     r"(?:/home(?:2)?/|/Dataset2/|/data/I\d{4,}/|"
     r"(?:sk|ms)-[A-Za-z0-9]{16,}|BEGIN (?:RSA|OPENSSH|EC) PRIVATE KEY)"
 )
-METADATA_FIELDS = (
+SCALAR_METADATA_FIELDS = (
     "source_domain",
     "dataset",
     "source",
     "scene",
     "subcat",
-    "gt",
     "answer_text",
-    "options",
     "correct_option",
-    "correct_options",
 )
+JSON_METADATA_FIELDS = ("gt", "options", "correct_options")
 
 
 def parse_args() -> argparse.Namespace:
@@ -113,28 +111,41 @@ def release_row(row: dict[str, Any], location: str) -> tuple[str, str, dict[str,
         raise ValueError(f"{location} has unmapped task_type: {task!r}")
 
     output_metadata = {
-        key: remove_private_values(metadata[key])
-        for key in METADATA_FIELDS
-        if key in metadata and metadata[key] is not None
+        key: str(remove_private_values(metadata.get(key)) or "")
+        for key in SCALAR_METADATA_FIELDS
     }
-    output_metadata["task_type"] = task
-    output_metadata["curriculum_level"] = level.upper()
-    output_metadata["used_in_reported_sft"] = (
-        level in {"l1", "l2"} and task not in SFT_EXCLUDED_TASKS
+    output_metadata.update(
+        {
+            f"{key}_json": json.dumps(
+                remove_private_values(metadata.get(key)),
+                ensure_ascii=False,
+                separators=(",", ":"),
+            )
+            if metadata.get(key) is not None
+            else ""
+            for key in JSON_METADATA_FIELDS
+        }
+    )
+    output_metadata.update(
+        {
+            "task_type": task,
+            "curriculum_level": level.upper(),
+            "used_in_reported_sft": (
+                level in {"l1", "l2"} and task not in SFT_EXCLUDED_TASKS
+            ),
+        }
     )
 
     output: dict[str, Any] = {
         "id": str(row.get("id") or row.get("qa_id") or ""),
         "conversations": normalize_conversations(row, location),
         "metadata": output_metadata,
+        "images": portable_media(row, "images", location),
+        "videos": portable_media(row, "videos", location),
     }
     if not output["id"]:
         raise ValueError(f"{location} has no id")
-    for field in ("images", "videos"):
-        media = portable_media(row, field, location)
-        if media:
-            output[field] = media
-    if "images" not in output and "videos" not in output:
+    if not output["images"] and not output["videos"]:
         raise ValueError(f"{location} has no media")
     assert_private_data_absent(output, location)
     return level, task, output
@@ -183,7 +194,7 @@ def main() -> None:
             metadata = output["metadata"]
             source = str(metadata.get("dataset") or metadata.get("source") or "unspecified")
             source_counts[source] += 1
-            media_counts["image_records" if "images" in output else "video_records"] += 1
+            media_counts["image_records" if output["images"] else "video_records"] += 1
 
     actual = {level: counts[level] for level in EXPECTED_COUNTS}
     if args.paper_counts and actual != EXPECTED_COUNTS:
@@ -198,8 +209,11 @@ def main() -> None:
         "reported_sft_rows": sum(
             count
             for key, count in task_counts.items()
-            if key.startswith("l2:") or key not in {"l1:long_horizon_manipulation_program"}
-            and key.startswith("l1:")
+            if key.startswith("l2:")
+            or (
+                key.startswith("l1:")
+                and key != "l1:long_horizon_manipulation_program"
+            )
         ),
         "source_files": [path.name for path in args.input],
         "media_included": False,
