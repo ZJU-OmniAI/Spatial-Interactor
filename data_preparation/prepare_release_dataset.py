@@ -136,17 +136,19 @@ def release_row(row: dict[str, Any], location: str) -> tuple[str, str, dict[str,
         }
     )
 
+    images = portable_media(row, "images", location)
+    videos = portable_media(row, "videos", location)
+    if bool(images) == bool(videos):
+        raise ValueError(f"{location} must have exactly one media type")
     output: dict[str, Any] = {
         "id": str(row.get("id") or row.get("qa_id") or ""),
         "conversations": normalize_conversations(row, location),
         "metadata": output_metadata,
-        "images": portable_media(row, "images", location),
-        "videos": portable_media(row, "videos", location),
+        "media_paths": images or videos,
+        "media_type": "image" if images else "video",
     }
     if not output["id"]:
         raise ValueError(f"{location} has no id")
-    if not output["images"] and not output["videos"]:
-        raise ValueError(f"{location} has no media")
     assert_private_data_absent(output, location)
     return level, task, output
 
@@ -194,7 +196,7 @@ def main() -> None:
             metadata = output["metadata"]
             source = str(metadata.get("dataset") or metadata.get("source") or "unspecified")
             source_counts[source] += 1
-            media_counts["image_records" if output["images"] else "video_records"] += 1
+            media_counts[f"{output['media_type']}_records"] += 1
 
     actual = {level: counts[level] for level in EXPECTED_COUNTS}
     if args.paper_counts and actual != EXPECTED_COUNTS:

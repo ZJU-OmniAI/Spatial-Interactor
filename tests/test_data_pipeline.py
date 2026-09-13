@@ -168,7 +168,8 @@ class DataPipelineTest(unittest.TestCase):
             self.assertFalse(released["metadata"]["used_in_reported_sft"])
             self.assertNotIn("source_file", released["metadata"])
             self.assertEqual(json.loads(released["metadata"]["gt_json"]), {"direction": "left"})
-            self.assertIn("videos", released)
+            self.assertEqual(released["media_type"], "image")
+            self.assertTrue(released["media_paths"])
             self.assertNotIn("/private/build.json", json.dumps(released))
 
     def test_opd_builder_keeps_privilege_out_of_student_prompt(self):
