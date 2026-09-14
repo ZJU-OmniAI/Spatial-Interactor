@@ -995,12 +995,6 @@ td.best {
 td.overall {
   font-weight: 650;
 }
-.table-note {
-  font-size: 11px;
-  line-height: 1.7;
-  color: var(--muted);
-  margin-top: 14px;
-}
 .empty-row {
   text-align: center !important;
   padding: 35px !important;
@@ -1441,15 +1435,6 @@ dialog[open] {
   color: var(--muted);
   font-variant-numeric: tabular-nums;
 }
-.demo-credit {
-  color: var(--muted);
-  font-size: 12px;
-  margin: 10px 0 0;
-}
-.demo-credit a {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
 @media (max-width: 1280px) {
   .back-to-top {
     display: none;
@@ -1482,9 +1467,6 @@ dialog[open] {
   }
   .demo-caption p {
     font-size: 12px;
-  }
-  .demo-credit {
-    font-size: 11px;
   }
   .demo-meta {
     gap: 4px;
@@ -1853,9 +1835,6 @@ dialog[open] {
   }
   tbody th {
     min-width: 175px;
-  }
-  .table-note {
-    font-size: 10px;
   }
   .analysis-block + .analysis-block {
     margin-top: 28px;

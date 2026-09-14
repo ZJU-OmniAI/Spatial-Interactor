@@ -182,18 +182,12 @@
   const resultsConfig = {
     main: {
       tableId: "results-main-table",
-      noteId: "main-results-note",
-      note: "Scores (%) reported in Table 1. Overall averages the benchmark averages; MindCube uses the Tiny split and SPBench uses the multi-view split.",
     },
     generalization: {
       tableId: "results-generalization-table",
-      noteId: "generalization-results-note",
-      note: "Accuracy (%) on the four reported cross-benchmark suites, with their mean as Overall.",
     },
     ablation: {
       tableId: "results-ablation-table",
-      noteId: "ablation-results-note",
-      note: "Qwen2.5-VL-7B throughout. Full SFT adds L1/L2 data; GRPO and OPD share the same initialization and long-horizon training data.",
     },
   };
   const resultSort = Object.fromEntries(
@@ -298,7 +292,6 @@
         return tr;
       }),
     );
-    $(config.noteId).textContent = config.note;
   }
 
   Object.keys(resultsConfig).forEach((key) => {

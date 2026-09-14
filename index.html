@@ -156,11 +156,11 @@
         <div class="wrap">
           <div class="section-title">
             <p class="eyebrow">01 / Motivation</p>
-            <h2>Why learn spatial reasoning through interaction?</h2>
+            <h2>Seeing space is not the same as tracking it</h2>
             <p>
-              Spatial reasoning in the physical world requires two abilities:
-              identifying local state transitions and integrating them over a
-              complete trajectory. Our diagnostics expose a gap in both.
+              A model may recognize a scene frame by frame while missing what
+              changed between frames or where the complete path leads. Two
+              diagnostics expose this gap.
             </p>
           </div>
           <figure class="paper-figure">
@@ -195,12 +195,11 @@
         <div class="wrap">
           <div class="section-title">
             <p class="eyebrow">02 / Learning through Interaction</p>
-            <h2>Model the change, then integrate the trajectory</h2>
+            <h2>Interaction turns observations into transitions</h2>
             <p>
-              Conventional spatial QA associates isolated observations with
-              answers. Spatial-Interactor instead learns how an action connects
-              two observable states, then composes those local transitions into
-              a coherent spatial state over time.
+              Each action links a before-state to an after-state, making spatial
+              change directly observable. Spatial-Interactor learns these local
+              transitions and composes them into a coherent state over time.
             </p>
           </div>
           <figure class="paper-figure teaser">
@@ -235,11 +234,11 @@
         <div class="wrap">
           <div class="section-title">
             <p class="eyebrow">03 / LSI-108K Construction</p>
-            <h2>Grounding supervision in physical interactions</h2>
+            <h2>Build supervision from what physically changed</h2>
             <p>
-              Simulated environments and real trajectories supply the state
-              changes. Geometry determines the target; deterministic templates
-              turn it into a question and answer.
+              Simulator actions, camera poses, and robot trajectories provide
+              grounded state changes. Geometry determines the target, which is
+              expressed as a visually answerable question.
             </p>
           </div>
           <figure class="paper-figure">
@@ -274,11 +273,11 @@
         <div class="wrap">
           <div class="section-title">
             <p class="eyebrow">04 / Spatial Interaction Curriculum</p>
-            <h2>From local transitions to complete trajectories</h2>
+            <h2>Learn locally, then reason globally</h2>
             <p>
-              From changes in the world, to changes in the observer, to the
-              integration of a complete path. Each question is grounded in
-              actions, states, or geometric trajectories.
+              The curriculum expands the reasoning horizon from changes in the
+              world, to changes of the observer, and finally to complete
+              trajectories.
             </p>
           </div>
           <div
@@ -473,10 +472,11 @@
         <div class="wrap">
           <div class="section-title">
             <p class="eyebrow">05 / Training Method</p>
-            <h2>Local transition learning and long-horizon integration</h2>
+            <h2>Two stages connect local change to global paths</h2>
             <p>
-              Two complementary training stages connect observable physical
-              changes to long-horizon spatial reasoning.
+              Supervised fine-tuning establishes local transition reasoning.
+              On-policy distillation then guides the model to integrate those
+              transitions across long trajectories.
             </p>
           </div>
           <div class="training-stages">
@@ -542,10 +542,11 @@
         <div class="wrap">
           <div class="section-title">
             <p class="eyebrow">06 / Experiments</p>
-            <h2>Main results</h2>
+            <h2>The gains follow the learned capabilities</h2>
             <p>
-              Consistent improvements on video and multi-view benchmarks, with
-              additional transfer to tasks outside the training mixture.
+              Spatial-Interactor improves video and multi-view reasoning across
+              four backbones, with the clearest gains on tasks that require
+              relating observations over time.
             </p>
           </div>
           <div class="results-tables" id="results-tables">
@@ -574,7 +575,6 @@
                   <tbody></tbody>
                 </table>
               </div>
-              <p id="main-results-note" class="table-note"></p>
             </article>
 
             <article class="results-table-block">
@@ -602,7 +602,6 @@
                   <tbody></tbody>
                 </table>
               </div>
-              <p id="generalization-results-note" class="table-note"></p>
             </article>
 
             <article class="results-table-block">
@@ -630,7 +629,6 @@
                   <tbody></tbody>
                 </table>
               </div>
-              <p id="ablation-results-note" class="table-note"></p>
             </article>
           </div>
         </div>
@@ -640,10 +638,10 @@
         <div class="wrap">
           <div class="section-title">
             <p class="eyebrow">07 / Analysis and Ablations</p>
-            <h2>How spatial interaction changes the model</h2>
+            <h2>The model learns to use temporal evidence</h2>
             <p>
-              The curriculum, learning curves, and temporal diagnostics reveal
-              complementary aspects of learning from state transitions.
+              Curriculum ablations, training dynamics, and temporal diagnostics
+              connect the performance gains to stronger state tracking.
             </p>
           </div>
 
@@ -823,18 +821,16 @@
         <div class="wrap">
           <div class="section-title">
             <p class="eyebrow">08 / Embodied Interaction</p>
-            <h2>Generalization from observations to actions</h2>
+            <h2>Spatial understanding carries into action</h2>
             <p>
-              When an action changes the next observation, spatial reasoning
-              must support repeated decisions. We evaluate this setting with the
-              Qwen2.5-VL-7B backbone.
+              The same spatial updates support repeated decisions when each
+              action changes what the model observes next.
             </p>
           </div>
           <article class="interaction-results">
             <div class="table-heading">
               <div>
                 <h3>WalkerBench</h3>
-                <p>Standard-100</p>
               </div>
               <button
                 class="icon-button"
@@ -858,21 +854,17 @@
             >
               <table id="walker-table" data-paper-table="4">
                 <caption class="sr-only">
-                  Table 4. WalkerBench Standard-100 results
+                  Table 4. WalkerBench results
                 </caption>
                 <thead></thead>
                 <tbody></tbody>
               </table>
             </div>
-            <p class="table-note">
-              Success rate (%). Steps: mean executed actions per task.
-            </p>
           </article>
           <article class="interaction-results">
             <div class="table-heading">
               <div>
                 <h3>ESI-Bench</h3>
-                <p>8 categories &middot; 30 matched questions each</p>
               </div>
               <button
                 class="icon-button"
@@ -902,10 +894,6 @@
                 <tbody></tbody>
               </table>
             </div>
-            <p class="table-note">
-              Success rate (%). Steps: mean interaction rounds among solved
-              episodes.
-            </p>
           </article>
         </div>
       </section>
@@ -914,10 +902,10 @@
         <div class="wrap">
           <div class="section-title">
             <p class="eyebrow">09 / Qualitative Results</p>
-            <h2>Spatial evidence across views and trajectories</h2>
+            <h2>From shared anchors to complete trajectories</h2>
             <p>
-              Two cases from the paper show how spatial evidence can be
-              connected across viewpoints and across a longer motion sequence.
+              A shared anchor resolves a local viewpoint change; ordered
+              landmarks recover motion across a longer trajectory.
             </p>
           </div>
           <div class="case-comparison">
@@ -931,7 +919,7 @@
                 href="assets/local-case.webp"
                 data-paper-figure="10"
                 data-zoom
-                data-caption="Illustrative SAT-Real attention case. Spatial-Interactor predicts the correct camera rotation from shared visual evidence."
+                data-caption="SAT-Real attention case. Spatial-Interactor predicts the correct camera rotation from shared visual evidence."
                 ><img
                   src="assets/local-case.webp"
                   alt="Selected SAT-Real case with two input views and attention visualizations for Base and Spatial-Interactor."
@@ -987,11 +975,10 @@
         <div class="wrap">
           <div class="section-title">
             <p class="eyebrow">Video demonstrations</p>
-            <h2>Spatial transitions in motion</h2>
+            <h2>See the transitions unfold</h2>
             <p>
-              Two short examples conclude the story by showing how local
-              camera movements accumulate into a complete route and determine
-              its global shape.
+              Successive camera movements accumulate into a trajectory and
+              determine its global shape.
             </p>
           </div>
           <div
@@ -1076,12 +1063,6 @@
                 /></a>
               </div>
             </div>
-            <p class="demo-credit" id="demo-credit">
-              Illustrative walkthrough. Scene assets:
-              <a href="https://revsi.site/" target="_blank" rel="noopener"
-                >ReVSI</a
-              >.
-            </p>
           </div>
         </div>
       </section>
