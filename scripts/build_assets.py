@@ -2,6 +2,7 @@
 """Export web assets from the paper without modifying the paper sources."""
 
 import argparse
+from collections import deque
 from io import BytesIO
 from pathlib import Path
 import shutil
@@ -9,11 +10,59 @@ import subprocess
 from PIL import Image
 
 
-def rgb_on_white(image):
-    # Paper PNGs use transparency between panels; flatten it onto page white.
+def remove_border_white(image, threshold=248):
+    """Make only edge-connected white canvas pixels transparent.
+
+    White fills enclosed by colored borders remain intact, while the page
+    canvas around a figure can blend with the homepage section background.
+    """
     rgba = image.convert("RGBA")
-    background = Image.new("RGBA", rgba.size, "white")
-    return Image.alpha_composite(background, rgba).convert("RGB")
+    width, height = rgba.size
+    pixels = rgba.load()
+    queue = deque()
+    visited = bytearray(width * height)
+
+    def is_canvas_white(x, y):
+        red, green, blue, alpha = pixels[x, y]
+        return (
+            alpha > 0
+            and red >= threshold
+            and green >= threshold
+            and blue >= threshold
+        )
+
+    def enqueue(x, y):
+        index = y * width + x
+        if not visited[index] and is_canvas_white(x, y):
+            visited[index] = 1
+            queue.append((x, y))
+
+    for x in range(width):
+        enqueue(x, 0)
+        enqueue(x, height - 1)
+    for y in range(1, height - 1):
+        enqueue(0, y)
+        enqueue(width - 1, y)
+
+    while queue:
+        x, y = queue.popleft()
+        red, green, blue, _ = pixels[x, y]
+        pixels[x, y] = (red, green, blue, 0)
+        if x:
+            enqueue(x - 1, y)
+        if x + 1 < width:
+            enqueue(x + 1, y)
+        if y:
+            enqueue(x, y - 1)
+        if y + 1 < height:
+            enqueue(x, y + 1)
+
+    return rgba
+
+
+def prepare_web_image(image):
+    # Preserve source alpha and remove only the outer white page canvas.
+    return remove_border_white(image)
 
 
 def main():
@@ -38,18 +87,20 @@ def main():
     }
     for name, source in figures.items():
         content = subprocess.check_output([
-            "pdftoppm", "-singlefile", "-scale-to", "2600", "-png",
+            "pdftocairo", "-singlefile", "-scale-to", "2600", "-png",
+            "-transp",
             str(paper / "Figures" / source),
+            "-",
         ])
-        image = rgb_on_white(Image.open(BytesIO(content)))
-        image.save(assets / f"{name}.webp", quality=94, method=6)
+        image = prepare_web_image(Image.open(BytesIO(content)))
+        image.save(assets / f"{name}.webp", quality=96, method=6)
         print(f"{name}: {image.width} x {image.height}", flush=True)
     with Image.open(paper / "Figures" / "fig5_opd_300dpi.png") as image:
-        rgb_on_white(image).save(assets / "opd.webp", quality=96, method=6)
+        prepare_web_image(image).save(assets / "opd.webp", quality=96, method=6)
     for case in [f"E{index:02d}" for index in range(1, 36)]:
         with Image.open(paper / "appendix_artifacts" / "task_showcase_media" / f"{case}.png") as image:
             image.thumbnail((2000, 1400), Image.Resampling.LANCZOS)
-            rgb_on_white(image).save(assets / f"{case}.webp", quality=94, method=6)
+            prepare_web_image(image).save(assets / f"{case}.webp", quality=96, method=6)
     with Image.open(paper / "others" / "ZJU.png") as image:
         image.thumbnail((192, 192), Image.Resampling.LANCZOS)
         image.save(assets / "zju.png")
