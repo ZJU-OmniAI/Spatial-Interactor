@@ -43,9 +43,9 @@
     "Main results",
     "Cross-benchmark transfer",
     "Ablation",
+    "Training analysis",
     "Temporal evidence",
-    "Closed-loop interaction",
-    "Qualitative cases",
+    "Closed-loop interaction and qualitative cases",
     "Takeaway",
   ];
   let storyIndex = 0;
@@ -55,13 +55,15 @@
   const storyProgress = $("story-progress");
   const storyThumbs = $("story-thumbs");
   if (storySlide && storyPageNumber && storyPageTitle && storyProgress && storyThumbs) {
+    const storyAsset = (index) =>
+      `assets/presentation/slide-${String(index + 1).padStart(2, "0")}.webp${index === 17 ? "?v=20260915" : ""}`;
     storyPages.forEach((title, index) => {
       const button = element("button", undefined, "story-thumb");
       button.type = "button";
       button.dataset.storyIndex = String(index);
       button.setAttribute("aria-label", `Open presentation page ${index + 1}: ${title}`);
       const image = document.createElement("img");
-      image.src = `assets/presentation/slide-${String(index + 1).padStart(2, "0")}.webp`;
+      image.src = storyAsset(index);
       image.alt = "";
       image.loading = index < 4 ? "eager" : "lazy";
       button.append(image, element("span", String(index + 1).padStart(2, "0")));
@@ -71,7 +73,7 @@
     function renderStory(nextIndex, animate = true) {
       storyIndex = (nextIndex + storyPages.length) % storyPages.length;
       const page = String(storyIndex + 1).padStart(2, "0");
-      storySlide.src = `assets/presentation/slide-${page}.webp`;
+      storySlide.src = storyAsset(storyIndex);
       storySlide.alt = `Presentation page ${storyIndex + 1} of ${storyPages.length}: ${storyPages[storyIndex]}`;
       storyPageNumber.textContent = page;
       storyPageTitle.textContent = storyPages[storyIndex];
