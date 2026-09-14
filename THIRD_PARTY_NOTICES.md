@@ -26,12 +26,3 @@ Spatial-Interactor paper assets. They are not covered by the font/icon licenses.
 
 ProVisE is credited as a design reference. Its research figures, text, and source
 code are not redistributed in this directory.
-
-## Video Demonstrations
-
-The trajectory integration and path-shape recordings come from the project's
-local visualizer. Their scene imagery and geometry derive from
-[ReVSI](https://revsi.site/), as documented in the visualizer. Their reasoning
-text is an illustrative walkthrough, not a recorded model prediction. The
-website retains a visible credit. These assets retain their original source
-terms; they are not covered by the font/icon licenses above.

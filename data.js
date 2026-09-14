@@ -254,14 +254,14 @@ window.SPATIAL_DATA = {
       cases: ["E12", "E13", "E22", "E23"],
     },
     l3: {
-      title: "Long-horizon integration",
+      title: "Long-horizon transition integration",
       count: "22,922",
       description:
-        "Integrate successive camera-motion transitions across a complete trajectory to recover global paths and identify key locations.",
+        "Compose successive transitions over complete camera trajectories to recover global trajectory properties and key locations.",
       tasks: [
         "Path length",
         "Displacement",
-        "Path shape",
+        "Trajectory shape",
         "Reverse paths",
         "Turns & revisits",
       ],
@@ -363,7 +363,7 @@ window.SPATIAL_DATA = {
       answer: "B",
     },
     E29: {
-      title: "Reverse-path planning",
+      title: "Reverse-path reasoning",
       source: "RoomTour3D",
       domain: "Real camera",
       question: "Which reverse path returns to the starting location?",
@@ -376,7 +376,7 @@ window.SPATIAL_DATA = {
       answer: "A",
     },
     E32: {
-      title: "Path shape",
+      title: "Trajectory shape",
       source: "RoomTour3D",
       domain: "Real camera",
       question: "Which path shape describes the complete video?",

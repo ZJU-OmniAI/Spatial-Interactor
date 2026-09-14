@@ -1,4 +1,4 @@
-/* Playback, motion, gallery, and responsive checks. No runtime dependencies. */
+/* Figure gallery, motion, and responsive checks. No runtime dependencies. */
 const assert = require("node:assert/strict");
 const fs = require("node:fs/promises");
 const os = require("node:os");
@@ -12,38 +12,15 @@ const url =
 const output =
   process.env.OUTPUT_DIR || path.join(os.tmpdir(), "spatial-site-media-check");
 
-async function waitForPlayback(page) {
-  await page.waitForFunction(
-    () => {
-      const video = document.getElementById("demo-video");
-      return !video.paused && video.currentTime > 0.25 && video.videoWidth > 0;
-    },
-    undefined,
-    { timeout: 20000 },
-  );
-}
-
-async function videoFrame(page, time) {
-  return page.locator("#demo-video").evaluate(async (video, target) => {
-    video.pause();
-    await new Promise((resolve) => {
-      video.addEventListener("seeked", resolve, { once: true });
-      video.currentTime = target;
-    });
-    const canvas = document.createElement("canvas");
-    canvas.width = 96;
-    canvas.height = 60;
-    const context = canvas.getContext("2d");
-    context.drawImage(video, 0, 0, 96, 60);
-    return Array.from(context.getImageData(0, 0, 96, 60).data);
-  }, time);
-}
-
 async function checkControls(page, selectors) {
   const issues = await page.evaluate((groups) => {
     const issues = [];
     for (const group of groups) {
       const node = document.querySelector(group);
+      if (!node) {
+        issues.push(`${group}: missing`);
+        continue;
+      }
       const children = [...node.children].filter(
         (child) => child.getClientRects().length,
       );
@@ -66,6 +43,14 @@ async function checkControls(page, selectors) {
   assert.deepEqual(issues, []);
 }
 
+async function waitForFigure(page) {
+  await page.waitForFunction(
+    () =>
+      document.getElementById("figure-viewport").getAttribute("aria-busy") ===
+      "false",
+  );
+}
+
 async function main() {
   await fs.mkdir(output, { recursive: true });
   const browser = await chromium.launch({
@@ -73,96 +58,16 @@ async function main() {
     args: ["--no-sandbox"],
   });
   const errors = [];
-  const requests = [];
-  const playback = [];
   try {
     const page = await browser.newPage({
       viewport: { width: 1440, height: 1000 },
       reducedMotion: "reduce",
     });
     page.on("pageerror", (error) => errors.push(error.message));
-    page.on("request", (request) => {
-      if (/\.mp4(?:\?|$)/.test(request.url())) requests.push(request.url());
-    });
     await page.goto(url);
-    await page.locator("#demo-stage").scrollIntoViewIfNeeded();
-    assert.equal(requests.length, 0, "No videos requested before play");
-    assert.equal(await page.locator("#demo-video").getAttribute("src"), null);
-    assert.equal(await page.locator(".demo-tabs [role=tab]").count(), 2);
-    for (let index = 0; index < 2; index += 1) {
-      await page.locator(`[data-demo="${index}"]`).click();
-      await page.locator("#demo-stage").scrollIntoViewIfNeeded();
-      const before = requests.length;
-      assert.equal(await page.locator("#demo-video").getAttribute("src"), null);
-      await page.locator("#demo-play").click();
-      await waitForPlayback(page);
-      assert.equal(
-        requests.length,
-        before + 1,
-        "Only the selected video loads",
-      );
-      const metadata = await page.locator("#demo-video").evaluate((video) => ({
-        width: video.videoWidth,
-        height: video.videoHeight,
-        duration: video.duration,
-        controls: video.controls,
-      }));
-      assert(metadata.width >= 1280 && metadata.controls);
-      assert(metadata.duration > 25 && metadata.duration < 52);
-      if (url.startsWith("http")) {
-        const a = await videoFrame(page, 2);
-        const b = await videoFrame(page, 14);
-        let changed = 0;
-        for (let i = 0; i < a.length; i += 4) {
-          if (
-            Math.abs(a[i] - b[i]) +
-              Math.abs(a[i + 1] - b[i + 1]) +
-              Math.abs(a[i + 2] - b[i + 2]) >
-            15
-          )
-            changed += 1;
-        }
-        assert(changed > 100, `Video ${index}: nonblank moving frames`);
-        metadata.changedPixels = changed;
-      }
-      await page
-        .locator("#demo-stage")
-        .screenshot({ path: path.join(output, `video-${index}.png`) });
-      playback.push(metadata);
-    }
-    await page.locator('[data-demo="0"]').click();
-    await page.locator("#demo-play").click();
-    await waitForPlayback(page);
-    await page.locator("#results").scrollIntoViewIfNeeded();
-    await page.waitForFunction(
-      () => document.getElementById("demo-video").paused,
-    );
-    assert(await page.locator("#back-to-top").isVisible());
-    assert.notEqual(
-      await page
-        .locator("#reading-progress")
-        .evaluate((node) => node.style.transform),
-      "scaleX(0)",
-    );
-    await page.locator("#back-to-top").click();
-    await page.waitForFunction(() => window.scrollY === 0);
-    await page.waitForFunction(
-      () => document.getElementById("back-to-top").hidden,
-    );
-    await page.locator("#demo-path").focus();
-    await page.keyboard.press("End");
-    assert.equal(
-      await page.locator("#demo-path").getAttribute("aria-selected"),
-      "true",
-    );
-    await page.keyboard.press("Home");
-    assert.equal(
-      await page.locator("#demo-trajectory").getAttribute("aria-selected"),
-      "true",
-    );
-    console.log(
-      "PASS: two videos, lazy loading, motion pixels, pause on exit, tabs, reading progress",
-    );
+
+    assert.equal(await page.locator("video").count(), 0);
+    assert.equal(await page.locator("[data-paper-figure]").count(), 11);
 
     for (const [width, height] of [
       [1440, 1000],
@@ -172,71 +77,61 @@ async function main() {
       [320, 740],
     ]) {
       await page.setViewportSize({ width, height });
-      await page.locator("#demos").scrollIntoViewIfNeeded();
-      await checkControls(page, [".demo-tabs", ".demo-caption", ".demo-meta"]);
       assert(
         await page.evaluate(
           () => document.documentElement.scrollWidth <= innerWidth + 1,
         ),
       );
-      await page
-        .locator("#demos")
-        .screenshot({ path: path.join(output, `demos-${width}.png`) });
       await page.locator('[data-paper-figure="2"]').click();
-      await page.waitForFunction(
-        () =>
-          document
-            .getElementById("figure-viewport")
-            .getAttribute("aria-busy") === "false",
-      );
-      assert.equal(
-        await page.locator("#figure-position").textContent(),
-        "2 / 11",
-      );
+      await waitForFigure(page);
+      assert.equal(await page.locator("#figure-position").textContent(), "2 / 11");
+
       const fit = await page.locator("#figure-dialog-image").boundingBox();
       await page.locator("#zoom-in").click();
       const zoomed = await page.locator("#figure-dialog-image").boundingBox();
       assert(zoomed.width > fit.width * 1.4);
       assert.equal(await page.locator("#zoom-level").textContent(), "150%");
       await page.locator("#fit-figure").click();
+
       await page.locator("#next-figure").click();
-      await page.waitForFunction(
-        () =>
-          document
-            .getElementById("figure-viewport")
-            .getAttribute("aria-busy") === "false",
-      );
-      assert.equal(
-        await page.locator("#figure-position").textContent(),
-        "3 / 11",
-      );
+      await waitForFigure(page);
+      assert.equal(await page.locator("#figure-position").textContent(), "3 / 11");
       await checkControls(page, [".dialog-toolbar", ".figure-controls"]);
       await page
         .locator("#figure-dialog")
         .screenshot({ path: path.join(output, `gallery-${width}.png`) });
+
       await page.keyboard.press("ArrowLeft");
-      assert.equal(
-        await page.locator("#figure-position").textContent(),
-        "2 / 11",
-      );
+      await waitForFigure(page);
+      assert.equal(await page.locator("#figure-position").textContent(), "2 / 11");
       await page.keyboard.press("Escape");
       assert.equal(await page.locator("#figure-dialog").isVisible(), false);
       assert.equal(
         await page.evaluate(() => document.activeElement.dataset.paperFigure),
         "2",
       );
-      console.log(`PASS: ${width}px demos and zoom gallery`);
+      console.log(`PASS: ${width}px zoom gallery`);
     }
-    await page.locator("#demo-play").click();
-    await waitForPlayback(page);
-    await page
-      .locator("#demo-stage")
-      .screenshot({ path: path.join(output, "mobile-playback.png") });
+
     await page.locator("#example-zoom").click();
+    await waitForFigure(page);
     assert.equal(await page.locator("#figure-navigation").isVisible(), false);
     await page.keyboard.press("Escape");
-    assert.equal(await page.evaluate(() => document.getAnimations().length), 0);
 
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await page.locator("#results").scrollIntoViewIfNeeded();
+    assert(await page.locator("#back-to-top").isVisible());
+    assert.notEqual(
+      await page.locator("#reading-progress").evaluate((node) => node.style.transform),
+      "scaleX(0)",
+    );
+    await page.locator("#back-to-top").click();
+    await page.waitForFunction(() => window.scrollY === 0);
+    await page.waitForFunction(
+      () => document.getElementById("back-to-top").hidden,
+    );
+
+    assert.equal(await page.evaluate(() => document.getAnimations().length), 0);
     await page.emulateMedia({ reducedMotion: "no-preference" });
     await page.locator("#tab-l2").click();
     assert(
@@ -249,31 +144,14 @@ async function main() {
     await checkControls(page, [".example-toolbar"]);
     await page.locator("#next-example").click({ clickCount: 3 });
     await page.locator("#example-image").evaluate((image) => image.decode());
-    assert.equal(await page.locator("#example-id").textContent(), "E23");
-    console.log(
-      "PASS: mobile playback, standalone figure, transitions, reduced motion, rapid case switching",
-    );
+    assert.equal(await page.locator("#example-id").textContent(), "E14");
 
-    if (url.startsWith("http")) {
-      await page.locator('[data-demo="1"]').click();
-      await page.route("**/videos/path-shape.mp4", (route) => route.abort());
-      await page.locator("#demo-play").click();
-      await page.waitForFunction(() =>
-        document
-          .getElementById("demo-status")
-          .textContent.startsWith("Video unavailable"),
-      );
-      assert(await page.locator("#demo-play").isVisible());
-      await page.unroute("**/videos/path-shape.mp4");
-      await page.locator("#demo-play").click();
-      await waitForPlayback(page);
-      console.log("PASS: failed-video retry");
-    }
     assert.deepEqual(errors, []);
     await fs.writeFile(
       path.join(output, "media-checks.json"),
-      JSON.stringify({ playback, viewports: 5, errors }, null, 2),
+      JSON.stringify({ figures: 11, viewports: 5, errors }, null, 2),
     );
+    console.log("PASS: gallery, navigation, transitions, and reduced motion");
     console.log(`Screenshots and report: ${output}`);
   } finally {
     await browser.close();

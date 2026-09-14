@@ -172,24 +172,34 @@ async function main() {
       const ids = await page
         .locator("#example-select option")
         .evaluateAll((options) => options.map((option) => option.value));
-      assert.equal(ids.length, 4);
+      assert.equal(ids.length, { l1: 11, l2: 17, l3: 7 }[level]);
       for (const id of ids) {
         await page.selectOption("#example-select", id);
         await assertImage(page, "#example-image");
         assert.equal(await page.locator("#example-id").textContent(), id);
+        const expectedAnswers = ["E30", "E33"].includes(id)
+          ? 3
+          : ["E14", "E15", "E16", "E17", "E18"].includes(id)
+            ? 0
+            : 1;
+        const opensByDefault = expectedAnswers === 0;
         assert.equal(
           await page.locator("#answer-details").evaluate((node) => node.open),
-          false,
+          opensByDefault,
         );
-        await page.locator("#answer-details summary").click();
-        await page.waitForFunction(
-          () =>
-            document.querySelectorAll("#example-options li.is-answer").length >
-            0,
-        );
+        if (!opensByDefault) {
+          await page.locator("#answer-details summary").click();
+        }
+        if (expectedAnswers) {
+          await page.waitForFunction(
+            () =>
+              document.querySelectorAll("#example-options li.is-answer").length >
+              0,
+          );
+        }
         assert.equal(
           await page.locator("#example-options li.is-answer").count(),
-          id === "E33" ? 3 : 1,
+          expectedAnswers,
         );
         assert(
           (await page.locator("#example-answer").textContent()).length > 5,
@@ -204,7 +214,7 @@ async function main() {
       );
     }
     console.log(
-      "PASS: all 12 examples, answers, sources, images, and wrapping pager",
+      "PASS: all 35 examples, answers, sources, images, and wrapping pager",
     );
 
     await page.locator("#tab-l1").focus();

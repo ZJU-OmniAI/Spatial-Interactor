@@ -119,23 +119,23 @@ async function main() {
         0,
       );
     }
-    await checkTable("results-table");
-    const table = page.locator("#results-table");
+    for (const id of [
+      "results-main-table",
+      "results-generalization-table",
+      "results-ablation-table",
+      "walker-table",
+      "esi-table",
+    ]) {
+      await checkTable(id);
+    }
+    const table = page.locator("#results-main-table");
     await table.locator('thead th[colspan="3"]').hover();
     assert.equal(
       await table.locator("tbody .is-hover-column").count(),
       3 * (await table.locator("tbody tr").count()),
     );
-    for (const mode of ["generalization", "ablation", "main"]) {
-      await page.locator(`[data-table="${mode}"]`).click();
-      await checkTable("results-table");
-    }
-    await page.selectOption("#model-filter", "ours");
-    await checkTable("results-table");
-    await page.locator('[data-sort="0"]').click();
+    await table.locator('[data-sort="0"]').click();
     assert.equal(await table.locator(".is-hover-cell").count(), 1);
-    await checkTable("walker-table");
-    await checkTable("esi-table");
     console.log(
       "PASS: row/column/cell feedback across five tables, grouped headers, filters, sorting, keyboard focus",
     );
@@ -149,7 +149,7 @@ async function main() {
     mobile.on("pageerror", (error) => errors.push(error.message));
     await mobile.goto(url);
     await mobile
-      .locator("#results-table tbody tr")
+      .locator("#results-main-table tbody tr")
       .first()
       .locator("td")
       .first()

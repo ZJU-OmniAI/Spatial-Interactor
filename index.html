@@ -19,6 +19,7 @@
     <link rel="icon" href="assets/zju.png" />
     <link rel="stylesheet" href="styles.css" />
     <script src="data.js" defer></script>
+    <script src="examples.js" defer></script>
     <script src="app.js" defer></script>
     <script src="media.js" defer></script>
   </head>
@@ -45,22 +46,9 @@
           <img src="assets/icons/menu.svg" alt="" width="20" height="20" />
         </button>
         <nav id="site-nav" aria-label="Main navigation">
-          <a href="#motivation">Motivation</a><a href="#approach">Approach</a
-          ><a href="#dataset">Curriculum</a><a href="#method">Method</a
-          ><a href="#results">Results</a><a href="#analysis">Analysis</a
-          ><a href="#examples">Qualitative</a
-          ><a
-            class="nav-paper"
-            href="assets/paper.pdf"
-            target="_blank"
-            rel="noopener"
-            >Paper
-            <img
-              src="assets/icons/arrow-up-right.svg"
-              alt=""
-              width="16"
-              height="16"
-          /></a>
+          <a href="#motivation">Motivation</a><a href="#dataset">Curriculum</a
+          ><a href="#method">Method</a><a href="#results">Results</a
+          ><a href="#analysis">Analysis</a><a href="#citation">Citation</a>
         </nav>
       </div>
       <div class="reading-progress" aria-hidden="true">
@@ -156,11 +144,11 @@
         <div class="wrap">
           <div class="section-title">
             <p class="eyebrow">01 / Motivation</p>
-            <h2>Seeing space is not the same as tracking it</h2>
+            <h2>State-transition diagnostics reveal the missing capability</h2>
             <p>
-              A model may recognize a scene frame by frame while missing what
-              changed between frames or where the complete path leads. Two
-              diagnostics expose this gap.
+              Frame shuffling exposes weak temporal-order sensitivity, while a
+              local-to-long-horizon comparison shows that models struggle to
+              integrate consecutive transitions over complete trajectories.
             </p>
           </div>
           <figure class="paper-figure">
@@ -189,12 +177,13 @@
       <section class="section" id="approach">
         <div class="wrap">
           <div class="section-title">
-            <p class="eyebrow">02 / Learning through Interaction</p>
-            <h2>Interaction turns observations into transitions</h2>
+            <p class="eyebrow">02 / State-Transition Learning</p>
+            <h2>Learning physical-world state transitions through interaction</h2>
             <p>
-              Each action links a before-state to an after-state, making spatial
-              change directly observable. Spatial-Interactor learns these local
-              transitions and composes them into a coherent state over time.
+              Each interaction aligns consecutive observations with the
+              physical change that connects them. Individual records support
+              local transition inference; ordered trajectories support
+              trajectory-level reasoning.
             </p>
           </div>
           <figure class="paper-figure teaser">
@@ -223,12 +212,12 @@
       <section class="section pale" id="construction">
         <div class="wrap">
           <div class="section-title">
-            <p class="eyebrow">03 / LSI-108K Construction</p>
-            <h2>Build supervision from what physically changed</h2>
+            <p class="eyebrow">03 / Curriculum-Driven Construction</p>
+            <h2>From interaction records to verifiable transition targets</h2>
             <p>
-              Simulator actions, camera poses, and robot trajectories provide
-              grounded state changes. Geometry determines the target, which is
-              expressed as a visually answerable question.
+              Executed interactions and geometric trajectories provide the
+              state changes. State, pose, and trajectory metadata determine the
+              targets, which deterministic templates render as QA pairs.
             </p>
           </div>
           <figure class="paper-figure">
@@ -257,12 +246,13 @@
       <section class="section" id="dataset">
         <div class="wrap">
           <div class="section-title">
-            <p class="eyebrow">04 / Spatial Interaction Curriculum</p>
-            <h2>Learn locally, then reason globally</h2>
+            <p class="eyebrow">04 / Progressive Curriculum</p>
+            <h2>A progressive spatial interaction curriculum</h2>
             <p>
-              The curriculum expands the reasoning horizon from changes in the
-              world, to changes of the observer, and finally to complete
-              trajectories.
+              We organize supervision by the state being updated and the
+              horizon of that update: L1 isolates external-world changes, L2
+              models observer-induced changes, and L3 composes successive
+              transitions over complete trajectories.
             </p>
           </div>
           <div
@@ -279,8 +269,8 @@
             >
               <span class="level-number">L1</span
               ><span
-                ><strong>Passive world</strong
-                ><small>World-state transitions</small></span
+                ><strong>Passive world-state</strong
+                ><small>Transitions</small></span
               ></button
             ><button
               role="tab"
@@ -292,8 +282,8 @@
             >
               <span class="level-number">L2</span
               ><span
-                ><strong>Active self</strong
-                ><small>Self-state transitions</small></span
+                ><strong>Active self-state</strong
+                ><small>Transitions</small></span
               ></button
             ><button
               role="tab"
@@ -305,8 +295,8 @@
             >
               <span class="level-number">L3</span
               ><span
-                ><strong>Long horizon</strong
-                ><small>Trajectory integration</small></span
+                ><strong>Long-horizon</strong
+                ><small>Transition integration</small></span
               >
             </button>
           </div>
@@ -423,7 +413,7 @@
             </div>
           </div>
           <div class="curriculum-overview">
-            <h3>The complete curriculum</h3>
+            <h3>Composition of LSI-108K</h3>
             <figure class="paper-figure">
               <a
                 class="figure-link"
@@ -451,12 +441,12 @@
       <section class="section pale" id="method">
         <div class="wrap">
           <div class="section-title">
-            <p class="eyebrow">05 / Training Method</p>
-            <h2>Two stages connect local change to global paths</h2>
+            <p class="eyebrow">05 / Training</p>
+            <h2>From local state-transition modeling to long-horizon integration</h2>
             <p>
-              Supervised fine-tuning establishes local transition reasoning.
-              On-policy distillation then guides the model to integrate those
-              transitions across long trajectories.
+              SFT learns world-state and self-state transitions from L1 and L2.
+              OPD then uses privileged process supervision to integrate
+              successive transitions over long trajectories.
             </p>
           </div>
           <div class="training-stages">
@@ -464,7 +454,7 @@
               <span class="stage-label"
                 >Stage 1 <span class="stage-levels">L1 + L2</span></span
               >
-              <h3>Supervised Fine-Tuning</h3>
+              <h3>Local State-Transition Modeling</h3>
               <p>
                 Associate differences between observations with object
                 operations and ego-motion, learning reusable local
@@ -482,7 +472,7 @@
               <span class="stage-label"
                 >Stage 2 <span class="stage-levels">L3</span></span
               >
-              <h3>On-Policy Distillation</h3>
+              <h3>Long-Horizon Integration with OPD</h3>
               <p>
                 Use training-only transition descriptions to guide reasoning
                 over complete trajectories, alongside verifiable final-answer
@@ -516,19 +506,19 @@
       <section class="section" id="results">
         <div class="wrap">
           <div class="section-title">
-            <p class="eyebrow">06 / Experiments</p>
-            <h2>The gains follow the learned capabilities</h2>
+            <p class="eyebrow">06 / Main Results</p>
+            <h2>Learning from interaction improves spatial reasoning</h2>
             <p>
-              Spatial-Interactor improves video and multi-view reasoning across
-              four backbones, with the clearest gains on tasks that require
-              relating observations over time.
+              Across four backbones, Spatial-Interactor improves spatial
+              relations, multi-view reasoning, and tasks that integrate motion
+              evidence over longer trajectories.
             </p>
           </div>
           <div class="results-tables" id="results-tables">
             <article class="results-table-block">
               <div class="table-heading">
                 <div>
-                  <h3>Main benchmarks</h3>
+                  <h3>Main benchmark results</h3>
                 </div>
                 <div class="table-actions">
                   <button
@@ -580,7 +570,7 @@
             <article class="results-table-block">
               <div class="table-heading">
                 <div>
-                  <h3>Training ablation</h3>
+                  <h3>Ablation studies</h3>
                 </div>
                 <div class="table-actions">
                   <button
@@ -609,18 +599,19 @@
       <section class="section pale" id="analysis">
         <div class="wrap">
           <div class="section-title">
-            <p class="eyebrow">07 / Analysis and Ablations</p>
-            <h2>The model learns to use temporal evidence</h2>
+            <p class="eyebrow">07 / Process and Temporal Analysis</p>
+            <h2>Process dynamics and temporal evidence</h2>
             <p>
-              Curriculum ablations, training dynamics, and temporal diagnostics
-              connect the performance gains to stronger state tracking.
+              Curriculum ablations, OPD optimization dynamics, and temporal
+              diagnostics examine how answer performance and process alignment
+              change during training.
             </p>
           </div>
 
           <article class="analysis-block">
             <div class="analysis-heading">
               <div>
-                <h3>Learning world changes, then self changes</h3>
+                <h3>Progressive local-transition learning</h3>
                 <p>
                   L1 and L2 contribute differently. Training them in sequence
                   improves all four benchmarks over Base.
@@ -656,7 +647,7 @@
           <article class="analysis-block">
             <div class="analysis-heading">
               <div>
-                <h3>What changes during OPD?</h3>
+                <h3>OPD optimization dynamics</h3>
                 <p>
                   Across four backbones, task reward rises, rollout diversity
                   gradually narrows, and divergence from the privileged teacher
@@ -693,7 +684,7 @@
           <article class="analysis-block">
             <div class="analysis-heading">
               <div>
-                <h3>More observations. Better-ordered evidence.</h3>
+                <h3>Temporal evidence and privileged-trace diagnostics</h3>
                 <p>
                   OPD retains its advantage across frame budgets. For the frozen
                   SFT model, ordered segment descriptions help more than
@@ -730,7 +721,7 @@
           <article class="analysis-block frame-order-block">
             <div class="analysis-heading">
               <div>
-                <h3>Temporal order becomes more important</h3>
+                <h3>Frame-order sensitivity</h3>
                 <p>
                   Shuffling identical frames reduces Spatial-Interactor scores
                   by 6.6 and 7.0 points, compared with 0.9 and 0.8 for the
@@ -769,8 +760,8 @@
       <section class="section" id="interaction">
         <div class="wrap">
           <div class="section-title">
-            <p class="eyebrow">08 / Embodied Interaction</p>
-            <h2>Spatial understanding carries into action</h2>
+            <p class="eyebrow">08 / Closed-Loop Interaction</p>
+            <h2>Spatial reasoning under changing observations</h2>
             <p>
               The same spatial updates support repeated decisions when each
               action changes what the model observes next.
@@ -850,8 +841,8 @@
       <section class="section pale" id="examples">
         <div class="wrap">
           <div class="section-title">
-            <p class="eyebrow">09 / Qualitative Results</p>
-            <h2>From shared anchors to complete trajectories</h2>
+            <p class="eyebrow">09 / Qualitative Analysis</p>
+            <h2>Spatial reasoning across views and trajectories</h2>
             <p>
               A shared anchor resolves a local viewpoint change; ordered
               landmarks recover motion across a longer trajectory.
@@ -860,7 +851,7 @@
           <div class="case-comparison">
             <figure class="paper-figure">
               <div class="case-heading">
-                <h3>A shared spatial anchor</h3>
+                <h3>Cross-view anchor correspondence</h3>
               </div>
               <a
                 class="figure-link"
@@ -883,7 +874,7 @@
             </figure>
             <figure class="paper-figure">
               <div class="case-heading">
-                <h3>One consistent account of motion</h3>
+                <h3>Long-horizon trajectory integration</h3>
               </div>
               <a
                 class="figure-link"
@@ -904,101 +895,6 @@
                     height="18" /></span
               ></a>
             </figure>
-          </div>
-        </div>
-      </section>
-
-      <section class="section demo-section" id="demos">
-        <div class="wrap">
-          <div class="section-title">
-            <p class="eyebrow">Video demonstrations</p>
-            <h2>See the transitions unfold</h2>
-            <p>
-              Successive camera movements accumulate into a trajectory and
-              determine its global shape.
-            </p>
-          </div>
-          <div
-            class="demo-tabs"
-            role="tablist"
-            aria-label="Video demonstration"
-          >
-            <button
-              role="tab"
-              id="demo-trajectory"
-              aria-selected="true"
-              aria-controls="demo-panel"
-              data-demo="0"
-            >
-              Trajectory integration
-            </button>
-            <button
-              role="tab"
-              id="demo-path"
-              aria-selected="false"
-              aria-controls="demo-panel"
-              tabindex="-1"
-              data-demo="1"
-            >
-              Path shape
-            </button>
-          </div>
-          <div
-            id="demo-panel"
-            role="tabpanel"
-            aria-labelledby="demo-trajectory"
-          >
-            <div class="demo-stage" id="demo-stage">
-              <video
-                id="demo-video"
-                playsinline
-                preload="none"
-                poster="assets/videos/trajectory-integration.webp"
-                aria-label="Trajectory integration demonstration"
-              >
-                <a href="assets/videos/trajectory-integration.mp4"
-                  >Trajectory integration video</a
-                >
-              </video>
-              <button
-                class="demo-play"
-                id="demo-play"
-                aria-label="Play trajectory integration"
-                title="Play video"
-              >
-                <img
-                  src="assets/icons/play.svg"
-                  alt=""
-                  width="28"
-                  height="28"
-                />
-              </button>
-              <p class="demo-status" id="demo-status" role="status" hidden></p>
-            </div>
-            <div class="demo-caption">
-              <div>
-                <h3 id="demo-title">Trajectory integration</h3>
-                <p id="demo-description">
-                  Local transitions, traveled distance, and start-to-end
-                  displacement.
-                </p>
-              </div>
-              <div class="demo-meta">
-                <a
-                  id="demo-download"
-                  class="icon-button"
-                  href="assets/videos/trajectory-integration.mp4"
-                  download
-                  title="Download video"
-                  aria-label="Download video"
-                  ><img
-                    src="assets/icons/download.svg"
-                    alt=""
-                    width="18"
-                    height="18"
-                /></a>
-              </div>
-            </div>
           </div>
         </div>
       </section>

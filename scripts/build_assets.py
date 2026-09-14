@@ -46,7 +46,7 @@ def main():
         print(f"{name}: {image.width} x {image.height}", flush=True)
     with Image.open(paper / "Figures" / "fig5_opd_300dpi.png") as image:
         rgb_on_white(image).save(assets / "opd.webp", quality=96, method=6)
-    for case in ["E02", "E03", "E09", "E12", "E13", "E22", "E23", "E28", "E29", "E32", "E33", "E34"]:
+    for case in [f"E{index:02d}" for index in range(1, 36)]:
         with Image.open(paper / "appendix_artifacts" / "task_showcase_media" / f"{case}.png") as image:
             image.thumbnail((2000, 1400), Image.Resampling.LANCZOS)
             rgb_on_white(image).save(assets / f"{case}.webp", quality=94, method=6)
