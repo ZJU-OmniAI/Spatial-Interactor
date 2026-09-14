@@ -45,10 +45,10 @@
           <img src="assets/icons/menu.svg" alt="" width="20" height="20" />
         </button>
         <nav id="site-nav" aria-label="Main navigation">
-          <a href="#demos">Demos</a><a href="#motivation">Motivation</a
-          ><a href="#dataset">LSI-108K</a><a href="#method">Method</a
+          <a href="#motivation">Motivation</a><a href="#approach">Approach</a
+          ><a href="#dataset">Curriculum</a><a href="#method">Method</a
           ><a href="#results">Results</a><a href="#analysis">Analysis</a
-          ><a href="#release">Resources</a
+          ><a href="#examples">Qualitative</a
           ><a
             class="nav-paper"
             href="assets/paper.pdf"
@@ -70,10 +70,7 @@
 
     <main id="main">
       <header class="masthead wrap" id="top">
-        <p class="lab-line">
-          OmniAI Group of ZJU ACES Lab
-          <span aria-hidden="true">&middot;</span> SAP
-        </p>
+        <p class="lab-line">OmniAI Group of ZJU ACES Lab</p>
         <h1 class="project-title">
           <img
             src="assets/spatial-interactor-icon.png"
@@ -126,7 +123,7 @@
             target="_blank"
             rel="noopener"
             ><img
-              src="assets/icons/arrow-up-right.svg"
+              src="assets/icons/github.svg"
               alt=""
               width="18"
               height="18"
@@ -157,155 +154,12 @@
           >
         </div>
       </header>
-      <div class="wrap teaser-wrap">
-        <figure class="paper-figure teaser">
-          <a
-            href="assets/paradigm.webp"
-            data-paper-figure="2"
-            class="figure-link"
-            data-zoom
-            data-caption="From isolated spatial knowledge to coherent spatial states through interaction."
-            ><img
-              src="assets/paradigm.webp"
-              alt="Conventional spatial QA learns isolated knowledge. Spatial-Interactor learns state transitions from interactions to maintain coherent spatial states."
-              width="2600"
-              height="1226"
-              fetchpriority="high" /><span class="zoom-mark" aria-hidden="true"
-              ><img
-                src="assets/icons/maximize-2.svg"
-                alt=""
-                width="18"
-                height="18" /></span
-          ></a>
-          <figcaption>
-            Learn the change between observations. Integrate the changes across
-            a trajectory.
-          </figcaption>
-        </figure>
-        <div class="headline-stats">
-          <div>
-            <strong>108K</strong><span>Interaction-derived QA pairs</span>
-          </div>
-          <div>
-            <strong>3 levels</strong
-            ><span>From local changes to global paths</span>
-          </div>
-          <div>
-            <strong>4 backbones</strong><span>Qwen2.5-VL &amp; Qwen3-VL</span>
-          </div>
-        </div>
-      </div>
-
-      <section class="section demo-section" id="demos">
-        <div class="wrap">
-          <div class="section-title">
-            <p class="eyebrow">In motion</p>
-            <h2>From observation to spatial understanding</h2>
-            <p>
-              Follow local camera movements as they accumulate into a complete
-              route.
-            </p>
-          </div>
-          <div
-            class="demo-tabs"
-            role="tablist"
-            aria-label="Video demonstration"
-          >
-            <button
-              role="tab"
-              id="demo-trajectory"
-              aria-selected="true"
-              aria-controls="demo-panel"
-              data-demo="0"
-            >
-              Trajectory integration
-            </button>
-            <button
-              role="tab"
-              id="demo-path"
-              aria-selected="false"
-              aria-controls="demo-panel"
-              tabindex="-1"
-              data-demo="1"
-            >
-              Path shape
-            </button>
-          </div>
-          <div
-            id="demo-panel"
-            role="tabpanel"
-            aria-labelledby="demo-trajectory"
-          >
-            <div class="demo-stage" id="demo-stage">
-              <video
-                id="demo-video"
-                playsinline
-                preload="none"
-                poster="assets/videos/trajectory-integration.webp"
-                aria-label="Trajectory integration demonstration"
-              >
-                <a href="assets/videos/trajectory-integration.mp4"
-                  >Trajectory integration video</a
-                >
-              </video>
-              <button
-                class="demo-play"
-                id="demo-play"
-                aria-label="Play trajectory integration"
-                title="Play video"
-              >
-                <img
-                  src="assets/icons/play.svg"
-                  alt=""
-                  width="28"
-                  height="28"
-                />
-              </button>
-              <p class="demo-status" id="demo-status" role="status" hidden></p>
-            </div>
-            <div class="demo-caption">
-              <div>
-                <h3 id="demo-title">Trajectory integration</h3>
-                <p id="demo-description">
-                  Local transitions, traveled distance, and start-to-end
-                  displacement.
-                </p>
-              </div>
-              <div class="demo-meta">
-                <span id="demo-duration">0:29</span>
-                <a
-                  id="demo-download"
-                  class="icon-button"
-                  href="assets/videos/trajectory-integration.mp4"
-                  download
-                  title="Download video"
-                  aria-label="Download video"
-                  ><img
-                    src="assets/icons/download.svg"
-                    alt=""
-                    width="18"
-                    height="18"
-                /></a>
-              </div>
-            </div>
-            <p class="demo-credit" id="demo-credit">
-              Illustrative walkthrough. Scene assets:
-              <a href="https://revsi.site/" target="_blank" rel="noopener"
-                >ReVSI</a
-              >.
-            </p>
-          </div>
-        </div>
-      </section>
 
       <section class="section pale" id="motivation">
         <div class="wrap">
           <div class="section-title">
             <p class="eyebrow">01 / Motivation</p>
-            <h2>
-              Seeing a scene is not the same<br class="desktop-break" />
-              as understanding how it changes.
-            </h2>
+            <h2>Why learn spatial reasoning through interaction?</h2>
             <p>
               Spatial reasoning in the physical world requires two abilities:
               identifying local state transitions and integrating them over a
@@ -331,6 +185,11 @@
                   width="18"
                   height="18" /></span
             ></a>
+            <figcaption>
+              <strong class="figure-label">Figure 1.</strong> State-transition
+              diagnostics expose weak temporal-order sensitivity and a clear
+              gap between local perception and long-horizon integration.
+            </figcaption>
           </figure>
           <div class="insights">
             <div>
@@ -357,11 +216,133 @@
         </div>
       </section>
 
+      <section class="section" id="approach">
+        <div class="wrap">
+          <div class="section-title">
+            <p class="eyebrow">02 / Learning through Interaction</p>
+            <h2>Model the change, then integrate the trajectory</h2>
+            <p>
+              Conventional spatial QA associates isolated observations with
+              answers. Spatial-Interactor instead learns how an action connects
+              two observable states, then composes those local transitions into
+              a coherent spatial state over time.
+            </p>
+          </div>
+          <figure class="paper-figure teaser">
+            <a
+              href="assets/paradigm.webp"
+              data-paper-figure="2"
+              class="figure-link"
+              data-zoom
+              data-caption="From isolated spatial knowledge to coherent spatial states through interaction."
+              ><img
+                src="assets/paradigm.webp"
+                alt="Conventional spatial QA learns isolated knowledge. Spatial-Interactor learns state transitions from interactions to maintain coherent spatial states."
+                width="2600"
+                height="1226"
+                fetchpriority="high" /><span class="zoom-mark" aria-hidden="true"
+                ><img
+                  src="assets/icons/maximize-2.svg"
+                  alt=""
+                  width="18"
+                  height="18" /></span
+            ></a>
+            <figcaption>
+              <strong class="figure-label">Figure 2.</strong> Interaction
+              connects observations through physical change, turning isolated
+              evidence into an updated spatial state.
+            </figcaption>
+          </figure>
+          <div class="headline-stats">
+            <div>
+              <strong>108K</strong><span>Interaction-derived QA pairs</span>
+            </div>
+            <div>
+              <strong>3 levels</strong
+              ><span>From local changes to global paths</span>
+            </div>
+            <div>
+              <strong>4 backbones</strong><span>Qwen2.5-VL &amp; Qwen3-VL</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section pale" id="construction">
+        <div class="wrap">
+          <div class="section-title">
+            <p class="eyebrow">03 / LSI-108K Construction</p>
+            <h2>Grounding supervision in physical interactions</h2>
+            <p>
+              Simulated environments and real trajectories supply the state
+              changes. Geometry determines the target; deterministic templates
+              turn it into a question and answer.
+            </p>
+          </div>
+          <figure class="paper-figure">
+            <a
+              class="figure-link"
+              href="assets/construction.webp"
+              data-paper-figure="3"
+              data-zoom
+              data-caption="Interaction records are converted into geometry-derived targets, then filtered and verified QA pairs."
+              ><img
+                src="assets/construction.webp"
+                alt="Simulated object interactions, ego-motion, real camera trajectories, and robot trajectories feed a ground-truth-to-QA pipeline with quality filtering and visual verification."
+                width="2600"
+                height="1414"
+                loading="lazy" /><span class="zoom-mark" aria-hidden="true"
+                ><img
+                  src="assets/icons/maximize-2.svg"
+                  alt=""
+                  width="18"
+                  height="18" /></span
+            ></a>
+            <figcaption>
+              <strong class="figure-label">Figure 3.</strong> Simulated and
+              real trajectories are converted into geometry-derived targets,
+              then rendered as verifiable spatial questions.
+            </figcaption>
+          </figure>
+          <div class="pipeline-notes">
+            <div>
+              <span>01</span>
+              <h3>Collect interactions</h3>
+              <p>
+                Execute controlled actions or recover changes from camera poses,
+                robot states, and object tracks.
+              </p>
+            </div>
+            <div>
+              <span>02</span>
+              <h3>Derive the target</h3>
+              <p>
+                Use action and geometry metadata to determine direction,
+                magnitude, order, or trajectory structure.
+              </p>
+            </div>
+            <div>
+              <span>03</span>
+              <h3>Generate &amp; verify</h3>
+              <p>
+                Render QA with deterministic templates, filter ambiguous
+                transitions, and check visual answerability.
+              </p>
+            </div>
+          </div>
+          <div class="source-line">
+            <span><strong>55,338</strong> simulated</span
+            ><span><strong>42,180</strong> real camera</span
+            ><span><strong>10,000</strong> real robot</span>
+          </div>
+        </div>
+      </section>
+
       <section class="section" id="dataset">
         <div class="wrap">
           <div class="section-title">
-            <p class="eyebrow">02 / LSI-108K</p>
-            <h2>A curriculum of spatial interaction</h2>
+            <p class="eyebrow">04 / Spatial Interaction Curriculum</p>
+            <h2>From local transitions to complete trajectories</h2>
             <p>
               From changes in the world, to changes in the observer, to the
               integration of a complete path. Each question is grounded in
@@ -547,90 +528,20 @@
                     height="18" /></span
               ></a>
               <figcaption>
-                Data sources, task families, and representative examples across
-                L1, L2, and L3.
+                <strong class="figure-label">Figure 4.</strong> Data sources,
+                task families, and representative examples across L1, L2, and
+                L3.
               </figcaption>
             </figure>
           </div>
         </div>
       </section>
 
-      <section class="section pale" id="construction">
+      <section class="section pale" id="method">
         <div class="wrap">
           <div class="section-title">
-            <p class="eyebrow">03 / Data Construction</p>
-            <h2>
-              Physical interactions.<br class="desktop-break" />
-              Verifiable supervision.
-            </h2>
-            <p>
-              Simulated environments and real trajectories supply the state
-              changes. Geometry determines the target; deterministic templates
-              turn it into a question and answer.
-            </p>
-          </div>
-          <figure class="paper-figure">
-            <a
-              class="figure-link"
-              href="assets/construction.webp"
-              data-paper-figure="3"
-              data-zoom
-              data-caption="Interaction records are converted into geometry-derived targets, then filtered and verified QA pairs."
-              ><img
-                src="assets/construction.webp"
-                alt="Simulated object interactions, ego-motion, real camera trajectories, and robot trajectories feed a ground-truth-to-QA pipeline with quality filtering and visual verification."
-                width="2600"
-                height="1414"
-                loading="lazy" /><span class="zoom-mark" aria-hidden="true"
-                ><img
-                  src="assets/icons/maximize-2.svg"
-                  alt=""
-                  width="18"
-                  height="18" /></span
-            ></a>
-          </figure>
-          <div class="pipeline-notes">
-            <div>
-              <span>01</span>
-              <h3>Collect interactions</h3>
-              <p>
-                Execute controlled actions or recover changes from camera poses,
-                robot states, and object tracks.
-              </p>
-            </div>
-            <div>
-              <span>02</span>
-              <h3>Derive the target</h3>
-              <p>
-                Use action and geometry metadata to determine direction,
-                magnitude, order, or trajectory structure.
-              </p>
-            </div>
-            <div>
-              <span>03</span>
-              <h3>Generate &amp; verify</h3>
-              <p>
-                Render QA with deterministic templates, filter ambiguous
-                transitions, and check visual answerability.
-              </p>
-            </div>
-          </div>
-          <div class="source-line">
-            <span><strong>55,338</strong> simulated</span
-            ><span><strong>42,180</strong> real camera</span
-            ><span><strong>10,000</strong> real robot</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="method">
-        <div class="wrap">
-          <div class="section-title">
-            <p class="eyebrow">04 / Method</p>
-            <h2>
-              Learn local transitions.<br class="desktop-break" />
-              Then learn to integrate them.
-            </h2>
+            <p class="eyebrow">05 / Training Method</p>
+            <h2>Local transition learning and long-horizon integration</h2>
             <p>
               Two complementary training stages connect observable physical
               changes to long-horizon spatial reasoning.
@@ -686,6 +597,11 @@
                   width="18"
                   height="18" /></span
             ></a>
+            <figcaption>
+              <strong class="figure-label">Figure 5.</strong> OPD aligns the
+              student's on-policy reasoning with a same-prefix privileged
+              teacher while verifiable rewards supervise final answers.
+            </figcaption>
           </figure>
           <div class="method-points">
             <p>
@@ -704,14 +620,11 @@
         </div>
       </section>
 
-      <section class="section pale" id="results">
+      <section class="section" id="results">
         <div class="wrap">
           <div class="section-title">
-            <p class="eyebrow">05 / Results</p>
-            <h2>
-              Across backbones.<br class="desktop-break" />
-              Across spatial reasoning tasks.
-            </h2>
+            <p class="eyebrow">06 / Experiments</p>
+            <h2>Main results</h2>
             <p>
               Consistent improvements on video and multi-view benchmarks, with
               additional transfer to tasks outside the training mixture.
@@ -843,14 +756,11 @@
         </div>
       </section>
 
-      <section class="section" id="analysis">
+      <section class="section pale" id="analysis">
         <div class="wrap">
           <div class="section-title">
-            <p class="eyebrow">06 / Analysis</p>
-            <h2>
-              From local learning<br class="desktop-break" />
-              to temporal reasoning
-            </h2>
+            <p class="eyebrow">07 / Analysis and Ablations</p>
+            <h2>How spatial interaction changes the model</h2>
             <p>
               The curriculum, learning curves, and temporal diagnostics reveal
               complementary aspects of learning from state transitions.
@@ -892,6 +802,7 @@
                 /></span>
               </a>
               <figcaption>
+                <strong class="figure-label">Figure 6.</strong>
                 Qwen2.5-VL-7B. Sequential L1 &rarr; L2 raises the average from
                 44.1 to 49.8.
               </figcaption>
@@ -934,8 +845,9 @@
                 /></span>
               </a>
               <figcaption>
-                Answer reward and reasoning alignment improve together; rollout
-                diversity remains nonzero.
+                <strong class="figure-label">Figure 7.</strong> Answer reward
+                and reasoning alignment improve together; rollout diversity
+                remains nonzero.
               </figcaption>
             </figure>
           </article>
@@ -976,8 +888,9 @@
                 /></span>
               </a>
               <figcaption>
-                Left: VSI-Bench Route Planning. Right: VSTI-Bench Camera
-                Displacement. Both use Qwen2.5-VL-7B.
+                <strong class="figure-label">Figure 8.</strong> Left:
+                VSI-Bench Route Planning. Right: VSTI-Bench Camera Displacement.
+                Both use Qwen2.5-VL-7B.
               </figcaption>
             </figure>
           </article>
@@ -1018,19 +931,19 @@
                 /></span>
               </a>
               <figcaption>
-                The largest changes appear in Camera Displacement and Camera
-                Motion.
+                <strong class="figure-label">Figure 9.</strong> The largest
+                changes appear in Camera Displacement and Camera Motion.
               </figcaption>
             </figure>
           </article>
         </div>
       </section>
 
-      <section class="section pale" id="interaction">
+      <section class="section" id="interaction">
         <div class="wrap">
           <div class="section-title">
-            <p class="eyebrow">07 / Closed-Loop Interaction</p>
-            <h2>From observations to actions</h2>
+            <p class="eyebrow">08 / Embodied Interaction</p>
+            <h2>Generalization from observations to actions</h2>
             <p>
               When an action changes the next observation, spatial reasoning
               must support repeated decisions. We evaluate this setting with the
@@ -1117,14 +1030,11 @@
         </div>
       </section>
 
-      <section class="section" id="examples">
+      <section class="section pale" id="examples">
         <div class="wrap">
           <div class="section-title">
-            <p class="eyebrow">08 / Qualitative Examples</p>
-            <h2>
-              Local correspondence.<br class="desktop-break" />
-              Long-horizon reasoning.
-            </h2>
+            <p class="eyebrow">09 / Qualitative Results</p>
+            <h2>Spatial evidence across views and trajectories</h2>
             <p>
               Two cases from the paper show how spatial evidence can be
               connected across viewpoints and across a longer motion sequence.
@@ -1155,9 +1065,9 @@
                     height="18" /></span
               ></a>
               <figcaption>
-                A shared object provides a reference for comparing viewpoints.
-                This selected attention case illustrates cross-view
-                correspondence.
+                <strong class="figure-label">Figure 10.</strong> A shared
+                object provides a reference for comparing viewpoints. This
+                selected attention case illustrates cross-view correspondence.
               </figcaption>
             </figure>
             <figure class="paper-figure">
@@ -1184,106 +1094,119 @@
                     height="18" /></span
               ></a>
               <figcaption>
-                Stable office landmarks and sustained lateral parallax connect
-                local observations to the motion over the requested interval.
+                <strong class="figure-label">Figure 11.</strong> Stable office
+                landmarks and sustained lateral parallax connect local
+                observations to the motion over the requested interval.
               </figcaption>
             </figure>
           </div>
         </div>
       </section>
 
-      <section class="section release-section" id="release">
-        <div class="wrap release-wrap">
+      <section class="section demo-section" id="demos">
+        <div class="wrap">
           <div class="section-title">
-            <p class="eyebrow">Open resources</p>
-            <h2>Code, data, and model weights</h2>
+            <p class="eyebrow">Video demonstrations</p>
+            <h2>Spatial transitions in motion</h2>
             <p>
-              Reproduce the data pipeline and training procedure, or start
-              directly from one of four released checkpoints.
+              Two short examples conclude the story by showing how local
+              camera movements accumulate into a complete route and determine
+              its global shape.
             </p>
           </div>
-          <div class="release-grid">
-            <div class="release-column">
-              <span class="release-label">Implementation</span>
-              <a
-                class="release-link"
-                href="https://github.com/ZJU-OmniAI/Spatial-Interactor"
-                target="_blank"
-                rel="noopener"
-                ><strong>Spatial-Interactor code</strong
-                ><span>Construction, SFT, and OPD</span
-                ><img
-                  src="assets/icons/arrow-up-right.svg"
+          <div
+            class="demo-tabs"
+            role="tablist"
+            aria-label="Video demonstration"
+          >
+            <button
+              role="tab"
+              id="demo-trajectory"
+              aria-selected="true"
+              aria-controls="demo-panel"
+              data-demo="0"
+            >
+              Trajectory integration
+            </button>
+            <button
+              role="tab"
+              id="demo-path"
+              aria-selected="false"
+              aria-controls="demo-panel"
+              tabindex="-1"
+              data-demo="1"
+            >
+              Path shape
+            </button>
+          </div>
+          <div
+            id="demo-panel"
+            role="tabpanel"
+            aria-labelledby="demo-trajectory"
+          >
+            <div class="demo-stage" id="demo-stage">
+              <video
+                id="demo-video"
+                playsinline
+                preload="none"
+                poster="assets/videos/trajectory-integration.webp"
+                aria-label="Trajectory integration demonstration"
+              >
+                <a href="assets/videos/trajectory-integration.mp4"
+                  >Trajectory integration video</a
+                >
+              </video>
+              <button
+                class="demo-play"
+                id="demo-play"
+                aria-label="Play trajectory integration"
+                title="Play video"
+              >
+                <img
+                  src="assets/icons/play.svg"
                   alt=""
-                  width="17"
-                  height="17"
-              /></a>
+                  width="28"
+                  height="28"
+                />
+              </button>
+              <p class="demo-status" id="demo-status" role="status" hidden></p>
             </div>
-            <div class="release-column">
-              <span class="release-label">Annotations</span>
-              <a
-                class="release-link"
-                href="https://huggingface.co/datasets/kagakouko/LSI-108K"
-                target="_blank"
-                rel="noopener"
-                ><strong>LSI-108K</strong><span>107,518 spatial QA pairs</span
-                ><img
-                  src="assets/icons/arrow-up-right.svg"
-                  alt=""
-                  width="17"
-                  height="17"
-              /></a>
-            </div>
-            <div class="release-column model-release-column">
-              <span class="release-label">Checkpoints</span>
-              <div class="model-release-links">
+            <div class="demo-caption">
+              <div>
+                <h3 id="demo-title">Trajectory integration</h3>
+                <p id="demo-description">
+                  Local transitions, traveled distance, and start-to-end
+                  displacement.
+                </p>
+              </div>
+              <div class="demo-meta">
+                <span id="demo-duration">0:29</span>
                 <a
-                  href="https://huggingface.co/kagakouko/Spatial-Interactor-Qwen2.5-VL-3B"
-                  target="_blank"
-                  rel="noopener"
-                  >Qwen2.5-VL-3B<img
-                    src="assets/icons/arrow-up-right.svg"
+                  id="demo-download"
+                  class="icon-button"
+                  href="assets/videos/trajectory-integration.mp4"
+                  download
+                  title="Download video"
+                  aria-label="Download video"
+                  ><img
+                    src="assets/icons/download.svg"
                     alt=""
-                    width="15"
-                    height="15"
-                /></a>
-                <a
-                  href="https://huggingface.co/kagakouko/Spatial-Interactor-Qwen2.5-VL-7B"
-                  target="_blank"
-                  rel="noopener"
-                  >Qwen2.5-VL-7B<img
-                    src="assets/icons/arrow-up-right.svg"
-                    alt=""
-                    width="15"
-                    height="15"
-                /></a>
-                <a
-                  href="https://huggingface.co/kagakouko/Spatial-Interactor-Qwen3-VL-4B"
-                  target="_blank"
-                  rel="noopener"
-                  >Qwen3-VL-4B<img
-                    src="assets/icons/arrow-up-right.svg"
-                    alt=""
-                    width="15"
-                    height="15"
-                /></a>
-                <a
-                  href="https://huggingface.co/kagakouko/Spatial-Interactor-Qwen3-VL-8B"
-                  target="_blank"
-                  rel="noopener"
-                  >Qwen3-VL-8B<img
-                    src="assets/icons/arrow-up-right.svg"
-                    alt=""
-                    width="15"
-                    height="15"
+                    width="18"
+                    height="18"
                 /></a>
               </div>
             </div>
+            <p class="demo-credit" id="demo-credit">
+              Illustrative walkthrough. Scene assets:
+              <a href="https://revsi.site/" target="_blank" rel="noopener"
+                >ReVSI</a
+              >.
+            </p>
           </div>
         </div>
       </section>
 
-      <section class="section" id="citation">
+      <section class="section pale" id="citation">
         <div class="wrap citation-wrap">
           <div class="section-title">
             <p class="eyebrow">Citation</p>
@@ -1351,27 +1274,12 @@
         <div>
           <strong>Spatial-Interactor</strong>
           <p>
-            OmniAI Group of ZJU ACES Lab &middot; Zhejiang University &middot;
-            SAP
+            OmniAI Group of ZJU ACES Lab &middot; Zhejiang University
           </p>
         </div>
-        <div class="footer-links">
-          <a href="https://github.com/ZJU-OmniAI/Spatial-Interactor">Code</a
-          ><a href="https://huggingface.co/datasets/kagakouko/LSI-108K"
-            >Dataset</a
-          ><a href="mailto:slims3801@gmail.com">Contact</a
-          ><a
-            href="https://zju-omniai.github.io/ProVisE/"
-            target="_blank"
-            rel="noopener"
-            >Design inspiration: ProVisE
-            <img
-              src="assets/icons/arrow-up-right.svg"
-              alt=""
-              width="14"
-              height="14"
-          /></a>
-        </div>
+        <p class="footer-note">
+          Learning spatial reasoning through observable interaction.
+        </p>
       </div>
     </footer>
     <button
