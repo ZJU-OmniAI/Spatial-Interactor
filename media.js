@@ -8,14 +8,12 @@
       title: "Trajectory integration",
       description:
         "Local transitions, traveled distance, and start-to-end displacement.",
-      duration: "0:29",
     },
     {
       file: "path-shape",
       title: "Path shape",
       description:
         "Connect successive movements and turns into a complete route.",
-      duration: "0:29",
     },
   ];
   const video = $("demo-video");
@@ -47,7 +45,6 @@
     play.setAttribute("aria-label", `Play ${demo.title.toLowerCase()}`);
     $("demo-title").textContent = demo.title;
     $("demo-description").textContent = demo.description;
-    $("demo-duration").textContent = demo.duration;
     $("demo-download").href = `${base}.mp4`;
     const fallback = video.querySelector("a");
     fallback.href = `${base}.mp4`;
