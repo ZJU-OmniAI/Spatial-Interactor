@@ -767,7 +767,7 @@ h1 {
   border: 1px solid #d6cfc2;
   border-radius: 7px;
   overflow: clip;
-  background: var(--surface);
+  background: var(--accent-soft);
   box-shadow: 0 14px 38px rgba(84, 73, 58, 0.08);
 }
 .example-toolbar {
@@ -775,7 +775,7 @@ h1 {
   justify-content: space-between;
   align-items: center;
   gap: 20px;
-  background: color-mix(in srgb, var(--accent-soft) 62%, var(--surface));
+  background: var(--accent-soft);
   border-bottom: 1px solid var(--line);
   padding: 12px 18px;
   min-height: 58px;
@@ -870,7 +870,7 @@ select {
   min-height: 410px;
 }
 .example-visual {
-  background: #e6e7d8;
+  background: var(--accent-soft);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -883,8 +883,8 @@ select {
   justify-content: center;
   min-height: 300px;
   padding: 10px;
-  background: var(--surface);
-  border: 1px solid #d8d5c9;
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
   border-radius: 6px;
 }
 .example-visual .figure-link > img {
@@ -906,6 +906,7 @@ select {
   padding: 28px 28px 23px;
   border-left: 1px solid var(--line);
   min-width: 0;
+  background: var(--accent-soft);
 }
 .example-qa .eyebrow {
   color: var(--accent);
@@ -984,7 +985,7 @@ select {
   margin-inline: -10px;
   padding: 12px 10px 0;
   border-radius: 5px;
-  background: color-mix(in srgb, var(--accent-soft) 70%, var(--surface));
+  background: var(--accent-soft);
 }
 .answer-details p {
   font-size: 14px;
@@ -1252,6 +1253,12 @@ td.overall {
   max-width: 1100px;
   margin-inline: auto;
 }
+.analysis-figure--white .figure-link {
+  background: var(--surface);
+  border: 1px solid #d8d5c9;
+  border-radius: 6px;
+  padding: 10px;
+}
 .paper-figure--analysis {
   max-width: 1100px;
 }
@@ -1321,7 +1328,8 @@ td.overall {
   color: #775548;
 }
 .case-comparison .figure-link {
-  background: #fbf9f4;
+  background: transparent;
+  border: 0;
   display: flex;
   align-items: center;
   justify-content: center;
