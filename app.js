@@ -182,19 +182,16 @@
   const resultsConfig = {
     main: {
       tableId: "results-main-table",
-      countId: "main-row-count",
       noteId: "main-results-note",
       note: "Scores (%) reported in Table 1. Overall averages the benchmark averages; MindCube uses the Tiny split and SPBench uses the multi-view split.",
     },
     generalization: {
       tableId: "results-generalization-table",
-      countId: "generalization-row-count",
       noteId: "generalization-results-note",
       note: "Accuracy (%) on the four reported cross-benchmark suites, with their mean as Overall.",
     },
     ablation: {
       tableId: "results-ablation-table",
-      countId: "ablation-row-count",
       noteId: "ablation-results-note",
       note: "Qwen2.5-VL-7B throughout. Full SFT adds L1/L2 data; GRPO and OPD share the same initialization and long-horizon training data.",
     },
@@ -301,8 +298,6 @@
         return tr;
       }),
     );
-    $(config.countId).textContent =
-      `${visibleRows.length} ${key === "ablation" ? "settings" : "models"}`;
     $(config.noteId).textContent = config.note;
   }
 

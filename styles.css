@@ -418,69 +418,9 @@ h1 {
   font-size: 13px;
   margin-top: 11px;
 }
-.headline-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  max-width: 900px;
-  margin-inline: auto;
-  border-top: 1px solid var(--line);
-  padding: 25px 0 30px;
-}
-.headline-stats div {
-  text-align: center;
-  border-right: 1px solid var(--line);
-  padding: 0 16px;
-}
-.headline-stats div:last-child {
-  border: 0;
-}
-.headline-stats strong {
-  font-size: 24px;
-  line-height: 1.4;
-  font-weight: 700;
-  color: var(--teal);
-  display: block;
-}
-.headline-stats span {
-  font-size: 11px;
-  color: var(--muted);
-}
 #motivation .paper-figure {
   max-width: 900px;
   margin-inline: auto;
-}
-#motivation .insights {
-  max-width: 900px;
-  margin-inline: auto;
-}
-.insights {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 45px;
-  margin-top: 36px;
-}
-.insights > div {
-  display: flex;
-  gap: 15px;
-  align-items: flex-start;
-}
-.insight-index {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--blue);
-  border-top: 2px solid #8da7b4;
-  padding-top: 9px;
-  min-width: 32px;
-  line-height: 1.4;
-}
-.insights h3 {
-  font-size: 17px;
-  margin: 5px 0 8px;
-}
-.insights p {
-  font-size: 14px;
-  color: var(--muted);
-  line-height: 1.7;
 }
 .curriculum-tabs {
   display: grid;
@@ -839,50 +779,9 @@ select {
   max-width: 900px;
   margin-inline: auto;
 }
-.pipeline-notes,
-.source-line,
-.training-stages,
-.method-points {
+.training-stages {
   max-width: 900px;
   margin-inline: auto;
-}
-.pipeline-notes {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  margin-top: 35px;
-}
-.pipeline-notes > div {
-  border-top: 1px solid #cad7d4;
-  padding-top: 16px;
-}
-.pipeline-notes > div > span {
-  font-size: 11px;
-  color: var(--green);
-  font-weight: 700;
-}
-.pipeline-notes h3 {
-  font-size: 16px;
-  margin: 7px 0 9px;
-}
-.pipeline-notes p {
-  font-size: 13px;
-  color: var(--muted);
-}
-.source-line {
-  display: flex;
-  justify-content: center;
-  gap: 38px;
-  padding-top: 30px;
-  margin-top: 30px;
-  border-top: 1px solid var(--line);
-  font-size: 12px;
-  color: var(--muted);
-}
-.source-line strong {
-  color: var(--ink);
-  font-weight: 650;
-  margin-right: 5px;
 }
 .training-stages {
   display: grid;
@@ -930,56 +829,6 @@ select {
 .method-figure {
   max-width: 900px;
   margin: auto;
-}
-.method-points {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
-  border-top: 1px solid var(--line);
-  margin-top: 30px;
-  padding-top: 23px;
-}
-.method-points p {
-  font-size: 13px;
-  color: var(--muted);
-}
-.method-points strong {
-  display: block;
-  color: var(--ink);
-  margin-bottom: 7px;
-  font-size: 13px;
-}
-.result-highlights {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  max-width: 900px;
-  gap: 25px;
-  text-align: center;
-  margin: 10px auto 38px;
-}
-.result-highlights > div {
-  border-right: 1px solid var(--line);
-}
-.result-highlights > div:last-child {
-  border: 0;
-}
-.result-highlights strong {
-  font-size: 32px;
-  font-weight: 650;
-  color: var(--teal);
-  display: block;
-  line-height: 1.4;
-  font-variant-numeric: tabular-nums;
-}
-.result-highlights > div:nth-child(2) strong {
-  color: var(--blue);
-}
-.result-highlights > div:nth-child(3) strong {
-  color: var(--purple);
-}
-.result-highlights span {
-  font-size: 11px;
-  color: var(--muted);
 }
 .results-tables {
   display: grid;
@@ -1151,11 +1000,6 @@ td.overall {
   line-height: 1.7;
   color: var(--muted);
   margin-top: 14px;
-}
-.results-insights {
-  border-top: 1px solid var(--line);
-  padding-top: 26px;
-  margin-top: 30px;
 }
 .empty-row {
   text-align: center !important;
@@ -1821,22 +1665,6 @@ dialog[open] {
     max-width: 300px;
     margin: 12px auto 0;
   }
-  .headline-stats {
-    padding: 19px 0 23px;
-  }
-  .headline-stats div {
-    padding: 0 8px;
-  }
-  .headline-stats strong {
-    font-size: 19px;
-  }
-  .headline-stats span {
-    display: block;
-    font-size: 10px;
-    max-width: 120px;
-    margin: auto;
-    line-height: 1.5;
-  }
   .section {
     padding: 48px 0;
   }
@@ -1854,17 +1682,6 @@ dialog[open] {
   }
   .section-title .eyebrow {
     font-size: 10px;
-  }
-  .insights {
-    gap: 22px;
-    grid-template-columns: 1fr;
-    margin-top: 27px;
-  }
-  .insights h3 {
-    font-size: 16px;
-  }
-  .insights p {
-    font-size: 13px;
   }
   .curriculum-tabs {
     gap: 3px;
@@ -1982,39 +1799,6 @@ dialog[open] {
     font-size: 18px;
     margin-bottom: 18px;
   }
-  .pipeline-notes {
-    gap: 18px;
-    grid-template-columns: 1fr;
-    margin-top: 22px;
-  }
-  .pipeline-notes > div {
-    display: grid;
-    grid-template-columns: 25px 1fr;
-    gap: 4px 8px;
-  }
-  .pipeline-notes > div > span {
-    grid-row: 1/3;
-    padding-top: 2px;
-  }
-  .pipeline-notes h3 {
-    margin: 0;
-    font-size: 15px;
-  }
-  .pipeline-notes p {
-    font-size: 12px;
-  }
-  .source-line {
-    gap: 14px;
-    justify-content: space-between;
-    font-size: 10px;
-    padding-top: 20px;
-    margin-top: 23px;
-  }
-  .source-line strong {
-    display: block;
-    font-size: 15px;
-    margin: 0;
-  }
   .training-stages {
     grid-template-columns: 1fr;
     gap: 16px;
@@ -2034,32 +1818,6 @@ dialog[open] {
   }
   .stage-label {
     margin-bottom: 8px;
-  }
-  .method-points {
-    grid-template-columns: 1fr;
-    gap: 15px;
-    padding-top: 20px;
-    margin-top: 23px;
-  }
-  .method-points p {
-    font-size: 12px;
-  }
-  .method-points strong {
-    display: inline;
-    font-size: 12px;
-  }
-  .result-highlights {
-    gap: 6px;
-    margin-bottom: 26px;
-  }
-  .result-highlights strong {
-    font-size: 24px;
-  }
-  .result-highlights span {
-    display: block;
-    font-size: 10px;
-    padding: 4px 8px 0;
-    line-height: 1.5;
   }
   .results-tables {
     gap: 30px;
@@ -2243,9 +2001,6 @@ dialog[open] {
   }
   .example-toolbar select {
     width: 168px;
-  }
-  .result-highlights strong {
-    font-size: 20px;
   }
   .table-actions span[role="status"] {
     display: none;

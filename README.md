@@ -8,8 +8,8 @@ connection is needed to view the site. Videos load only after pressing play.
 - `index.html`: paper-ordered project narrative, figures, results, demos, and citation.
 - `data.js`: five result tables and 12 QA examples, transcribed from the paper.
 - `styles.css` / `app.js`: responsive layout, animated example browser, sortable
-  tables with row/column hover tracking, cursor-responsive figure previews, CSV
-  export, reading progress, and citation copying.
+  tables, cursor-responsive figure previews, CSV export, reading progress, and
+  citation copying.
 - `media.js`: two video demos and a zoomable, keyboard-accessible figure gallery.
 - `assets/`: local figures, example images, fonts, icons, and the paper PDF.
 
