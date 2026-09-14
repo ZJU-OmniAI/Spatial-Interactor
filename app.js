@@ -26,6 +26,77 @@
     return node;
   };
 
+  const storyPages = [
+    "Opening",
+    "The missing change",
+    "Frame-order diagnostic",
+    "Long-horizon gap",
+    "Interaction as transition",
+    "Three-level curriculum",
+    "L1 · Passive world state",
+    "L2 · Active self state",
+    "L3 · Long-horizon integration",
+    "From records to QA",
+    "Two-stage training",
+    "Privileged transition trace",
+    "Same-prefix distillation",
+    "Main results",
+    "Cross-benchmark transfer",
+    "Ablation",
+    "Temporal evidence",
+    "Closed-loop interaction",
+    "Qualitative cases",
+    "Takeaway",
+  ];
+  let storyIndex = 0;
+  const storySlide = $("story-slide");
+  const storyPageNumber = $("story-page-number");
+  const storyPageTitle = $("story-page-title");
+  const storyProgress = $("story-progress");
+  const storyThumbs = $("story-thumbs");
+  if (storySlide && storyPageNumber && storyPageTitle && storyProgress && storyThumbs) {
+    storyPages.forEach((title, index) => {
+      const button = element("button", undefined, "story-thumb");
+      button.type = "button";
+      button.dataset.storyIndex = String(index);
+      button.setAttribute("aria-label", `Open presentation page ${index + 1}: ${title}`);
+      const image = document.createElement("img");
+      image.src = `assets/presentation/slide-${String(index + 1).padStart(2, "0")}.webp`;
+      image.alt = "";
+      image.loading = index < 4 ? "eager" : "lazy";
+      button.append(image, element("span", String(index + 1).padStart(2, "0")));
+      button.addEventListener("click", () => renderStory(index));
+      storyThumbs.append(button);
+    });
+    function renderStory(nextIndex, animate = true) {
+      storyIndex = (nextIndex + storyPages.length) % storyPages.length;
+      const page = String(storyIndex + 1).padStart(2, "0");
+      storySlide.src = `assets/presentation/slide-${page}.webp`;
+      storySlide.alt = `Presentation page ${storyIndex + 1} of ${storyPages.length}: ${storyPages[storyIndex]}`;
+      storyPageNumber.textContent = page;
+      storyPageTitle.textContent = storyPages[storyIndex];
+      storyProgress.style.transform = `scaleX(${(storyIndex + 1) / storyPages.length})`;
+      [...storyThumbs.children].forEach((thumb, index) => {
+        const active = index === storyIndex;
+        thumb.classList.toggle("is-active", active);
+        thumb.setAttribute("aria-current", active ? "page" : "false");
+      });
+      if (animate && !reducedMotion.matches) animateIn(storySlide, 8);
+    }
+    $("story-previous").addEventListener("click", () => renderStory(storyIndex - 1));
+    $("story-next").addEventListener("click", () => renderStory(storyIndex + 1));
+    document.addEventListener("keydown", (event) => {
+      if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement || event.target.isContentEditable) return;
+      const deck = $("story-deck");
+      const bounds = deck.getBoundingClientRect();
+      const deckIsActive = deck.contains(document.activeElement) || (bounds.top < innerHeight * 0.72 && bounds.bottom > innerHeight * 0.28);
+      if (!deckIsActive) return;
+      if (event.key === "ArrowLeft") renderStory(storyIndex - 1);
+      if (event.key === "ArrowRight") renderStory(storyIndex + 1);
+    });
+    renderStory(0, false);
+  }
+
   function setupTabs(selector, onSelect) {
     const tabs = [...document.querySelectorAll(`${selector} [role="tab"]`)];
     function select(tab) {
@@ -583,7 +654,7 @@
     );
     document
       .querySelectorAll(
-        ".section-title, .paper-figure, .insights, .analysis-block",
+        ".story-deck-intro, .story-deck-viewer, .section-title, .paper-figure, .insights, .analysis-block",
       )
       .forEach((node) => reveals.observe(node));
   }

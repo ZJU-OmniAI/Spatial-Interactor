@@ -7,7 +7,7 @@
       name="description"
       content="Spatial-Interactor learns spatial reasoning through observable interactions. Explore LSI-108K, the three-level curriculum, on-policy distillation, and results across four vision-language models."
     />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#f6f2e9" />
     <meta property="og:title" content="Spatial-Interactor" />
     <meta
       property="og:description"
@@ -93,6 +93,7 @@
           ><span><sup>*</sup> Equal contribution</span>
         </p>
         <div class="resources">
+          <!-- Replace this temporary local-PDF href with the final arXiv URL after upload. -->
           <a
             class="button primary"
             href="assets/paper.pdf"
@@ -104,7 +105,7 @@
               width="18"
               height="18"
             />
-            Paper</a
+            ArXiv</a
           ><a
             class="button"
             href="https://github.com/ZJU-OmniAI/Spatial-Interactor"
@@ -116,29 +117,55 @@
               width="18"
               height="18"
             />
-            Code</a
+            GitHub</a
           ><a
             class="button"
-            href="https://huggingface.co/datasets/kagakouko/LSI-108K"
+            href="https://huggingface.co/kagakouko"
             target="_blank"
             rel="noopener"
             ><img
-              src="assets/icons/database.svg"
+              src="assets/icons/scan.svg"
               alt=""
               width="18"
               height="18"
             />
-            Dataset</a
+            Hugging Face</a
           ><a
             class="button"
-            href="https://huggingface.co/collections/kagakouko/spatial-interactor-6aa6da1ead0d1b83bcf846de"
-            target="_blank"
-            rel="noopener"
-            ><img src="assets/icons/scan.svg" alt="" width="18" height="18" />
-            Models</a
+            href="#citation"
+            ><img src="assets/icons/file-text.svg" alt="" width="18" height="18" />
+            BibTeX</a
           >
         </div>
       </header>
+
+      <section class="story-deck" id="story-deck" aria-labelledby="story-deck-title">
+        <div class="wrap">
+          <div class="story-deck-intro">
+            <p class="eyebrow">The story in 20 pages</p>
+            <h2 id="story-deck-title">From seeing a scene to understanding how it changes.</h2>
+            <p>
+              A visual walkthrough of the problem, the interaction curriculum,
+              the training protocol, and the evidence behind Spatial-Interactor.
+            </p>
+          </div>
+          <div class="story-deck-viewer">
+            <button class="story-deck-control" id="story-previous" type="button" aria-label="Previous presentation page" title="Previous page">
+              <img src="assets/icons/chevron-left.svg" alt="" width="22" height="22" />
+            </button>
+            <figure class="story-deck-stage">
+              <img id="story-slide" src="assets/presentation/slide-01.webp" alt="Presentation page 1 of 20" width="1440" height="810" fetchpriority="high" />
+              <figcaption><span id="story-page-number">01</span><span id="story-page-title">Opening</span><span id="story-page-total">/ 20</span></figcaption>
+            </figure>
+            <button class="story-deck-control" id="story-next" type="button" aria-label="Next presentation page" title="Next page">
+              <img src="assets/icons/chevron-right.svg" alt="" width="22" height="22" />
+            </button>
+          </div>
+          <div class="story-deck-progress" aria-hidden="true"><span id="story-progress"></span></div>
+          <div class="story-deck-thumbs" id="story-thumbs" aria-label="Presentation pages"></div>
+          <p class="story-deck-hint">Use the arrows or the left and right keys to move through the story.</p>
+        </div>
+      </section>
 
       <section class="section pale" id="motivation">
         <div class="wrap">
@@ -913,7 +940,7 @@
               href="assets/paper.pdf"
               target="_blank"
               rel="noopener"
-              >Read the paper
+              >Read the paper PDF
               <img
                 src="assets/icons/arrow-up-right.svg"
                 alt=""
