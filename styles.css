@@ -154,52 +154,62 @@ h3 {
   font-size: 13px;
 }
 #motivation {
-  background: #fbf5f0;
+  background: #faf3f0;
 }
 #approach {
-  background: #f3f7f2;
+  background: #ffffff;
 }
 #construction {
-  background: #eef6f6;
+  background: #edf6f5;
 }
 #dataset {
-  background: #fbf8ec;
+  background: #ffffff;
 }
 #method {
-  background: #f6f1f7;
+  background: #f5f1f7;
 }
 #results {
-  background: #f2f7f1;
+  background: #ffffff;
 }
 #analysis {
-  background: #eef4f7;
+  background: #eef3f8;
 }
 #interaction {
-  background: #fbf6eb;
+  background: #ffffff;
 }
 #examples {
-  background: #faf1ef;
+  background: #f2f6ef;
 }
 #citation {
-  background: #edf5f1;
+  background: #ffffff;
 }
-#motivation .eyebrow,
-#examples .eyebrow {
-  color: var(--rust);
+#motivation .eyebrow {
+  color: #945f57;
 }
-#construction .eyebrow,
-#analysis .eyebrow {
-  color: var(--blue);
+#approach .eyebrow,
+#citation .eyebrow {
+  color: var(--teal);
 }
-#dataset .eyebrow,
-#interaction .eyebrow {
-  color: var(--gold);
+#construction .eyebrow {
+  color: #48777a;
+}
+#dataset .eyebrow {
+  color: #96783c;
 }
 #method .eyebrow {
-  color: var(--purple);
+  color: #745f7d;
 }
 #results .eyebrow {
-  color: var(--green);
+  color: #55765f;
+}
+#analysis .eyebrow {
+  color: #58758d;
+}
+#interaction .eyebrow {
+  color: #946a55;
+}
+#examples .eyebrow {
+  color: #607963;
 }
 .sr-only {
   position: absolute;
