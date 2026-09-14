@@ -615,11 +615,27 @@ h1 {
   margin-inline: auto;
 }
 .teaser .figure-link {
-  width: min(100%, 900px);
+  width: min(100%, 1080px);
+  margin-inline: auto;
+}
+.paper-figure--diagnostics {
+  max-width: 1080px;
+  margin-inline: auto;
+}
+.paper-figure--paradigm {
+  max-width: 1080px;
+  margin-inline: auto;
+}
+.paper-figure--construction {
+  max-width: 1110px;
+  margin-inline: auto;
+}
+.paper-figure--curriculum {
+  max-width: 1100px;
   margin-inline: auto;
 }
 #motivation .paper-figure {
-  max-width: 1180px;
+  max-width: 1080px;
   margin-inline: auto;
 }
 .curriculum-tabs {
@@ -988,11 +1004,11 @@ select {
   font-size: 25px;
 }
 .curriculum-overview .paper-figure {
-  max-width: 1180px;
+  max-width: 1100px;
   margin-inline: auto;
 }
 #construction > .wrap > .paper-figure {
-  max-width: 1180px;
+  max-width: 1110px;
   margin-inline: auto;
 }
 .training-stages {
@@ -1043,7 +1059,7 @@ select {
   opacity: 0.4;
 }
 .method-figure {
-  max-width: 1180px;
+  max-width: 1120px;
   margin: auto;
 }
 .results-tables {
@@ -1233,11 +1249,14 @@ td.overall {
   margin-top: 7px;
 }
 .analysis-figure {
-  max-width: 1180px;
+  max-width: 1100px;
   margin-inline: auto;
 }
+.paper-figure--analysis {
+  max-width: 1100px;
+}
 .analysis-block {
-  max-width: 1180px;
+  max-width: 1100px;
   margin-inline: auto;
 }
 .frame-order-block {
@@ -1304,12 +1323,13 @@ td.overall {
 .case-comparison .figure-link {
   background: #fbf9f4;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  min-height: 300px;
+  height: 500px;
+  min-height: 0;
 }
 .case-comparison .figure-link > img {
-  max-height: 555px;
+  height: 100%;
   width: 100%;
   object-fit: contain;
 }
@@ -1593,9 +1613,6 @@ dialog[open] {
   .masthead {
     padding-top: 42px;
   }
-  .teaser .figure-link > img {
-    max-height: 300px;
-  }
 }
 @media (max-width: 1000px) {
   .story-deck-viewer {
@@ -1750,9 +1767,6 @@ dialog[open] {
   }
   .teaser {
     padding: 5px 0 0;
-  }
-  .teaser .figure-link > img {
-    max-height: 260px;
   }
   .section {
     padding: 44px 0;
@@ -1979,12 +1993,6 @@ dialog[open] {
   .case-heading h3 {
     font-size: 21px;
   }
-  .case-comparison .figure-link {
-    min-height: 0;
-  }
-  .case-comparison .figure-link > img {
-    max-height: none;
-  }
   .citation-wrap {
     grid-template-columns: 1fr;
     gap: 25px;
@@ -2041,6 +2049,16 @@ dialog[open] {
   .dialog-toolbar .icon-button {
     width: 30px;
     height: 30px;
+  }
+}
+@media (max-width: 600px) {
+  .case-comparison .figure-link {
+    height: auto;
+    min-height: 0;
+  }
+  .case-comparison .figure-link > img {
+    height: auto;
+    max-height: none;
   }
 }
 @media (max-width: 380px) {
