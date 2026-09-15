@@ -55,8 +55,10 @@
   const storyProgress = $("story-progress");
   const storyThumbs = $("story-thumbs");
   if (storySlide && storyPageNumber && storyPageTitle && storyProgress && storyThumbs) {
-    const storyAsset = (index) =>
-      `assets/presentation/slide-${String(index + 1).padStart(2, "0")}.webp${index === 17 ? "?v=20260915" : ""}`;
+    const storyAsset = (index) => {
+      const cacheBust = [1, 3, 17].includes(index) ? "?v=20260916" : "";
+      return `assets/presentation/slide-${String(index + 1).padStart(2, "0")}.webp${cacheBust}`;
+    };
     storyPages.forEach((title, index) => {
       const button = element("button", undefined, "story-thumb");
       button.type = "button";

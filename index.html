@@ -17,10 +17,10 @@
     <meta property="og:image" content="assets/paradigm.webp" />
     <title>Spatial-Interactor | ZJU OmniAI</title>
     <link rel="icon" href="assets/zju.png" />
-    <link rel="stylesheet" href="styles.css?v=20260915b" />
+    <link rel="stylesheet" href="styles.css?v=20260916a" />
     <script src="data.js" defer></script>
     <script src="examples.js" defer></script>
-    <script src="app.js?v=20260915" defer></script>
+    <script src="app.js?v=20260916" defer></script>
     <script src="media.js" defer></script>
   </head>
   <body>
@@ -151,11 +151,19 @@
             <div class="story-deck-actions">
               <a
                 class="button primary"
+                href="assets/presentation/spatial-interactor-intro.mp4"
+                target="_blank"
+                rel="noopener"
+                ><img src="assets/icons/play.svg" alt="" width="16" height="16" />
+                Watch introduction</a
+              >
+              <a
+                class="button"
                 href="assets/presentation/spatial-interactor-presentation.mp4"
                 target="_blank"
                 rel="noopener"
                 ><img src="assets/icons/play.svg" alt="" width="16" height="16" />
-                Watch presentation</a
+                Watch 20-page presentation</a
               >
               <a
                 class="button"
@@ -164,6 +172,18 @@
                 Download PPTX</a
               >
             </div>
+            <figure class="story-deck-film">
+              <video
+                controls
+                preload="metadata"
+                poster="assets/presentation/spatial-interactor-intro-poster.webp"
+                width="1280"
+                height="720"
+              >
+                <source src="assets/presentation/spatial-interactor-intro.mp4" type="video/mp4" />
+                <a href="assets/presentation/spatial-interactor-intro.mp4">Watch the introduction video</a>
+              </video>
+            </figure>
           </div>
           <div class="story-deck-viewer">
             <button class="story-deck-control" id="story-previous" type="button" aria-label="Previous presentation page" title="Previous page">
