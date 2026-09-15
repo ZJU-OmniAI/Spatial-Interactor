@@ -1,34 +1,101 @@
-# Spatial-Interactor
+<p align="center">
+  <a href="assets/presentation/Spatial-Interactor-Visual-Presentation.pptx">
+    <img src="assets/readme/cover.webp" width="100%" alt="Spatial-Interactor visual presentation cover">
+  </a>
+</p>
 
-Official code release for **Spatial-Interactor: Learning Spatial Reasoning
-through Interaction with the Observable Physical World**.
+<h1 align="center">Spatial-Interactor</h1>
 
-[[Project page](https://zju-omniai.github.io/Spatial-Interactor/)]
-[[Dataset](https://huggingface.co/datasets/kagakouko/LSI-108K)]
-[[3B model](https://huggingface.co/kagakouko/Spatial-Interactor-Qwen2.5-VL-3B)]
-[[7B model](https://huggingface.co/kagakouko/Spatial-Interactor-Qwen2.5-VL-7B)]
-[[4B model](https://huggingface.co/kagakouko/Spatial-Interactor-Qwen3-VL-4B)]
-[[8B model](https://huggingface.co/kagakouko/Spatial-Interactor-Qwen3-VL-8B)]
+<p align="center">
+  <strong>Learning Spatial Reasoning through Interaction with the Observable Physical World</strong>
+</p>
 
-This repository contains the LSI-108K construction code, curriculum and mixture
-builders, full-parameter SFT launcher, and On-Policy Distillation (OPD)
-implementation described in the paper. The code archive excludes datasets,
-source media, model weights, generated traces, experiment outputs, credentials,
-and machine-specific paths.
+<p align="center">
+  <a href="https://zju-omniai.github.io/Spatial-Interactor/"><img src="https://img.shields.io/badge/Project-Page-D67655?style=for-the-badge" alt="Project page"></a>
+  <a href="https://zju-omniai.github.io/Spatial-Interactor/assets/paper.pdf"><img src="https://img.shields.io/badge/Paper-PDF-C95645?style=for-the-badge" alt="Paper PDF"></a>
+  <a href="assets/presentation/Spatial-Interactor-Visual-Presentation.pptx"><img src="https://img.shields.io/badge/Visual-Deck-D7AA45?style=for-the-badge" alt="Visual presentation"></a>
+  <a href="https://huggingface.co/datasets/kagakouko/LSI-108K"><img src="https://img.shields.io/badge/LSI--108K-Dataset-768D6D?style=for-the-badge" alt="LSI-108K dataset"></a>
+</p>
 
-## Layout
+<p align="center">
+  <a href="https://huggingface.co/kagakouko/Spatial-Interactor-Qwen2.5-VL-3B">Qwen2.5-VL-3B</a> &nbsp;|&nbsp;
+  <a href="https://huggingface.co/kagakouko/Spatial-Interactor-Qwen2.5-VL-7B">Qwen2.5-VL-7B</a> &nbsp;|&nbsp;
+  <a href="https://huggingface.co/kagakouko/Spatial-Interactor-Qwen3-VL-4B">Qwen3-VL-4B</a> &nbsp;|&nbsp;
+  <a href="https://huggingface.co/kagakouko/Spatial-Interactor-Qwen3-VL-8B">Qwen3-VL-8B</a>
+</p>
+
+<p align="center">
+  <a href="assets/presentation/Spatial-Interactor-Visual-Presentation.pptx"><strong>Download the 20-page visual presentation</strong></a>
+</p>
+
+## Learning from observable change
+
+Spatial reasoning is not only about recognizing relations in a static frame. An
+agent must follow how objects, viewpoints, and locations change through
+interaction, then integrate those local transitions into a coherent spatial
+state. Spatial-Interactor turns observable physical interaction into direct
+supervision for this process.
+
+<p align="center">
+  <img src="assets/readme/paradigm.webp" width="100%" alt="Spatial-Interactor learning paradigm">
+</p>
+
+## A three-level spatial interaction curriculum
+
+The curriculum progresses from **passive world-state transitions (L1)**, to
+**active self-state transitions (L2)**, and finally to **long-horizon state
+transition integration (L3)**. Together, these levels connect local physical
+change with global path understanding.
+
+<p align="center">
+  <img src="assets/readme/curriculum.webp" width="100%" alt="LSI-108K three-level spatial interaction curriculum">
+</p>
+
+## From interaction trajectories to verifiable QA
+
+LSI-108K is constructed from simulator actions, scene states, camera poses,
+object tracks, and robot trajectories. Geometric signals are converted into
+textual ground truth before task templates produce question-answer pairs,
+keeping supervision tied to observable state changes.
+
+<p align="center">
+  <img src="assets/readme/construction.webp" width="100%" alt="LSI-108K construction pipeline">
+</p>
+
+| Level | Samples | Spatial supervision |
+|:---:|---:|:---|
+| **L1** | 15,109 | Passive world-state transitions |
+| **L2** | 69,487 | Active self-state transitions |
+| **L3** | 22,922 | Long-horizon transition integration |
+| **Total** | **107,518** | **Interaction-derived spatial QA** |
+
+## On-Policy Distillation
+
+Training first uses L1 and L2 to establish local state-transition modeling.
+For L3, On-Policy Distillation (OPD) combines verifiable answer rewards with a
+training-only privileged transition trace. The teacher and student evaluate the
+same student-generated prefixes; process distillation is applied to reasoning
+tokens, while answer rewards supervise the final result. At inference, the
+model receives only the original image or video and question.
+
+<p align="center">
+  <img src="assets/readme/opd.webp" width="100%" alt="On-Policy Distillation pipeline">
+</p>
+
+## Repository layout
 
 ```text
-data_generation/       simulated, real-scene, and long-trajectory construction
+data_generation/       interaction and privileged-trace construction
 data_preparation/      curriculum, SFT-mixture, and OPD-data builders
 training/sft/          LLaMA-Factory snapshot and full SFT launcher
-training/opd/          modified EasyR1, reward, OPD, and GRPO launchers
+training/opd/          EasyR1-based OPD, reward, and GRPO implementation
 docs/                  method-to-code and reproduction notes
 tests/                 lightweight data and objective tests
 ```
 
-To create the portable Hugging Face annotation release from generated source
-files, run:
+## Prepare the data
+
+Create the portable Hugging Face annotation release from generated records:
 
 ```bash
 python data_preparation/prepare_release_dataset.py \
@@ -37,17 +104,7 @@ python data_preparation/prepare_release_dataset.py \
   --paper-counts
 ```
 
-The exporter keeps relative media references and geometry-derived targets while
-removing machine paths and development-only provenance fields. Source media are
-not redistributed and must be obtained under their original licenses.
-
-## 1. Build the SFT data
-
-The complete LSI-108K release contains 15,109 L1, 69,487 L2, and 22,922 L3
-records. The reported SFT mixture uses 13,109 single-transition L1 records, all
-69,487 L2 records, VSI (50,000), MindCube (10,000), and VSTI (20,000). The
-remaining 2,000 multi-stage operation records are retained in L1 but were not
-part of the reported SFT run.
+Build the reported SFT mixture:
 
 ```bash
 python data_preparation/assign_curriculum_levels.py \
@@ -64,9 +121,15 @@ python data_preparation/build_sft_mixture.py \
   --output-dir /data/spatial_interactor_sft
 ```
 
+The reported SFT mixture uses 13,109 single-transition L1 records, all 69,487
+L2 records, VSI (50,000), MindCube (10,000), and VSTI (20,000). The remaining
+2,000 multi-stage operation records are released in L1 but are not part of the
+reported SFT run.
+
+## Train Spatial-Interactor
+
 Run one-epoch BF16 full-parameter SFT. The vision tower is frozen; the language
-model and multimodal projector are updated. On eight GPUs, the default global
-batch is 64.
+model and multimodal projector are updated. The default global batch is 64.
 
 ```bash
 MODEL_PATH=/models/qwen-vl \
@@ -77,18 +140,9 @@ GPUS=0,1,2,3,4,5,6,7 \
 bash training/sft/train_sft.sh
 ```
 
-Use `MODEL_FAMILY=qwen3vl` for Qwen3-VL. The launcher derives gradient
-accumulation from `GLOBAL_BATCH_SIZE=64` and the number of visible GPUs.
+Use `MODEL_FAMILY=qwen3vl` for Qwen3-VL.
 
-## 2. Build privileged traces
-
-The paper's online stage selects 10,912 RoomTour-based L3 records and 11,000
-VSTI long-horizon records before a video-disjoint split. This yields 10,712 L3
-and 10,783 VSTI training records (21,495 total), plus 417 validation records.
-The annotator receives only 32 uniformly sampled chronological frames, divided
-into four fixed eight-frame intervals. It never receives a question, answer,
-reward target, or task metadata. One trace is generated per unique video and
-reused by all associated questions.
+Build question-independent privileged traces from 32 chronological frames:
 
 ```bash
 python data_generation/build_trace_manifest.py \
@@ -108,7 +162,7 @@ python data_generation/generate_privileged_traces.py \
   --workers 4
 ```
 
-## 3. Build and train OPD
+Build the OPD split and launch training:
 
 ```bash
 python data_preparation/build_opd_dataset.py \
@@ -118,11 +172,6 @@ python data_preparation/build_opd_dataset.py \
   --data-root /data/media \
   --output-dir /data/spatial_interactor_opd \
   --paper-counts
-
-python data_preparation/validate_data.py \
-  --format opd \
-  --input /data/spatial_interactor_opd/train.parquet \
-          /data/spatial_interactor_opd/val.parquet
 
 MODEL_PATH=/outputs/spatial_interactor_sft \
 DATA_DIR=/data/spatial_interactor_opd \
@@ -139,8 +188,8 @@ temperature 0.8, top-p 0.9, a 384-token response limit, reference KL weight
 zero over the next 1,100 steps. No vocabulary-wise pointwise KL clipping is
 used.
 
-The matched answer-only GRPO ablation uses the same checkpoint, data, prompts,
-rollouts, and rewards:
+The matched answer-only GRPO ablation uses the same initialization, data,
+prompts, rollouts, and rewards:
 
 ```bash
 MODEL_PATH=/outputs/spatial_interactor_sft \
@@ -152,13 +201,12 @@ GPUS=0,1,2,3,4,5,6,7 \
 bash training/opd/scripts/train_grpo.sh
 ```
 
-## 4. Verify the release
+## Verification and documentation
 
 ```bash
 bash scripts/check_release.sh
 ```
 
-See [DATA.md](docs/DATA.md), [OPD.md](docs/OPD.md),
-[ENVIRONMENT.md](docs/ENVIRONMENT.md), and
-[METHOD_TO_CODE.md](docs/METHOD_TO_CODE.md) for the paper-to-code mapping and
-environment details.
+See [Data](docs/DATA.md), [OPD](docs/OPD.md),
+[Environment](docs/ENVIRONMENT.md), [Reproducibility](docs/REPRODUCIBILITY.md),
+and [Method-to-code mapping](docs/METHOD_TO_CODE.md) for implementation details.
