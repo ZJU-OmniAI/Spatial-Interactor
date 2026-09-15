@@ -12,6 +12,7 @@ frame_cache/
 *.pt
 *.pth
 *.mp4
+!assets/presentation/spatial-interactor-intro.mp4
 !assets/presentation/spatial-interactor-presentation.mp4
 *.zip
 *.tar*

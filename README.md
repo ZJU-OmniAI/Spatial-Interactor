@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://zju-omniai.github.io/Spatial-Interactor/assets/presentation/spatial-interactor-presentation.mp4">
+  <a href="https://zju-omniai.github.io/Spatial-Interactor/assets/presentation/spatial-interactor-intro.mp4">
     <img src="assets/readme/cover.webp" width="100%" alt="Spatial-Interactor visual presentation cover">
   </a>
 </p>
@@ -13,7 +13,8 @@
 <p align="center">
   <a href="https://zju-omniai.github.io/Spatial-Interactor/"><img src="https://img.shields.io/badge/Project-Page-D67655?style=for-the-badge" alt="Project page"></a>
   <a href="https://zju-omniai.github.io/Spatial-Interactor/assets/paper.pdf"><img src="https://img.shields.io/badge/Paper-PDF-C95645?style=for-the-badge" alt="Paper PDF"></a>
-  <a href="https://zju-omniai.github.io/Spatial-Interactor/assets/presentation/spatial-interactor-presentation.mp4"><img src="https://img.shields.io/badge/Watch-Video-D7AA45?style=for-the-badge" alt="Watch presentation video"></a>
+  <a href="https://zju-omniai.github.io/Spatial-Interactor/assets/presentation/spatial-interactor-intro.mp4"><img src="https://img.shields.io/badge/Watch-Intro-D7AA45?style=for-the-badge" alt="Watch introduction video"></a>
+  <a href="https://zju-omniai.github.io/Spatial-Interactor/assets/presentation/spatial-interactor-presentation.mp4"><img src="https://img.shields.io/badge/Watch-Slides-8A79A8?style=for-the-badge" alt="Watch 20-page presentation"></a>
   <a href="assets/presentation/Spatial-Interactor-Visual-Presentation.pptx"><img src="https://img.shields.io/badge/Download-PPTX-8A79A8?style=for-the-badge" alt="Download PowerPoint"></a>
   <a href="https://huggingface.co/datasets/kagakouko/LSI-108K"><img src="https://img.shields.io/badge/LSI--108K-Dataset-768D6D?style=for-the-badge" alt="LSI-108K dataset"></a>
 </p>
@@ -26,9 +27,26 @@
 </p>
 
 <p align="center">
+  <a href="https://zju-omniai.github.io/Spatial-Interactor/assets/presentation/spatial-interactor-intro.mp4"><strong>Watch the introduction video</strong></a>
+  &nbsp;|&nbsp;
   <a href="https://zju-omniai.github.io/Spatial-Interactor/assets/presentation/spatial-interactor-presentation.mp4"><strong>Watch the 20-page visual presentation</strong></a>
   &nbsp;|&nbsp;
   <a href="assets/presentation/Spatial-Interactor-Visual-Presentation.pptx">Download PPTX</a>
+</p>
+
+## Introduction video
+
+<video controls preload="metadata" poster="https://raw.githubusercontent.com/ZJU-OmniAI/Spatial-Interactor/main/assets/presentation/spatial-interactor-intro-poster.webp" width="100%">
+  <source src="https://zju-omniai.github.io/Spatial-Interactor/assets/presentation/spatial-interactor-intro.mp4" type="video/mp4">
+  <a href="https://zju-omniai.github.io/Spatial-Interactor/assets/presentation/spatial-interactor-intro.mp4">Watch the introduction video</a>
+</video>
+
+## Presentation
+
+<p align="center">
+  <a href="assets/presentation/Spatial-Interactor-Visual-Presentation.pptx">
+    <img src="assets/readme/cover.webp" width="100%" alt="Spatial-Interactor 20-page presentation">
+  </a>
 </p>
 
 ## Learning from observable change
