@@ -322,11 +322,17 @@ nav > a.active::after {
   margin-inline: auto;
   color: var(--ink);
 }
-.story-deck-intro > p:last-child {
+.story-deck-intro > p:last-of-type {
   max-width: 690px;
   margin: 12px auto 0;
   color: var(--ink-soft);
   font-size: 17px;
+}
+.story-deck-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 18px;
 }
 .story-deck-viewer {
   display: grid;
