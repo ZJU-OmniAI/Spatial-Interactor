@@ -31,11 +31,6 @@
   <a href="assets/presentation/Spatial-Interactor-Visual-Presentation.pptx">Download PPTX</a>
 </p>
 
-<video controls preload="metadata" poster="assets/readme/presentation-poster.webp" width="100%">
-  <source src="assets/presentation/spatial-interactor-presentation.mp4" type="video/mp4">
-  <a href="https://zju-omniai.github.io/Spatial-Interactor/assets/presentation/spatial-interactor-presentation.mp4">Watch the presentation video</a>
-</video>
-
 ## Learning from observable change
 
 Spatial reasoning is not only about recognizing relations in a static frame. An
