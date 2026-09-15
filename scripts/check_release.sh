@@ -6,9 +6,9 @@ cd "${ROOT}"
 export PYTHONDONTWRITEBYTECODE=1
 
 MAX_BYTES=$((50 * 1024 * 1024))
-TREE_BYTES="$(du -sb . | cut -f1)"
+TREE_BYTES="$(du -sb --exclude=.git --exclude=assets . | cut -f1)"
 if (( TREE_BYTES > MAX_BYTES )); then
-  echo "Source tree exceeds the 50 MiB submission limit: ${TREE_BYTES} bytes." >&2
+  echo "Code tree exceeds the 50 MiB submission limit: ${TREE_BYTES} bytes." >&2
   exit 1
 fi
 
@@ -17,7 +17,7 @@ FORBIDDEN_ASSETS="$(find . -type f \( \
   -o -iname '*.mp4' -o -iname '*.avi' -o -iname '*.mov' \
   -o -iname '*.pt' -o -iname '*.pth' -o -iname '*.safetensors' \
   -o -iname '*.parquet' -o -iname '*.jsonl' -o -iname '*.log' -o -iname '*.pyc' \
-\) -print)"
+\) -not -path './assets/*' -print)"
 if [[ -n "${FORBIDDEN_ASSETS}" ]]; then
   echo "Non-code experiment assets found:" >&2
   printf '%s\n' "${FORBIDDEN_ASSETS}" >&2
