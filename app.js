@@ -55,6 +55,9 @@
   const storyProgress = $("story-progress");
   const storyThumbs = $("story-thumbs");
   if (storySlide && storyPageNumber && storyPageTitle && storyProgress && storyThumbs) {
+    const storyDeck = $("story-deck");
+    const storyInterval = 4000;
+    let storyTimer;
     const storyAsset = (index) => {
       const cacheBust = [1, 3, 17].includes(index) ? "?v=20260916" : "";
       return `assets/presentation/slide-${String(index + 1).padStart(2, "0")}.webp${cacheBust}`;
@@ -69,7 +72,7 @@
       image.alt = "";
       image.loading = index < 4 ? "eager" : "lazy";
       button.append(image, element("span", String(index + 1).padStart(2, "0")));
-      button.addEventListener("click", () => renderStory(index));
+      button.addEventListener("click", () => selectStory(index));
       storyThumbs.append(button);
     });
     function renderStory(nextIndex, animate = true) {
@@ -87,18 +90,44 @@
       });
       if (animate && !reducedMotion.matches) animateIn(storySlide, 8);
     }
-    $("story-previous").addEventListener("click", () => renderStory(storyIndex - 1));
-    $("story-next").addEventListener("click", () => renderStory(storyIndex + 1));
+    function stopStoryAuto() {
+      clearTimeout(storyTimer);
+    }
+    function startStoryAuto() {
+      stopStoryAuto();
+      if (reducedMotion.matches || document.hidden) return;
+      storyTimer = setTimeout(() => {
+        renderStory(storyIndex + 1);
+        startStoryAuto();
+      }, storyInterval);
+    }
+    function selectStory(nextIndex) {
+      renderStory(nextIndex);
+      startStoryAuto();
+    }
+    $("story-previous").addEventListener("click", () => selectStory(storyIndex - 1));
+    $("story-next").addEventListener("click", () => selectStory(storyIndex + 1));
     document.addEventListener("keydown", (event) => {
       if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement || event.target.isContentEditable) return;
-      const deck = $("story-deck");
-      const bounds = deck.getBoundingClientRect();
-      const deckIsActive = deck.contains(document.activeElement) || (bounds.top < innerHeight * 0.72 && bounds.bottom > innerHeight * 0.28);
+      const bounds = storyDeck.getBoundingClientRect();
+      const deckIsActive = storyDeck.contains(document.activeElement) || (bounds.top < innerHeight * 0.72 && bounds.bottom > innerHeight * 0.28);
       if (!deckIsActive) return;
-      if (event.key === "ArrowLeft") renderStory(storyIndex - 1);
-      if (event.key === "ArrowRight") renderStory(storyIndex + 1);
+      if (event.key === "ArrowLeft") selectStory(storyIndex - 1);
+      if (event.key === "ArrowRight") selectStory(storyIndex + 1);
     });
+    storyDeck.addEventListener("mouseenter", stopStoryAuto);
+    storyDeck.addEventListener("mouseleave", startStoryAuto);
+    storyDeck.addEventListener("focusin", stopStoryAuto);
+    storyDeck.addEventListener("focusout", () => setTimeout(() => {
+      if (!storyDeck.contains(document.activeElement)) startStoryAuto();
+    }));
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) stopStoryAuto();
+      else startStoryAuto();
+    });
+    reducedMotion.addEventListener("change", startStoryAuto);
     renderStory(0, false);
+    startStoryAuto();
   }
 
   function setupTabs(selector, onSelect) {
