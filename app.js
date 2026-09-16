@@ -28,18 +28,18 @@
 
   const storyPages = [
     "Opening",
-    "The missing change",
-    "Frame-order diagnostic",
-    "Long-horizon gap",
-    "Interaction as transition",
+    "Why spatial interaction?",
+    "State-transition diagnostics",
+    "Observation, action, next observation",
+    "Spatial-Interactor overview",
     "Three-level curriculum",
     "L1 · Passive world state",
     "L2 · Active self state",
     "L3 · Long-horizon integration",
-    "From records to QA",
+    "LSI-108K dataset",
     "Two-stage training",
-    "Privileged transition trace",
-    "Same-prefix distillation",
+    "On-Policy Distillation",
+    "Experimental setup",
     "Main results",
     "Cross-benchmark transfer",
     "Ablation",
@@ -55,9 +55,19 @@
   const storyProgress = $("story-progress");
   const storyThumbs = $("story-thumbs");
   if (storySlide && storyPageNumber && storyPageTitle && storyProgress && storyThumbs) {
-    const storyDeck = $("story-deck");
-    const storyInterval = 4000;
+    const storyViewer = document.querySelector(".story-deck-viewer");
+    const storyToggle = $("story-toggle");
+    const storyInterval = 1000;
     let storyTimer;
+    let storyPaused = reducedMotion.matches;
+    let storyHovered = false;
+    let storyFocused = false;
+    function updateStoryToggle() {
+      const label = storyPaused ? "Play presentation" : "Pause presentation";
+      storyToggle.setAttribute("aria-label", label);
+      storyToggle.title = label;
+      storyToggle.querySelector("img").src = `assets/icons/${storyPaused ? "play" : "pause"}.svg`;
+    }
     const storyAsset = (index) => {
       const cacheBust = [1, 3, 17].includes(index) ? "?v=20260916" : "";
       return `assets/presentation/slide-${String(index + 1).padStart(2, "0")}.webp${cacheBust}`;
@@ -66,6 +76,7 @@
       const button = element("button", undefined, "story-thumb");
       button.type = "button";
       button.dataset.storyIndex = String(index);
+      button.title = `${index + 1}: ${title}`;
       button.setAttribute("aria-label", `Open presentation page ${index + 1}: ${title}`);
       const image = document.createElement("img");
       image.src = storyAsset(index);
@@ -88,14 +99,14 @@
         thumb.classList.toggle("is-active", active);
         thumb.setAttribute("aria-current", active ? "page" : "false");
       });
-      if (animate && !reducedMotion.matches) animateIn(storySlide, 8);
+      if (animate && !reducedMotion.matches) animateIn(storySlide, 0);
     }
     function stopStoryAuto() {
       clearTimeout(storyTimer);
     }
     function startStoryAuto() {
       stopStoryAuto();
-      if (reducedMotion.matches || document.hidden) return;
+      if (storyPaused || storyHovered || storyFocused || document.hidden) return;
       storyTimer = setTimeout(() => {
         renderStory(storyIndex + 1);
         startStoryAuto();
@@ -107,26 +118,54 @@
     }
     $("story-previous").addEventListener("click", () => selectStory(storyIndex - 1));
     $("story-next").addEventListener("click", () => selectStory(storyIndex + 1));
+    storyToggle.addEventListener("click", () => {
+      storyPaused = !storyPaused;
+      updateStoryToggle();
+      startStoryAuto();
+    });
     document.addEventListener("keydown", (event) => {
       if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement || event.target.isContentEditable) return;
-      const bounds = storyDeck.getBoundingClientRect();
-      const deckIsActive = storyDeck.contains(document.activeElement) || (bounds.top < innerHeight * 0.72 && bounds.bottom > innerHeight * 0.28);
+      if (document.querySelector("dialog[open]") || document.activeElement.closest("video")) return;
+      const bounds = storyViewer.getBoundingClientRect();
+      const focused = document.activeElement;
+      const isOtherControl = focused.matches("button, a, select, [role=tab], summary") && !storyViewer.contains(focused) && !storyThumbs.contains(focused);
+      const deckIsActive = !isOtherControl && (storyViewer.contains(focused) || storyThumbs.contains(focused) || (bounds.top < innerHeight * 0.72 && bounds.bottom > innerHeight * 0.28));
       if (!deckIsActive) return;
-      if (event.key === "ArrowLeft") selectStory(storyIndex - 1);
-      if (event.key === "ArrowRight") selectStory(storyIndex + 1);
+      if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+        event.preventDefault();
+        selectStory(storyIndex + (event.key === "ArrowLeft" ? -1 : 1));
+      }
     });
-    storyDeck.addEventListener("mouseenter", stopStoryAuto);
-    storyDeck.addEventListener("mouseleave", startStoryAuto);
-    storyDeck.addEventListener("focusin", stopStoryAuto);
-    storyDeck.addEventListener("focusout", () => setTimeout(() => {
-      if (!storyDeck.contains(document.activeElement)) startStoryAuto();
-    }));
+    [storyViewer, storyThumbs].forEach((region) => {
+      region.addEventListener("mouseenter", () => {
+        storyHovered = true;
+        stopStoryAuto();
+      });
+      region.addEventListener("mouseleave", () => {
+        storyHovered = false;
+        startStoryAuto();
+      });
+      region.addEventListener("focusin", (event) => {
+        storyFocused = event.target !== storyToggle;
+        startStoryAuto();
+      });
+      region.addEventListener("focusout", () => setTimeout(() => {
+        const focused = document.activeElement;
+        storyFocused = focused !== storyToggle && (storyViewer.contains(focused) || storyThumbs.contains(focused));
+        startStoryAuto();
+      }));
+    });
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) stopStoryAuto();
       else startStoryAuto();
     });
-    reducedMotion.addEventListener("change", startStoryAuto);
+    reducedMotion.addEventListener("change", () => {
+      storyPaused = reducedMotion.matches;
+      updateStoryToggle();
+      startStoryAuto();
+    });
     renderStory(0, false);
+    updateStoryToggle();
     startStoryAuto();
   }
 

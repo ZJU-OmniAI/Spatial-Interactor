@@ -14,13 +14,16 @@
       content="Learning Spatial Reasoning through Interaction with the Observable Physical World"
     />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="assets/paradigm.webp" />
+    <meta property="og:image" content="https://zju-omniai.github.io/Spatial-Interactor/assets/presentation/slide-01.webp" />
+    <meta property="og:url" content="https://zju-omniai.github.io/Spatial-Interactor/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://zju-omniai.github.io/Spatial-Interactor/" />
     <title>Spatial-Interactor | ZJU OmniAI</title>
     <link rel="icon" href="assets/zju.png" />
-    <link rel="stylesheet" href="styles.css?v=20260916a" />
+    <link rel="stylesheet" href="styles.css?v=20260916d" />
     <script src="data.js" defer></script>
     <script src="examples.js" defer></script>
-    <script src="app.js?v=20260916b" defer></script>
+    <script src="app.js?v=20260916d" defer></script>
     <script src="media.js" defer></script>
   </head>
   <body>
@@ -120,7 +123,7 @@
             GitHub</a
           ><a
             class="button"
-            href="https://huggingface.co/kagakouko"
+            href="https://huggingface.co/collections/kagakouko/spatial-interactor"
             target="_blank"
             rel="noopener"
             ><img
@@ -142,12 +145,8 @@
       <section class="story-deck" id="story-deck" aria-labelledby="story-deck-title">
         <div class="wrap">
           <div class="story-deck-intro">
-            <p class="eyebrow">The story in 20 pages</p>
-            <h2 id="story-deck-title">From seeing a scene to understanding how it changes.</h2>
-            <p>
-              A visual walkthrough of the problem, the interaction curriculum,
-              the training protocol, and the evidence behind Spatial-Interactor.
-            </p>
+            <p class="eyebrow">Spatial-Interactor</p>
+            <h2 id="story-deck-title">Learning spatial reasoning through interaction</h2>
             <figure class="story-deck-film">
               <video
                 autoplay
@@ -156,7 +155,7 @@
                 muted
                 playsinline
                 preload="auto"
-                poster="assets/presentation/spatial-interactor-intro-poster.webp"
+                poster="assets/presentation/spatial-interactor-intro-poster.webp?v=20260916d"
                 width="1280"
                 height="720"
               >
@@ -170,7 +169,11 @@
             </button>
             <figure class="story-deck-stage">
               <img id="story-slide" src="assets/presentation/slide-01.webp" alt="Presentation page 1 of 20" width="1440" height="810" fetchpriority="high" />
-              <figcaption><span id="story-page-number">01</span><span id="story-page-title">Opening</span><span id="story-page-total">/ 20</span></figcaption>
+              <figcaption>
+                <span id="story-page-number">01</span><span id="story-page-total">/ 20</span>
+                <span id="story-page-title">Opening</span>
+                <button class="icon-button story-toggle" id="story-toggle" type="button" aria-label="Pause presentation" title="Pause presentation"><img src="assets/icons/pause.svg" alt="" width="18" height="18" /></button>
+              </figcaption>
             </figure>
             <button class="story-deck-control" id="story-next" type="button" aria-label="Next presentation page" title="Next page">
               <img src="assets/icons/chevron-right.svg" alt="" width="22" height="22" />
@@ -178,7 +181,6 @@
           </div>
           <div class="story-deck-progress" aria-hidden="true"><span id="story-progress"></span></div>
           <div class="story-deck-thumbs" id="story-thumbs" aria-label="Presentation pages"></div>
-          <p class="story-deck-hint">Use the arrows or the left and right keys to move through the story.</p>
         </div>
       </section>
 

@@ -67,9 +67,12 @@ async function main() {
       reducedMotion: "reduce",
     });
     page.on("pageerror", (error) => errors.push(error.message));
-    page.on("requestfailed", (request) =>
-      errors.push(`${request.url()}: ${request.failure()?.errorText}`),
-    );
+    page.on("requestfailed", (request) => {
+      // Switching examples can cancel a superseded image load; each image is
+      // independently decoded below, so cancellation is not a missing asset.
+      if (request.failure()?.errorText !== "net::ERR_ABORTED")
+        errors.push(`${request.url()}: ${request.failure()?.errorText}`);
+    });
     await page.goto(
       process.env.SITE_URL || pathToFileURL(path.join(root, "index.html")).href,
     );
@@ -361,7 +364,7 @@ async function main() {
       path.join(output, "checks.json"),
       JSON.stringify(
         {
-          examples: 12,
+          examples: 35,
           tables: 5,
           figures: 11,
           viewports: layouts.length,

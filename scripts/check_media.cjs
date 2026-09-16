@@ -66,7 +66,8 @@ async function main() {
     page.on("pageerror", (error) => errors.push(error.message));
     await page.goto(url);
 
-    assert.equal(await page.locator("video").count(), 0);
+    assert.equal(await page.locator("video").count(), 1);
+    assert(await page.locator("video").evaluate((video) => video.autoplay && video.muted && video.loop && video.controls));
     assert.equal(await page.locator("[data-paper-figure]").count(), 11);
 
     for (const [width, height] of [

@@ -313,14 +313,15 @@ nav > a.active::after {
   border-bottom: 1px solid var(--line);
 }
 .story-deck-intro {
-  max-width: 960px;
-  margin: 0 auto 27px;
+  max-width: 920px;
+  margin: 0 auto 24px;
   text-align: center;
 }
 .story-deck-intro h2 {
   max-width: 860px;
   margin-inline: auto;
   color: var(--ink);
+  font-size: 34px;
 }
 .story-deck-intro > p:last-of-type {
   max-width: 690px;
@@ -328,20 +329,13 @@ nav > a.active::after {
   color: var(--ink-soft);
   font-size: 17px;
 }
-.story-deck-actions {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 18px;
-  flex-wrap: wrap;
-}
 .story-deck-film {
-  max-width: 860px;
+  max-width: 920px;
   margin: 24px auto 28px;
   overflow: hidden;
   background: var(--paper-deep);
   border: 1px solid #d8cfc1;
-  box-shadow: 0 18px 45px rgba(90, 72, 49, 0.12);
+  box-shadow: 0 8px 24px rgba(90, 72, 49, 0.08);
 }
 .story-deck-film video {
   display: block;
@@ -355,7 +349,7 @@ nav > a.active::after {
   grid-template-columns: 42px minmax(0, 1fr) 42px;
   align-items: center;
   gap: 17px;
-  max-width: 1250px;
+  max-width: 1038px;
   margin-inline: auto;
 }
 .story-deck-stage {
@@ -363,35 +357,43 @@ nav > a.active::after {
   overflow: hidden;
   background: var(--paper-deep);
   border: 1px solid #d8cfc1;
-  box-shadow: 0 18px 45px rgba(90, 72, 49, 0.12);
+  box-shadow: 0 8px 24px rgba(90, 72, 49, 0.08);
 }
 .story-deck-stage > img {
   width: 100%;
   aspect-ratio: 16 / 9;
-  object-fit: cover;
+  object-fit: contain;
 }
 .story-deck-stage figcaption {
-  position: absolute;
-  right: 16px;
-  bottom: 13px;
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 10px;
-  background: rgba(246, 242, 233, 0.9);
-  border: 1px solid rgba(190, 177, 159, 0.7);
+  min-height: 44px;
+  padding: 5px 12px;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
   color: var(--ink-soft);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
-  backdrop-filter: blur(6px);
 }
 .story-deck-stage figcaption span:first-child {
   color: var(--rust);
   font-variant-numeric: tabular-nums;
 }
-.story-deck-stage figcaption span:last-child {
+#story-page-total {
   color: var(--muted);
   font-weight: 500;
+}
+#story-page-title {
+  min-width: 0;
+  flex: 1;
+  padding-left: 8px;
+  font-weight: 500;
+}
+.story-toggle {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
 }
 .story-deck-control {
   display: grid;
@@ -415,7 +417,7 @@ nav > a.active::after {
   height: 20px;
 }
 .story-deck-progress {
-  max-width: 1250px;
+  max-width: 920px;
   height: 3px;
   margin: 18px auto 15px;
   overflow: hidden;
@@ -432,9 +434,9 @@ nav > a.active::after {
 }
 .story-deck-thumbs {
   display: grid;
-  grid-template-columns: repeat(20, minmax(0, 1fr));
+  grid-template-columns: repeat(10, minmax(0, 1fr));
   gap: 7px;
-  max-width: 1250px;
+  max-width: 920px;
   margin-inline: auto;
 }
 .story-thumb {
@@ -473,12 +475,6 @@ nav > a.active::after {
 .story-thumb.is-active img {
   opacity: 1;
 }
-.story-deck-hint {
-  margin-top: 13px;
-  text-align: center;
-  color: var(--muted);
-  font-size: 12px;
-}
 .lab-line {
   font-size: 13px;
   color: var(--teal);
@@ -514,10 +510,9 @@ h1 {
   color: var(--ink);
 }
 .authors {
-  max-width: 1020px;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  max-width: 880px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 6px 17px;
   margin: 23px auto 11px;
   font-size: 14px;
@@ -1612,9 +1607,6 @@ dialog[open] {
     flex: 0 0 92px;
     scroll-snap-align: start;
   }
-  .story-deck-hint {
-    font-size: 11px;
-  }
   .figure-controls,
   .figure-navigation,
   .figure-zoom-controls {
@@ -1772,6 +1764,9 @@ dialog[open] {
     display: none;
   }
   .authors {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 4px 14px;
     font-size: 12px;
     margin: 19px auto 10px;
