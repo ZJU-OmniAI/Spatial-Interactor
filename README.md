@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/readme/cover.webp" width="100%" alt="Spatial-Interactor visual presentation cover">
+  <img src="assets/readme/icon.png" width="100" alt="Spatial-Interactor">
 </p>
 
 <h1 align="center">Spatial-Interactor</h1>
@@ -9,9 +9,10 @@
 </p>
 
 <p align="center">
-  <a href="https://zju-omniai.github.io/Spatial-Interactor/"><img src="https://img.shields.io/badge/Project-Page-D67655?style=for-the-badge" alt="Project page"></a>
-  <a href="https://zju-omniai.github.io/Spatial-Interactor/assets/paper.pdf"><img src="https://img.shields.io/badge/Paper-PDF-C95645?style=for-the-badge" alt="Paper PDF"></a>
-  <a href="https://huggingface.co/datasets/kagakouko/LSI-108K"><img src="https://img.shields.io/badge/LSI--108K-Dataset-768D6D?style=for-the-badge" alt="LSI-108K dataset"></a>
+  <a href="https://zju-omniai.github.io/Spatial-Interactor/"><img src="https://img.shields.io/badge/Project-Page-A56F59?style=flat-square&amp;labelColor=54534D" alt="Project page"></a>
+  <a href="https://zju-omniai.github.io/Spatial-Interactor/assets/paper.pdf"><img src="https://img.shields.io/badge/Paper-PDF-9B8255?style=flat-square&amp;labelColor=54534D" alt="Paper PDF"></a>
+  <a href="https://huggingface.co/collections/kagakouko/spatial-interactor"><img src="https://img.shields.io/badge/Hugging_Face-Models_%26_Data-738363?style=flat-square&amp;labelColor=54534D" alt="Models and data on Hugging Face"></a>
+  <a href="#citation"><img src="https://img.shields.io/badge/Cite-BibTeX-887A9A?style=flat-square&amp;labelColor=54534D" alt="BibTeX"></a>
 </p>
 
 <p align="center">
@@ -21,7 +22,12 @@
   <a href="https://huggingface.co/kagakouko/Spatial-Interactor-Qwen3-VL-8B">Qwen3-VL-8B</a>
 </p>
 
-## Introduction
+Spatial-Interactor learns spatial reasoning from observable physical interaction,
+progressing from local state transitions to long-horizon integration. This
+repository contains the data-construction and training code; the dataset and
+four model checkpoints are available on Hugging Face.
+
+## Overview
 
 <p align="center">
   <img src="assets/readme/introduction-preview.webp" width="100%" alt="Animated Spatial-Interactor introduction">
@@ -215,3 +221,14 @@ bash scripts/check_release.sh
 See [Data](docs/DATA.md), [OPD](docs/OPD.md),
 [Environment](docs/ENVIRONMENT.md), [Reproducibility](docs/REPRODUCIBILITY.md),
 and [Method-to-code mapping](docs/METHOD_TO_CODE.md) for implementation details.
+
+## Citation
+
+```bibtex
+@misc{yao2026spatialinteractor,
+  title = {Spatial-Interactor: Learning Spatial Reasoning through Interaction with the Observable Physical World},
+  author = {Yao, Kaixiang and Wang, Xu and Pan, Miao and Hu, Xiyue and Wang, Weishi and Dahlmeier, Daniel and Chen, Jintao and Shen, Yongliang and Zhang, Xuhong and Zhang, Wenqi},
+  year = {2026},
+  note = {Preprint}
+}
+```
