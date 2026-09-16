@@ -23,14 +23,14 @@
 
 ## Introduction
 
-<video controls preload="metadata" poster="https://raw.githubusercontent.com/ZJU-OmniAI/Spatial-Interactor/main/assets/presentation/spatial-interactor-intro-poster.webp" width="100%">
-  <source src="https://zju-omniai.github.io/Spatial-Interactor/assets/presentation/spatial-interactor-intro.mp4" type="video/mp4">
-</video>
+<p align="center">
+  <img src="assets/readme/introduction-preview.webp" width="100%" alt="Animated Spatial-Interactor introduction">
+</p>
 
 ## Presentation
 
 <p align="center">
-  <img src="assets/readme/cover.webp" width="100%" alt="Spatial-Interactor 20-page presentation">
+  <img src="assets/readme/presentation-preview.webp" width="100%" alt="Animated Spatial-Interactor 20-page presentation">
 </p>
 
 ## Learning from observable change
