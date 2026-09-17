@@ -188,6 +188,15 @@ class DataPipelineTest(unittest.TestCase):
             })
             self.assertFalse(compact["metadata"]["used_in_reported_sft"])
 
+            full_again = root / "full_again"
+            self.run_script(
+                "data_preparation/prepare_release_dataset.py",
+                "--input", str(output / "lsi_l1.jsonl.gz"),
+                "--output-dir", str(full_again), "--metadata", "full",
+            )
+            with gzip.open(full_again / "lsi_l1.jsonl.gz", "rt", encoding="utf-8") as handle:
+                self.assertEqual(json.loads(handle.readline()), released)
+
     def test_opd_builder_keeps_privilege_out_of_student_prompt(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

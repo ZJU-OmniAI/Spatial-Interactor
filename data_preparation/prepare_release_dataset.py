@@ -138,18 +138,14 @@ def release_row(row: dict[str, Any], location: str, metadata_mode: str = "minima
         key: str(remove_private_values(metadata.get(key)) or "")
         for key in SCALAR_METADATA_FIELDS
     }
-    output_metadata.update(
-        {
-            f"{key}_json": json.dumps(
-                remove_private_values(metadata.get(key)),
-                ensure_ascii=False,
-                separators=(",", ":"),
-            )
-            if metadata.get(key) is not None
-            else ""
-            for key in JSON_METADATA_FIELDS
-        }
-    )
+    for key in JSON_METADATA_FIELDS:
+        value = metadata.get(key)
+        if value is None and metadata.get(f"{key}_json"):
+            value = json.loads(metadata[f"{key}_json"])
+        output_metadata[f"{key}_json"] = (
+            json.dumps(remove_private_values(value), ensure_ascii=False, separators=(",", ":"))
+            if value is not None else ""
+        )
 
     output_metadata.update(
         {
