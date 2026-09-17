@@ -6,7 +6,9 @@ from __future__ import annotations
 import argparse
 import io
 import json
+import os
 from concurrent.futures import ThreadPoolExecutor
+from functools import lru_cache
 from pathlib import Path
 
 import pyarrow as pa
@@ -27,10 +29,14 @@ def main() -> None:
     parser.add_argument("--workers", type=int, default=8)
     parser.add_argument("--resume", action="store_true")
     args = parser.parse_args()
+    if args.shard_mb <= 0 or args.workers <= 0:
+        parser.error("--shard-mb and --workers must be positive")
     args.output_dir.mkdir(parents=True, exist_ok=True)
     existing = sorted(args.output_dir.glob("*.parquet"))
     if existing and not args.resume:
         raise SystemExit("Output directory already contains Parquet shards; use a new directory.")
+    if [p.name for p in existing] != [f"train-{i:05d}.parquet" for i in range(len(existing))]:
+        raise SystemExit("Existing shard numbering is not contiguous; refusing to overwrite shards.")
     root = args.media_root.resolve()
     features = Features({
         "id": Value("string"),
@@ -47,13 +53,25 @@ def main() -> None:
     if not rows:
         raise SystemExit("No matching image records.")
 
+    @lru_cache(maxsize=4096)
+    def media_parent(relative):
+        parent = (root / relative).resolve()
+        if not parent.is_relative_to(root):
+            raise ValueError(f"Image directory escapes media root: {relative}")
+        return parent
+
     def embed(row):
         images = []
         for relative in row["media_paths"]:
-            path = (root / relative).resolve()
-            if not path.is_relative_to(root):
+            relative = Path(relative)
+            if relative.is_absolute() or ".." in relative.parts:
                 raise ValueError(f"Image escapes media root: {relative}")
-            data = path.read_bytes()
+            path = media_parent(relative.parent) / relative.name
+            # Cache directory resolution, but never follow an unchecked file symlink.
+            with open(
+                path, "rb", opener=lambda name, flags: os.open(name, flags | os.O_NOFOLLOW)
+            ) as handle:
+                data = handle.read()
             with PILImage.open(io.BytesIO(data)) as image:
                 image.verify()
             images.append({"bytes": data, "path": path.name})
@@ -85,7 +103,8 @@ def main() -> None:
                 batch = list(executor.map(embed, rows[offset:offset + 64]))
                 if writer is None:
                     path = args.output_dir / f"train-{shard_number:05d}.parquet"
-                    writer = pq.ParquetWriter(path, features.arrow_schema, compression="zstd")
+                    partial = path.with_suffix(".parquet.partial")
+                    writer = pq.ParquetWriter(partial, features.arrow_schema, compression="zstd")
                     shard_number += 1
                     shard_bytes = 0
                 writer.write_table(pa.Table.from_pylist(batch, schema=features.arrow_schema))
@@ -95,12 +114,18 @@ def main() -> None:
                 total_bytes += size
                 if shard_bytes >= args.shard_mb * 1024 * 1024:
                     writer.close()
+                    partial.replace(path)
                     writer = None
                 print(f"Embedded {min(offset + 64, len(rows))}/{len(rows)} records; "
                       f"{total_bytes / 2**30:.2f} GiB", flush=True)
-    finally:
+    except BaseException:
         if writer is not None:
             writer.close()
+        raise
+    else:
+        if writer is not None:
+            writer.close()
+            partial.replace(path)
     summary = {"rows": len(rows), "image_references": image_count,
                "unique_images": len({p for row in rows for p in row["media_paths"]}),
                "original_image_bytes": total_bytes, "shards": shard_number,

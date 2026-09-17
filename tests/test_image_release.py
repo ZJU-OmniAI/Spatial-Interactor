@@ -44,6 +44,17 @@ class ImageReleaseTest(unittest.TestCase):
             self.assertEqual(decoded["images"][1].getpixel((0, 0)), (255, 0, 0))
             result = subprocess.run(command, capture_output=True)
             self.assertNotEqual(result.returncode, 0)
+            subprocess.run(command + ["--resume"], check=True, capture_output=True)
+            self.assertEqual(len(list(output.glob("*.parquet"))), 1)
+            self.assertEqual(json.loads((output / "summary.json").read_text())["rows"], 1)
+
+            outside = root / "outside.png"
+            outside.write_bytes((root / "a.png").read_bytes())
+            (root / "a.png").unlink()
+            (root / "a.png").symlink_to(outside)
+            failed = command.copy()
+            failed[-1] = str(root / "symlink-output")
+            self.assertNotEqual(subprocess.run(failed, capture_output=True).returncode, 0)
 
             annotations = root / "annotations"
             subprocess.run([
