@@ -14,13 +14,13 @@
       content="Learning Spatial Reasoning through Interaction with the Observable Physical World"
     />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://zju-omniai.github.io/Spatial-Interactor/assets/presentation/slide-01.webp" />
+    <meta property="og:image" content="https://zju-omniai.github.io/Spatial-Interactor/assets/overview.webp?v=20260917" />
     <meta property="og:url" content="https://zju-omniai.github.io/Spatial-Interactor/" />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="canonical" href="https://zju-omniai.github.io/Spatial-Interactor/" />
     <title>Spatial-Interactor | ZJU OmniAI</title>
     <link rel="icon" href="assets/zju.png" />
-    <link rel="stylesheet" href="styles.css?v=20260916d" />
+    <link rel="stylesheet" href="styles.css?v=20260917" />
     <script src="data.js" defer></script>
     <script src="examples.js" defer></script>
     <script src="app.js?v=20260916d" defer></script>
@@ -99,7 +99,7 @@
           <!-- Replace this temporary local-PDF href with the final arXiv URL after upload. -->
           <a
             class="button primary"
-            href="assets/paper.pdf"
+            href="assets/paper.pdf?v=20260917"
             target="_blank"
             rel="noopener"
             ><img
@@ -183,6 +183,21 @@
         </div>
       </section>
 
+      <section class="section" id="overview" aria-label="Overview of Spatial-Interactor">
+        <div class="wrap">
+          <figure class="paper-figure paper-figure--overview">
+            <a class="figure-link" href="assets/overview.webp?v=20260917"
+              data-paper-figure="1" data-zoom
+              data-caption="Overview of Spatial-Interactor. Interaction trajectories support a three-level curriculum and two-stage training for spatial reasoning.">
+              <img src="assets/overview.webp?v=20260917"
+                alt="Spatial-Interactor overview: interaction trajectories, the L1-L2-L3 curriculum, SFT followed by OPD, and spatial reasoning results across four backbones."
+                width="1672" height="941" loading="lazy" />
+              <span class="zoom-mark" aria-hidden="true"><img src="assets/icons/maximize-2.svg" alt="" width="18" height="18" /></span>
+            </a>
+          </figure>
+        </div>
+      </section>
+
       <section class="section pale" id="motivation">
         <div class="wrap">
           <div class="section-title">
@@ -198,7 +213,7 @@
             <a
               class="figure-link"
               href="assets/diagnostics.webp"
-              data-paper-figure="1"
+              data-paper-figure="2"
               data-zoom
               data-caption="Two diagnostics: sensitivity to frame order, and the gap between local and long-horizon reasoning."
               ><img
@@ -231,16 +246,16 @@
           </div>
           <figure class="paper-figure paper-figure--paradigm teaser">
             <a
-              href="assets/paradigm.webp"
-              data-paper-figure="2"
+              href="assets/paradigm.webp?v=20260917"
+              data-paper-figure="3"
               class="figure-link"
               data-zoom
               data-caption="From isolated spatial knowledge to coherent spatial states through interaction."
               ><img
-                src="assets/paradigm.webp"
+                src="assets/paradigm.webp?v=20260917"
                 alt="Conventional spatial QA learns isolated knowledge. Spatial-Interactor learns state transitions from interactions to maintain coherent spatial states."
                 width="2600"
-                height="1226"
+                height="1246"
                 fetchpriority="high" /><span class="zoom-mark" aria-hidden="true"
                 ><img
                   src="assets/icons/maximize-2.svg"
@@ -266,15 +281,15 @@
           <figure class="paper-figure paper-figure--construction">
             <a
               class="figure-link"
-              href="assets/construction.webp"
-              data-paper-figure="3"
+              href="assets/construction.webp?v=20260917"
+              data-paper-figure="4"
               data-zoom
               data-caption="Interaction records are converted into geometry-derived targets, then filtered and verified QA pairs."
               ><img
-                src="assets/construction.webp"
+                src="assets/construction.webp?v=20260917"
                 alt="Simulated object interactions, ego-motion, real camera trajectories, and robot trajectories feed a ground-truth-to-QA pipeline with quality filtering and visual verification."
                 width="2600"
-                height="1414"
+                height="1439"
                 loading="lazy" /><span class="zoom-mark" aria-hidden="true"
                 ><img
                   src="assets/icons/maximize-2.svg"
@@ -461,7 +476,7 @@
               <a
                 class="figure-link"
                 href="assets/curriculum.webp"
-                data-paper-figure="4"
+                data-paper-figure="5"
                 data-zoom
                 data-caption="LSI-108K: 15,109 L1, 69,487 L2, and 22,922 L3 examples."
                 ><img
@@ -527,7 +542,7 @@
             <a
               class="figure-link"
               href="assets/opd.webp"
-              data-paper-figure="5"
+              data-paper-figure="6"
               data-zoom
               data-caption="On-policy distillation with training-only privileged transition traces and same-prefix teacher supervision."
               ><img
@@ -666,7 +681,7 @@
                 class="figure-link"
                 href="assets/curriculum-ablation.webp"
                 data-zoom
-                data-paper-figure="6"
+                data-paper-figure="7"
                 data-caption="Progressive local-transition learning: Base, L1 only, L2 only, and L1 then L2 on four benchmarks."
               >
                 <img
@@ -703,7 +718,7 @@
                 class="figure-link"
                 href="assets/training-dynamics.webp"
                 data-zoom
-                data-paper-figure="7"
+                data-paper-figure="8"
                 data-caption="OPD optimization dynamics: task reward, rollout diversity, and process divergence across four backbones."
               >
                 <img
@@ -740,7 +755,7 @@
                 class="figure-link"
                 href="assets/temporal-evidence.webp"
                 data-zoom
-                data-paper-figure="8"
+                data-paper-figure="9"
                 data-caption="Frame-budget and privileged-trace diagnostics. Left: VSI-Bench Route Planning with 16, 32, and 64 frames. Right: VSTI-Bench Camera Displacement with no trace, ordered traces, and shuffled traces."
               >
                 <img
@@ -777,7 +792,7 @@
                 class="figure-link"
                 href="assets/frame-order.webp"
                 data-zoom
-                data-paper-figure="9"
+                data-paper-figure="10"
                 data-caption="Frame-order sensitivity: normal and shuffled VSTI-Bench results for Spatial-Interactor-3B and 7B, including the five task categories."
               >
                 <img
@@ -899,7 +914,7 @@
               <a
                 class="figure-link"
                 href="assets/local-case.webp"
-                data-paper-figure="10"
+                data-paper-figure="11"
                 data-zoom
                 data-caption="SAT-Real attention case. Spatial-Interactor predicts the correct camera rotation from shared visual evidence."
                 ><img
@@ -922,7 +937,7 @@
               <a
                 class="figure-link"
                 href="assets/trajectory-case.webp"
-                data-paper-figure="11"
+                data-paper-figure="12"
                 data-zoom
                 data-caption="VSTI-Bench qualitative case: sustained rightward camera movement over the queried interval."
                 ><img
@@ -953,7 +968,7 @@
             </p>
             <a
               class="text-link"
-              href="assets/paper.pdf"
+              href="assets/paper.pdf?v=20260917"
               target="_blank"
               rel="noopener"
               >Read the paper PDF
@@ -1124,7 +1139,7 @@
     <noscript
       ><p class="noscript-note">
         The complete results and all examples are available in the
-        <a href="assets/paper.pdf">paper PDF</a>.
+        <a href="assets/paper.pdf?v=20260917">paper PDF</a>.
       </p></noscript
     >
   </body>

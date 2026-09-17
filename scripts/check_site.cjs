@@ -93,11 +93,14 @@ async function main() {
       );
     assert.deepEqual(
       figureIds,
-      Array.from({ length: 11 }, (_, index) => index + 1),
+      Array.from({ length: 12 }, (_, index) => index + 1),
     );
     for (const id of figureIds) {
       assert(await page.locator(`[data-paper-figure="${id}"]`).isVisible());
       await assertImage(page, `[data-paper-figure="${id}"] > img`);
+    }
+    for (const [id, name] of [[1, "overview"], [2, "diagnostics"], [3, "paradigm"], [4, "construction"]]) {
+      assert((await page.locator(`[data-paper-figure="${id}"]`).getAttribute("href")).includes(`assets/${name}.webp`));
     }
     const tableIds = await page
       .locator("[data-paper-table]")
@@ -167,7 +170,7 @@ async function main() {
       assert(lines.at(-1).endsWith(`"${expected[1].at(-1)}"`));
     }
     console.log(
-      "PASS: all 11 main-paper figures and 5 tables, including interaction subtasks and CSVs",
+      "PASS: all 12 main-paper figures and 5 tables, including interaction subtasks and CSVs",
     );
 
     for (const level of ["l1", "l2", "l3"]) {
@@ -366,7 +369,7 @@ async function main() {
         {
           examples: 35,
           tables: 5,
-          figures: 11,
+          figures: 12,
           viewports: layouts.length,
           errors,
           localFile: !process.env.SITE_URL,

@@ -639,6 +639,10 @@ h1 {
   max-width: 1080px;
   margin-inline: auto;
 }
+.paper-figure--overview {
+  max-width: 1080px;
+  margin-inline: auto;
+}
 .paper-figure--paradigm {
   max-width: 1080px;
   margin-inline: auto;

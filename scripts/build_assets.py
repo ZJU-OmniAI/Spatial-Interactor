@@ -68,6 +68,7 @@ def prepare_web_image(image):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--paper-dir", type=Path, default=Path(__file__).resolve().parents[2] / "Spatial-Interactor-arXiv")
+    parser.add_argument("--figures", nargs="+", help="Export only these figure names and refresh the paper PDF.")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     assets = root / "assets"
@@ -75,8 +76,6 @@ def main():
     paper = args.paper_dir
     figures = {
         "diagnostics": "fig1_state_transition_diagnostics_landscape.pdf",
-        "paradigm": "fig2_spatial_learning_paradigms_landscape.pdf",
-        "construction": "fig3_lsi_construction_landscape.pdf",
         "curriculum": "source3_print_visibility_300dpi.pdf",
         "curriculum-ablation": "experiment_curriculum_progression.pdf",
         "training-dynamics": "main_training_dynamics_manual_mockup.pdf",
@@ -85,16 +84,36 @@ def main():
         "local-case": "fig7_satreal_attention_paper_layout_direct_preview.pdf",
         "trajectory-case": "source5_compact_300dpi.pdf",
     }
+    figures = {name: paper / "Figures" / source for name, source in figures.items()}
+    updated = paper / "fig7_manual_preview" / "updated_figures"
+    figures.update({
+        "overview": updated / "fig1_overview.png",
+        "paradigm": updated / "fig3_spatial_paradigms.png",
+        "construction": updated / "fig4_dataset_construction.png",
+    })
+    if args.figures:
+        unknown = set(args.figures) - figures.keys()
+        if unknown:
+            parser.error(f"Unknown figures: {', '.join(sorted(unknown))}")
+        figures = {name: figures[name] for name in args.figures}
     for name, source in figures.items():
-        content = subprocess.check_output([
-            "pdftocairo", "-singlefile", "-scale-to", "2600", "-png",
-            "-transp",
-            str(paper / "Figures" / source),
-            "-",
-        ])
-        image = prepare_web_image(Image.open(BytesIO(content)))
+        if source.suffix.lower() == ".pdf":
+            content = subprocess.check_output([
+                "pdftocairo", "-singlefile", "-scale-to", "2600", "-png",
+                "-transp", str(source), "-",
+            ])
+            image = prepare_web_image(Image.open(BytesIO(content)))
+        else:
+            with Image.open(source) as original:
+                original.thumbnail((2600, 2600), Image.Resampling.LANCZOS)
+                # The illustrated overview has an intentional paper texture.
+                image = original.convert("RGBA") if name == "overview" else prepare_web_image(original)
         image.save(assets / f"{name}.webp", quality=96, method=6)
         print(f"{name}: {image.width} x {image.height}", flush=True)
+    if args.figures:
+        shutil.copy2(paper / "fig7_manual_preview" / "paper.pdf", assets / "paper.pdf")
+        print("Selected figures and current paper PDF exported.")
+        return
     with Image.open(paper / "Figures" / "fig5_opd_300dpi.png") as image:
         prepare_web_image(image).save(assets / "opd.webp", quality=96, method=6)
     for case in [f"E{index:02d}" for index in range(1, 36)]:

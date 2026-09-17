@@ -68,7 +68,7 @@ async function main() {
 
     assert.equal(await page.locator("video").count(), 1);
     assert(await page.locator("video").evaluate((video) => video.autoplay && video.muted && video.loop && video.controls));
-    assert.equal(await page.locator("[data-paper-figure]").count(), 11);
+    assert.equal(await page.locator("[data-paper-figure]").count(), 12);
 
     for (const [width, height] of [
       [1440, 1000],
@@ -85,7 +85,7 @@ async function main() {
       );
       await page.locator('[data-paper-figure="2"]').click();
       await waitForFigure(page);
-      assert.equal(await page.locator("#figure-position").textContent(), "2 / 11");
+      assert.equal(await page.locator("#figure-position").textContent(), "2 / 12");
 
       const fit = await page.locator("#figure-dialog-image").boundingBox();
       await page.locator("#zoom-in").click();
@@ -96,7 +96,7 @@ async function main() {
 
       await page.locator("#next-figure").click();
       await waitForFigure(page);
-      assert.equal(await page.locator("#figure-position").textContent(), "3 / 11");
+      assert.equal(await page.locator("#figure-position").textContent(), "3 / 12");
       await checkControls(page, [".dialog-toolbar", ".figure-controls"]);
       await page
         .locator("#figure-dialog")
@@ -104,7 +104,7 @@ async function main() {
 
       await page.keyboard.press("ArrowLeft");
       await waitForFigure(page);
-      assert.equal(await page.locator("#figure-position").textContent(), "2 / 11");
+      assert.equal(await page.locator("#figure-position").textContent(), "2 / 12");
       await page.keyboard.press("Escape");
       assert.equal(await page.locator("#figure-dialog").isVisible(), false);
       assert.equal(
@@ -150,7 +150,7 @@ async function main() {
     assert.deepEqual(errors, []);
     await fs.writeFile(
       path.join(output, "media-checks.json"),
-      JSON.stringify({ figures: 11, viewports: 5, errors }, null, 2),
+      JSON.stringify({ figures: 12, viewports: 5, errors }, null, 2),
     );
     console.log("PASS: gallery, navigation, transitions, and reduced motion");
     console.log(`Screenshots and report: ${output}`);

@@ -14,7 +14,9 @@ connection is needed to view the site.
 - `media.js`: zoomable, keyboard-accessible figure gallery.
 - `assets/`: local figures, example images, fonts, icons, and the paper PDF.
 
-All 11 main-paper figures are included. The Analysis section contains curriculum
+All 12 main-paper figures are included. Figure 1 is the overview, Figure 2
+contains the diagnostics, and Figures 3-4 show the learning paradigm and data
+construction. The Analysis section contains curriculum
 ablation, OPD training dynamics, frame-budget/trace comparisons, and frame-order
 sensitivity. WalkerBench and ESI-Bench include every subtask from Tables 4-5.
 The three paper result tables are shown together in one continuous results
@@ -24,7 +26,7 @@ Content follows the current paper. Multi-step object operations are included in
 L1, not L3. Scores are reported paper results, not an independent evaluation.
 The table export contains the currently selected rows, in their displayed order.
 The masthead exposes four compact release actions: the temporary local PDF
-under the `ArXiv` label, GitHub, the Hugging Face author page for the dataset
+under the `ArXiv` label, GitHub, the Hugging Face project collection for the dataset
 and released models, and the BibTeX section. Once the paper receives its arXiv
 identifier, replace the single `assets/paper.pdf` href in `index.html` with the
 final `https://arxiv.org/abs/...` URL.
@@ -51,7 +53,15 @@ python3 scripts/build_assets.py --paper-dir ../Spatial-Interactor-arXiv
 ```
 
 This updates website assets only. It reads the PDF/figures in the paper folder
-without modifying them. To rebuild the appendix example index, run:
+without modifying them. The overview, paradigm, and construction figures come
+from `fig7_manual_preview/updated_figures`, matching the current paper source.
+To update only those three figures and the PDF:
+
+```bash
+python3 scripts/build_assets.py --figures overview paradigm construction
+```
+
+To rebuild the appendix example index, run:
 
 ```bash
 python3 scripts/build_examples.py --index ../AuthorKit27/appendix_artifacts/selected_case_index.json
