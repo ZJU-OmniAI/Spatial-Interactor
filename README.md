@@ -10,7 +10,7 @@
 
 <p align="center">
   <a href="https://zju-omniai.github.io/Spatial-Interactor/"><img src="https://img.shields.io/badge/Project-Page-A56F59?style=flat-square&amp;labelColor=54534D" alt="Project page"></a>
-  <a href="https://zju-omniai.github.io/Spatial-Interactor/assets/paper.pdf"><img src="https://img.shields.io/badge/Paper-PDF-9B8255?style=flat-square&amp;labelColor=54534D" alt="Paper PDF"></a>
+  <a href="https://zju-omniai.github.io/Spatial-Interactor/assets/paper.pdf?v=20260917"><img src="https://img.shields.io/badge/Paper-PDF-9B8255?style=flat-square&amp;labelColor=54534D" alt="Paper PDF"></a>
   <a href="https://huggingface.co/collections/kagakouko/spatial-interactor"><img src="https://img.shields.io/badge/Hugging_Face-Models_%26_Data-738363?style=flat-square&amp;labelColor=54534D" alt="Models and data on Hugging Face"></a>
   <a href="#citation"><img src="https://img.shields.io/badge/Cite-BibTeX-887A9A?style=flat-square&amp;labelColor=54534D" alt="BibTeX"></a>
 </p>
@@ -28,6 +28,10 @@ repository contains the data-construction and training code; the dataset and
 four model checkpoints are available on Hugging Face.
 
 ## Overview
+
+<p align="center">
+  <img src="assets/readme/overview.webp" width="100%" alt="Spatial-Interactor overview: interaction trajectories, three-level curriculum, SFT and OPD, and spatial reasoning results">
+</p>
 
 <p align="center">
   <img src="assets/readme/introduction-preview.webp" width="100%" alt="Animated Spatial-Interactor introduction">
@@ -48,7 +52,7 @@ state. Spatial-Interactor turns observable physical interaction into direct
 supervision for this process.
 
 <p align="center">
-  <img src="assets/readme/paradigm.webp" width="100%" alt="Spatial-Interactor learning paradigm">
+  <img src="assets/readme/paradigm.webp?v=20260917" width="100%" alt="Spatial-Interactor learning paradigm">
 </p>
 
 ## A three-level spatial interaction curriculum
@@ -70,7 +74,7 @@ textual ground truth before task templates produce question-answer pairs,
 keeping supervision tied to observable state changes.
 
 <p align="center">
-  <img src="assets/readme/construction.webp" width="100%" alt="LSI-108K construction pipeline">
+  <img src="assets/readme/construction.webp?v=20260917" width="100%" alt="LSI-108K construction pipeline">
 </p>
 
 | Level | Samples | Spatial supervision |
