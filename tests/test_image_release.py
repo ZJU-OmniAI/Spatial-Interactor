@@ -44,3 +44,12 @@ class ImageReleaseTest(unittest.TestCase):
             self.assertEqual(decoded["images"][1].getpixel((0, 0)), (255, 0, 0))
             result = subprocess.run(command, capture_output=True)
             self.assertNotEqual(result.returncode, 0)
+
+            annotations = root / "annotations"
+            subprocess.run([
+                sys.executable, str(script.with_name("prepare_release_dataset.py")),
+                "--input", str(source), "--output-dir", str(annotations), "--parquet",
+            ], check=True, capture_output=True)
+            with gzip.open(annotations / "lsi_l2.jsonl.gz", "rt") as stream:
+                expected = [json.loads(line) for line in stream]
+            self.assertEqual(pq.read_table(annotations / "lsi_l2.parquet").to_pylist(), expected)

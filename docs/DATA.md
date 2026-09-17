@@ -24,6 +24,10 @@ The Hugging Face release provides all annotations in the `default` configuration
 The `ai2thor` configuration additionally embeds original images for the 4,485
 AI2-THOR QA pairs. It preserves frame order and does not replace the full release.
 Other sources currently retain relative media references, not hosted image bytes.
+Use `prepare_release_dataset.py --parquet` to generate the Hub's Parquet
+annotation files as well as portable JSONL. All configurations within a Hub
+repository must use the same file format; do not mix JSONL and Parquet in the
+card's `configs` entries. The JSONL files remain available for direct download.
 
 The default annotation export retains only source, scene, task, curriculum level,
 and the SFT inclusion flag alongside the conversation and media references.

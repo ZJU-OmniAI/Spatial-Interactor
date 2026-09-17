@@ -62,6 +62,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--paper-counts", action="store_true")
     parser.add_argument("--compression", choices=("gzip", "none"), default="gzip")
     parser.add_argument("--metadata", choices=("minimal", "full"), default="minimal")
+    parser.add_argument("--parquet", action="store_true", help="Also write Parquet for Hub configurations.")
     return parser.parse_args()
 
 
@@ -224,6 +225,13 @@ def main() -> None:
     actual = {level: counts[level] for level in EXPECTED_COUNTS}
     if args.paper_counts and actual != EXPECTED_COUNTS:
         raise RuntimeError(f"LSI-108K count mismatch: expected {EXPECTED_COUNTS}, got {actual}")
+    if args.parquet:
+        from datasets import Dataset
+
+        for level, path in paths.items():
+            rows = [row for _, _, row in read_rows([path])]
+            if rows:
+                Dataset.from_list(rows).to_parquet(args.output_dir / f"lsi_{level}.parquet")
     summary = {
         "dataset": "LSI-108K",
         "total_rows": sum(actual.values()),
