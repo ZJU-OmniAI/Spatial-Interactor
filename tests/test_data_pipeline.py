@@ -266,6 +266,31 @@ class DataPipelineTest(unittest.TestCase):
             summary = json.loads((output / "summary.json").read_text())
             self.assertEqual(summary["source_counts"]["vsti_long_horizon"], 2)
 
+    def test_release_source_is_not_inferred_from_campaign_name(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            rows = []
+            for source in ("SIMS-V", "ScanNetV2", "ScanNet++", "ARKitScenes", "roomtour3d"):
+                row = choice_row(source, "clip.mp4", "simple_path_shape")
+                row["metadata"].update(
+                    source=source,
+                    dataset="camera_pose_qa_visual_strict_intervals_user_arkit_cw90",
+                )
+                rows.append(row)
+            extra = choice_row("extra", "extra.mp4", "simple_path_shape")
+            extra["metadata"].update(source="SIMS-V", dataset="videoqa_extra_natural_candidates")
+            rows.append(extra)
+            write_jsonl(root / "input.jsonl", rows)
+            self.run_script(
+                "data_preparation/prepare_release_dataset.py",
+                "--input", str(root / "input.jsonl"), "--output-dir", str(root / "out"),
+            )
+            with gzip.open(root / "out/lsi_l3.jsonl.gz", "rt") as handle:
+                result = [json.loads(line) for line in handle]
+            self.assertEqual([r["metadata"]["source"] for r in result],
+                             ["SIMS-V", "ScanNet", "ScanNet++", "ARKitScenes", "RoomTour3D", "SIMS-V"])
+            self.assertEqual([r["conversations"] for r in result], [r["conversations"] for r in rows])
+
     def test_trace_format_validator(self):
         module_path = ROOT / "data_generation/generate_privileged_traces.py"
         spec = importlib.util.spec_from_file_location("trace_generator", module_path)

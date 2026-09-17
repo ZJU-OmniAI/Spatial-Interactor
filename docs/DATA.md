@@ -15,19 +15,16 @@ curriculum levels:
 
 Simulation sources are AI2-THOR, ProcTHOR, HSSD, and ReplicaCAD. Pose-aligned
 real-scene sources are ScanNet, ScanNet++, MultiScan, 3RScan, and ARKitScenes.
-Long-horizon trajectories additionally use RoomTour and BridgeData. Source data
-must be obtained under each dataset's own terms.
+RoomTour and SIMS-V provide additional camera trajectories; BridgeData V2
+provides robot-arm observations. Source data retain their own terms and attribution.
 
 ## Scene pipeline
 
-The Hugging Face release provides all annotations in the `default` configuration.
-The `ai2thor` configuration additionally embeds original images for the 4,485
-AI2-THOR QA pairs. It preserves frame order and does not replace the full release.
-Other sources currently retain relative media references, not hosted image bytes.
-Use `prepare_release_dataset.py --parquet` to generate the Hub's Parquet
-annotation files as well as portable JSONL. All configurations within a Hub
-repository must use the same file format; do not mix JSONL and Parquet in the
-card's `configs` entries. The JSONL files remain available for direct download.
+The Hugging Face `default` configuration contains all annotations; `images`
+embeds available original images. Video archives preserve the relative paths
+used by the annotations. See the dataset card for current media coverage and
+source-specific access conditions. Not all sources permit public redistribution.
+`prepare_release_dataset.py --parquet` creates portable JSONL and Parquet exports.
 
 The default annotation export retains only source, scene, task, curriculum level,
 and the SFT inclusion flag alongside the conversation and media references.
@@ -45,6 +42,10 @@ python data_preparation/export_image_subset.py \
 
 Install `requirements-data.txt` first. Images are validated and embedded without
 resizing or re-encoding; source attribution must accompany any distribution.
+For licensed video clips, `export_video_subset.py` accepts the same input,
+media-root, source, and output-dir arguments. It requires FFmpeg, checks video
+stream headers, deduplicates paths, and writes TAR shards with a checksum manifest.
+It does not re-encode videos or replace the annotations.
 
 `data_generation/scene/` contains the complete source-specific pipeline. The
 common simulated flow is:

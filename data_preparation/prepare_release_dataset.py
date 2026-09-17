@@ -35,16 +35,16 @@ JSON_METADATA_FIELDS = ("gt", "options", "correct_options")
 SOURCE_NAMES = {
     "AI2THOR": "AI2-THOR", "PROC": "ProcTHOR", "REP": "ReplicaCAD",
     "arkit": "ARKitScenes", "scannetpp": "ScanNet++", "scannetv2": "ScanNet",
+    "ScanNetV2": "ScanNet",
     "3rscan": "3RScan", "multiscan": "MultiScan", "roomtour3d": "RoomTour3D",
     "bridgedata_v2": "BridgeData V2",
 }
 
 
 def compact_metadata(metadata: dict[str, Any]) -> dict[str, Any]:
-    source = str(metadata.get("dataset") or metadata.get("source") or "")
-    if source.startswith("camera_pose_qa_") and "arkit" in source:
-        source = "ARKitScenes"
-    elif source.startswith(("roomtour3d_", "videoqa_extra_natural_candidates_")):
+    # A generation campaign can contain several sources; use the recorded origin.
+    source = str(metadata.get("source") or metadata.get("dataset") or "")
+    if source.startswith("roomtour3d_"):
         source = "RoomTour3D"
     return {
         "curriculum_level": metadata["curriculum_level"],
