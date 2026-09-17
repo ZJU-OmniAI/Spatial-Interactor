@@ -20,6 +20,28 @@ must be obtained under each dataset's own terms.
 
 ## Scene pipeline
 
+The Hugging Face release provides all annotations in the `default` configuration.
+The `ai2thor` configuration additionally embeds original images for the 4,485
+AI2-THOR QA pairs. It preserves frame order and does not replace the full release.
+Other sources currently retain relative media references, not hosted image bytes.
+
+The default annotation export retains only source, scene, task, curriculum level,
+and the SFT inclusion flag alongside the conversation and media references.
+Use `prepare_release_dataset.py --metadata full` with original generated records
+to retain structured geometry for construction/debugging. The compact release is
+not a substitute for the original geometric records used by the OPD data builder.
+
+To package images you have permission to redistribute:
+
+```bash
+python data_preparation/export_image_subset.py \
+  --input /data/LSI-108K/lsi_l1.jsonl.gz /data/LSI-108K/lsi_l2.jsonl.gz \
+  --media-root /data/media --source AI2-THOR --output-dir /data/ai2thor_parquet
+```
+
+Install `requirements-data.txt` first. Images are validated and embedded without
+resizing or re-encoding; source attribution must accompany any distribution.
+
 `data_generation/scene/` contains the complete source-specific pipeline. The
 common simulated flow is:
 

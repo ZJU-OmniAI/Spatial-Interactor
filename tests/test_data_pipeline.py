@@ -161,6 +161,7 @@ class DataPipelineTest(unittest.TestCase):
                 "data_preparation/prepare_release_dataset.py",
                 "--input", str(source),
                 "--output-dir", str(output),
+                "--metadata", "full",
             )
             with gzip.open(output / "lsi_l1.jsonl.gz", "rt", encoding="utf-8") as handle:
                 released = json.loads(handle.readline())
@@ -171,6 +172,21 @@ class DataPipelineTest(unittest.TestCase):
             self.assertEqual(released["media_type"], "image")
             self.assertTrue(released["media_paths"])
             self.assertNotIn("/private/build.json", json.dumps(released))
+
+            minimal = root / "minimal"
+            self.run_script(
+                "data_preparation/prepare_release_dataset.py",
+                "--input", str(output / "lsi_l1.jsonl.gz"),
+                "--output-dir", str(minimal),
+            )
+            with gzip.open(minimal / "lsi_l1.jsonl.gz", "rt", encoding="utf-8") as handle:
+                compact = json.loads(handle.readline())
+            self.assertEqual(compact["conversations"], released["conversations"])
+            self.assertEqual(compact["media_paths"], released["media_paths"])
+            self.assertEqual(set(compact["metadata"]), {
+                "curriculum_level", "task_type", "source", "scene", "used_in_reported_sft",
+            })
+            self.assertFalse(compact["metadata"]["used_in_reported_sft"])
 
     def test_opd_builder_keeps_privilege_out_of_student_prompt(self):
         with tempfile.TemporaryDirectory() as temporary:

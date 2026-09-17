@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import gzip
 import json
 import re
 from collections import Counter
@@ -67,7 +68,8 @@ CLASS_TASKS = {
 
 def read_rows(paths: list[Path]) -> Iterable[tuple[Path, int, dict[str, Any]]]:
     for path in paths:
-        with path.open("r", encoding="utf-8") as handle:
+        opener = gzip.open if path.suffix == ".gz" else open
+        with opener(path, "rt", encoding="utf-8") as handle:
             for line_number, line in enumerate(handle, 1):
                 if line.strip():
                     row = json.loads(line)

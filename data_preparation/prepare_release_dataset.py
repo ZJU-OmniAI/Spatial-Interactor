@@ -32,6 +32,27 @@ SCALAR_METADATA_FIELDS = (
     "correct_option",
 )
 JSON_METADATA_FIELDS = ("gt", "options", "correct_options")
+SOURCE_NAMES = {
+    "AI2THOR": "AI2-THOR", "PROC": "ProcTHOR", "REP": "ReplicaCAD",
+    "arkit": "ARKitScenes", "scannetpp": "ScanNet++", "scannetv2": "ScanNet",
+    "3rscan": "3RScan", "multiscan": "MultiScan", "roomtour3d": "RoomTour3D",
+    "bridgedata_v2": "BridgeData V2",
+}
+
+
+def compact_metadata(metadata: dict[str, Any]) -> dict[str, Any]:
+    source = str(metadata.get("dataset") or metadata.get("source") or "")
+    if source.startswith("camera_pose_qa_") and "arkit" in source:
+        source = "ARKitScenes"
+    elif source.startswith(("roomtour3d_", "videoqa_extra_natural_candidates_")):
+        source = "RoomTour3D"
+    return {
+        "curriculum_level": metadata["curriculum_level"],
+        "task_type": metadata["task_type"],
+        "source": SOURCE_NAMES.get(source, source),
+        "scene": str(metadata.get("scene") or ""),
+        "used_in_reported_sft": metadata["used_in_reported_sft"],
+    }
 
 
 def parse_args() -> argparse.Namespace:
@@ -40,6 +61,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--paper-counts", action="store_true")
     parser.add_argument("--compression", choices=("gzip", "none"), default="gzip")
+    parser.add_argument("--metadata", choices=("minimal", "full"), default="minimal")
     return parser.parse_args()
 
 
@@ -65,6 +87,8 @@ def normalize_conversations(row: dict[str, Any], location: str) -> list[dict[str
 
 def portable_media(row: dict[str, Any], field: str, location: str) -> list[str]:
     values = row.get(field) or []
+    if not values and row.get("media_type") == {"images": "image", "videos": "video"}[field]:
+        values = row.get("media_paths") or []
     if isinstance(values, str):
         values = [values]
     if not isinstance(values, list):
@@ -101,7 +125,7 @@ def remove_private_values(value: Any) -> Any:
     return value
 
 
-def release_row(row: dict[str, Any], location: str) -> tuple[str, str, dict[str, Any]]:
+def release_row(row: dict[str, Any], location: str, metadata_mode: str = "minimal") -> tuple[str, str, dict[str, Any]]:
     metadata = row.get("metadata") or {}
     if not isinstance(metadata, dict):
         raise ValueError(f"{location} has invalid metadata")
@@ -126,6 +150,7 @@ def release_row(row: dict[str, Any], location: str) -> tuple[str, str, dict[str,
             for key in JSON_METADATA_FIELDS
         }
     )
+
     output_metadata.update(
         {
             "task_type": task,
@@ -135,6 +160,8 @@ def release_row(row: dict[str, Any], location: str) -> tuple[str, str, dict[str,
             ),
         }
     )
+    if metadata_mode == "minimal":
+        output_metadata = compact_metadata(output_metadata)
 
     images = portable_media(row, "images", location)
     videos = portable_media(row, "videos", location)
@@ -184,7 +211,7 @@ def main() -> None:
         handles = {"l1": l1_handle, "l2": l2_handle, "l3": l3_handle}
         for path, line_number, row in read_rows(args.input):
             location = f"{path.name}:{line_number}"
-            level, task, output = release_row(row, location)
+            level, task, output = release_row(row, location, args.metadata)
             if output["id"] in seen_ids:
                 raise ValueError(f"Duplicate id: {output['id']}")
             seen_ids.add(output["id"])
@@ -217,8 +244,8 @@ def main() -> None:
                 and key != "l1:long_horizon_manipulation_program"
             )
         ),
-        "source_files": [path.name for path in args.input],
         "media_included": False,
+        "metadata_mode": args.metadata,
     }
     assert_private_data_absent(summary, "dataset summary")
     (args.output_dir / "dataset_summary.json").write_text(
