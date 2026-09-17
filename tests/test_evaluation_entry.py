@@ -1,5 +1,8 @@
 import importlib.util
+import json
 from pathlib import Path
+import subprocess
+import sys
 import tempfile
 import unittest
 
@@ -49,6 +52,31 @@ class EvaluationEntryTests(unittest.TestCase):
             (root / "task.yaml").write_text("task: example\n")
             state = ENTRY.source_state(root, root)
             self.assertEqual(len(state["task_files"]["task.yaml"]), 64)
+
+    def test_launch_and_resume_guard(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            toolkit = root / "toolkit"
+            toolkit.mkdir()
+            (toolkit / "run.py").write_text(
+                "import pathlib, sys\n"
+                "p = pathlib.Path(sys.argv[sys.argv.index('--work-dir') + 1])\n"
+                "p.mkdir(parents=True, exist_ok=True)\n"
+                "(p / 'launched.txt').write_text('ok')\n"
+            )
+            output = root / "output"
+            command = [sys.executable, str(Path(ENTRY.__file__)), "--bench", "vsi",
+                       "--model", "org/model", "--family", "qwen25vl", "--toolkit", str(toolkit),
+                       "--output", str(output)]
+            dry_run = subprocess.run(command + ["--dry-run"], capture_output=True, text=True, check=True)
+            self.assertIn("command", json.loads(dry_run.stdout))
+            self.assertFalse(output.exists())
+            subprocess.run(command, capture_output=True, check=True)
+            self.assertEqual((output / "results/launched.txt").read_text(), "ok")
+            subprocess.run(command + ["--resume"], capture_output=True, check=True)
+            changed = subprocess.run(command + ["--resume", "--frames", "16"], capture_output=True, text=True)
+            self.assertNotEqual(changed.returncode, 0)
+            self.assertIn("configuration", changed.stderr)
 
 
 if __name__ == "__main__":
