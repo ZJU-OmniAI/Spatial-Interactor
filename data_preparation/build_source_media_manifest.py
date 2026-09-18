@@ -5,7 +5,7 @@ import argparse, gzip, json
 from pathlib import Path
 from typing import Any
 SOURCE_NAMES={"AI2THOR":"AI2-THOR","PROC":"ProcTHOR","REP":"ReplicaCAD","arkit":"ARKitScenes","ScanNetV2":"ScanNet","scannetv2":"ScanNet","scannetpp":"ScanNet++","3rscan":"3RScan","multiscan":"MultiScan","roomtour3d":"RoomTour3D","bridgedata_v2":"BridgeData V2"}
-LOCATOR_KEYS=("source_qa_id","video_id","scene_id","path_id","clip_id","frame_ids","frame_indices","start_frame","end_frame")
+LOCATOR_KEYS=("source_qa_id","video_id","scene_id","path_id","clip_id","frame_ids","frame_indices","sampled_frame_indices","start_frame","end_frame","episode_id","episode_index","shard","turn_frame")
 def parse_json(value:Any)->dict[str,Any]:
     if isinstance(value,dict): return value
     if isinstance(value,str):
@@ -17,6 +17,9 @@ def make_row(row):
     metadata=row.get("metadata") or {}; source=str(metadata.get("source") or metadata.get("dataset") or "")
     if source.startswith("roomtour3d_"): source="RoomTour3D"
     gt=parse_json(metadata.get("gt_json")); locator={key:gt[key] for key in LOCATOR_KEYS if key in gt and gt[key] not in (None,"",[])}
+    if source == "roomtour3d" and not locator and row["id"].startswith("roomtour3d_"):
+        parts=row["id"].split("_")
+        if len(parts) >= 3: locator={"video_id": parts[1], "clip_index": parts[2]}
     if not locator and metadata.get("scene"): locator["scene_id"]=metadata["scene"]
     source_name=SOURCE_NAMES.get(source,source)
     hosted_images={"AI2-THOR","ProcTHOR","HSSD","ReplicaCAD","MultiScan","BridgeData V2","SpaceNum","ARKitScenes"}
