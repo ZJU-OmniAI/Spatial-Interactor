@@ -158,35 +158,21 @@ h3 {
 .section-title .eyebrow {
   font-size: 13px;
 }
-#motivation {
-  background: #f1e2d8;
-}
-#approach {
-  background: #f1e2ca;
-}
-#construction {
-  background: #e6e7d8;
-}
-#dataset {
-  background: #f1e2ca;
-}
-#method {
-  background: #f1e2d8;
-}
-#results {
-  background: #e6e7d8;
-}
-#analysis {
-  background: #f1e2ca;
-}
-#interaction {
-  background: #f1e2d8;
-}
+#motivation,
+#method,
 #examples {
+  background: #f1e2d8;
+}
+#construction,
+#analysis {
   background: #e6e7d8;
 }
+#approach,
+#dataset,
+#results,
+#interaction,
 #citation {
-  background: #f1e2ca;
+  background: var(--paper);
 }
 #motivation .eyebrow {
   color: var(--rust);
@@ -317,41 +303,6 @@ nav > a.active::after {
   margin: 0 auto 24px;
   text-align: center;
 }
-.story-deck-feature {
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 22px;
-  align-items: stretch;
-}
-.story-deck-feature .story-deck-film,
-.story-deck-overview {
-  max-width: none;
-  margin: 0;
-}
-.story-deck-overview {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  background: var(--paper-deep);
-  border: 1px solid #d8cfc1;
-  box-shadow: 0 8px 24px rgba(90, 72, 49, 0.08);
-}
-.story-deck-overview .figure-link {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  background: var(--surface);
-}
-.story-deck-overview figcaption,
-.presentation-language-pair figcaption {
-  padding: 10px 13px;
-  border-top: 1px solid var(--line);
-  color: var(--ink-soft);
-  background: var(--surface);
-  font-size: 13px;
-  font-weight: 700;
-  text-align: left;
-}
 .story-deck-intro h2 {
   max-width: 860px;
   margin-inline: auto;
@@ -378,6 +329,15 @@ nav > a.active::after {
   height: auto;
   aspect-ratio: 16 / 9;
   background: #1c1d21;
+}
+.presentation-label {
+  max-width: 1038px;
+  margin: 26px auto 12px;
+  color: var(--ink-soft);
+  font-size: 14px;
+  font-weight: 750;
+  letter-spacing: 0.02em;
+  text-align: left;
 }
 .story-deck-viewer {
   display: grid;
@@ -473,25 +433,6 @@ nav > a.active::after {
   gap: 7px;
   max-width: 920px;
   margin-inline: auto;
-}
-.presentation-language-pair {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 22px;
-  max-width: 1038px;
-  margin: 28px auto 0;
-}
-.presentation-language-pair figure {
-  overflow: hidden;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  box-shadow: 0 6px 18px rgba(90, 72, 49, 0.06);
-}
-.presentation-language-pair figure > img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
 }
 .story-thumb {
   position: relative;
@@ -1674,8 +1615,6 @@ dialog[open] {
   .story-deck-intro {
     margin-bottom: 20px;
   }
-  .story-deck-feature,
-  .presentation-language-pair,
   .analysis-grid {
     grid-template-columns: 1fr;
   }
