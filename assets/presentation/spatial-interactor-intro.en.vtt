@@ -1,34 +1,43 @@
 WEBVTT
 
-00:00:00.000 --> 00:00:08.500
-Spatial-Interactor · Learn, interact, reason.
+00:00:01.800 --> 00:00:08.300
+Every action the robot takes gives the world a new answer.
 
-00:00:08.500 --> 00:00:18.000
-People do not learn space by looking alone.
+00:00:08.300 --> 00:00:13.500
+Today's models can see the frames, but fail to read the changes.
 
-00:00:18.000 --> 00:00:29.000
-Each action changes the world—and the world answers back.
+00:00:13.500 --> 00:00:21.500
+How does a baby learn space? By moving, using its hands, and interacting with the world.
 
-00:00:29.000 --> 00:00:40.000
-How do we learn space? By moving, acting, and interacting with the world.
+00:00:21.500 --> 00:00:31.500
+We use actions to understand causal change and why the world changes.
 
-00:00:40.000 --> 00:00:50.000
-From local state transitions to long-horizon spatial states.
+00:00:37.000 --> 00:00:42.500
+One interaction naturally connects three things: observation, action, and a new observation.
 
-00:00:50.000 --> 00:01:00.000
-Learn one step first, then connect the steps.
-
-00:01:00.000 --> 00:01:10.000
+00:00:42.500 --> 00:00:49.500
 Three stages: passive world changes, active self-motion, and long-trajectory integration.
 
-00:01:10.000 --> 00:01:20.000
-Given a trajectory, how far did the camera move?
+00:00:49.500 --> 00:00:54.500
+108K verifiable interaction QA pairs.
 
-00:01:20.000 --> 00:01:30.000
-Forward, turn left, move forward... can the model recover the complete spatial state?
+00:00:54.500 --> 00:01:03.500
+Two-stage training: SFT learns local transitions, and on-policy distillation connects them into complete states.
 
-00:01:30.000 --> 00:01:40.000
+00:01:03.500 --> 00:01:12.500
+A 32-frame trajectory: how far did the camera move?
+
+00:01:12.500 --> 00:01:16.500
+Read local displacements segment by segment, then accumulate them into a complete path: 20 m traveled with only 2 m between the endpoints.
+
+00:01:16.500 --> 00:01:22.000
+A different question: what is the motion sequence of the complete trajectory?
+
+00:01:22.000 --> 00:01:31.500
+Forward, turn left, forward, turn left, forward: five transitions form a complete spatial state.
+
+00:01:31.500 --> 00:01:38.500
 One interaction becomes the capability for the next.
 
-00:01:40.000 --> 00:01:45.408
-Spatial-Interactor · Understanding space through interaction.
+00:01:38.500 --> 00:01:45.408
+Understand the world through interaction, and keep improving through interaction.
