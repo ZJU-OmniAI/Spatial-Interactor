@@ -19,6 +19,18 @@
   </a>
 </p>
 
+## 🎞️ Visual Presentation
+
+The full 20-slide visual presentation is included in the repository. Select
+the preview to open the presentation video, or download the
+[editable deck](assets/presentation/Spatial-Interactor-Visual-Presentation.pptx).
+
+<p align="center">
+  <a href="assets/presentation/spatial-interactor-presentation.mp4">
+    <img src="assets/readme/presentation-preview.webp" width="90%" alt="Spatial-Interactor visual presentation">
+  </a>
+</p>
+
 ## 📖 Overview
 
 Spatial reasoning is not only a matter of recognizing static relations. An
@@ -82,18 +94,6 @@ The complete release is collected on
 Source media are governed by their upstream licenses. When redistribution is
 not permitted, LSI-108K provides source and episode identifiers for obtaining
 the corresponding media from the original dataset.
-
-## 🎞️ Visual Presentation
-
-The full 20-slide visual presentation is included in the repository. Select
-the preview to open the presentation video, or download the
-[editable deck](assets/presentation/Spatial-Interactor-Visual-Presentation.pptx).
-
-<p align="center">
-  <a href="assets/presentation/spatial-interactor-presentation.mp4">
-    <img src="assets/readme/presentation-preview.webp" width="90%" alt="Spatial-Interactor visual presentation">
-  </a>
-</p>
 
 ## 🚀 Quick Start
 
