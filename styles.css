@@ -161,7 +161,7 @@ h3 {
 #motivation,
 #method,
 #examples {
-  background: #f1e2d8;
+  background: #e6e7d8;
 }
 #construction,
 #analysis {
@@ -330,6 +330,16 @@ nav > a.active::after {
   height: auto;
   aspect-ratio: 16 / 9;
   background: #1c1d21;
+}
+.video-language-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 920px;
+  margin: -16px auto 28px;
+  color: var(--ink-soft);
+  font-size: 13px;
+  font-weight: 750;
 }
 .presentation-label {
   display: flex;
@@ -1010,7 +1020,7 @@ select {
   justify-content: space-between;
   cursor: pointer;
   list-style: none;
-  color: var(--accent);
+  color: var(--coral);
   font-size: 14px;
   font-weight: 700;
 }
@@ -1033,7 +1043,7 @@ select {
 .answer-details p {
   font-size: 14px;
   margin-top: 10px;
-  color: var(--accent);
+  color: var(--coral);
   line-height: 1.7;
 }
 .curriculum-overview {
@@ -1358,15 +1368,7 @@ td.overall {
 }
 @media (min-width: 1001px) {
   #interaction > .wrap {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 28px;
-  }
-  #interaction > .wrap > .section-title {
-    grid-column: 1 / -1;
-  }
-  #interaction .interaction-results + .interaction-results {
-    margin-top: 0;
+    display: block;
   }
 }
 
@@ -1657,6 +1659,10 @@ dialog[open] {
   .presentation-label {
     gap: 12px;
     font-size: 13px;
+  }
+  .video-language-row {
+    gap: 12px;
+    font-size: 12px;
   }
   .story-deck-viewer {
     grid-template-columns: 30px minmax(0, 1fr) 30px;

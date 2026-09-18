@@ -55,6 +55,35 @@
   const storyProgress = $("story-progress");
   const storyThumbs = $("story-thumbs");
   const languageButtons = [...document.querySelectorAll("[data-presentation-language]")];
+  const videoLanguageButtons = [...document.querySelectorAll("[data-video-language]")];
+  const introVideo = $("intro-video");
+  const introVideoSource = $("intro-video-source");
+  const introCaptionTrack = $("intro-caption-track");
+  function selectVideoLanguage(language) {
+    if (!introVideo || !introVideoSource) return;
+    const selected = language === "en" ? "en" : "zh";
+    const wasPlaying = !introVideo.paused;
+    const currentTime = introVideo.currentTime;
+    introVideoSource.src = selected === "en"
+      ? "assets/presentation/spatial-interactor-intro-en.mp4?v=20260918c"
+      : "assets/presentation/spatial-interactor-intro.mp4?v=20260918c";
+    if (introCaptionTrack) {
+      introCaptionTrack.mode = selected === "en" ? "hidden" : "disabled";
+    }
+    videoLanguageButtons.forEach((button) => {
+      const active = button.dataset.videoLanguage === selected;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-pressed", String(active));
+    });
+    introVideo.load();
+    introVideo.addEventListener("loadedmetadata", () => {
+      introVideo.currentTime = Math.min(currentTime, Math.max(0, introVideo.duration - 0.2));
+      if (wasPlaying) introVideo.play().catch(() => {});
+    }, { once: true });
+  }
+  videoLanguageButtons.forEach((button) => {
+    button.addEventListener("click", () => selectVideoLanguage(button.dataset.videoLanguage));
+  });
   if (storySlide && storyPageNumber && storyPageTitle && storyProgress && storyThumbs) {
     const storyViewer = document.querySelector(".story-deck-viewer");
     const storyToggle = $("story-toggle");

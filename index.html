@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="styles.css?v=20260918a" />
     <script src="data.js" defer></script>
     <script src="examples.js" defer></script>
-    <script src="app.js?v=20260918b" defer></script>
+    <script src="app.js?v=20260918c" defer></script>
     <script src="media.js" defer></script>
   </head>
   <body>
@@ -148,6 +148,7 @@
             <h2 id="story-deck-title" class="sr-only">Project overview</h2>
             <figure class="story-deck-film">
                 <video
+                  id="intro-video"
                   autoplay
                   controls
                   loop
@@ -158,15 +159,23 @@
                   width="1280"
                   height="720"
                 >
-                  <source src="assets/presentation/spatial-interactor-intro-en.mp4" type="video/mp4" />
+                  <source id="intro-video-source" src="assets/presentation/spatial-interactor-intro.mp4" type="video/mp4" />
                   <track
+                    id="intro-caption-track"
                     kind="captions"
                     srclang="en"
                     label="English"
-                    src="assets/presentation/spatial-interactor-intro.en.vtt?v=20260918b"
+                    src="assets/presentation/spatial-interactor-intro.en.vtt?v=20260918c"
                   />
                 </video>
             </figure>
+            <div class="video-language-row">
+              <span>Project video</span>
+              <span class="presentation-language-toggle" role="group" aria-label="Video language">
+                <button type="button" class="language-button is-active" data-video-language="zh" aria-pressed="true">中文视频</button>
+                <button type="button" class="language-button" data-video-language="en" aria-pressed="false">English</button>
+              </span>
+            </div>
           </div>
           <div class="presentation-label">
             <span>Presentation · 20 pages</span>

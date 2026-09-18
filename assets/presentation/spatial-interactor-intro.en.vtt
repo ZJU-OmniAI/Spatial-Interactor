@@ -1,43 +1,43 @@
 WEBVTT
 
 00:00:01.800 --> 00:00:08.300
-Every action the robot takes gives the world a new answer.
+Every action gives the world a new answer.
 
 00:00:08.300 --> 00:00:13.500
-Today's models can see the frames, but fail to read the changes.
+Today's models see the frames but miss the changes.
 
 00:00:13.500 --> 00:00:21.500
 How does a baby learn space? By moving, using its hands, and interacting with the world.
 
 00:00:21.500 --> 00:00:31.500
-We use actions to understand causal change and why the world changes.
+We use action to understand why the world changes.
 
 00:00:37.000 --> 00:00:42.500
-One interaction naturally connects three things: observation, action, and a new observation.
+One interaction links observation, action, and new observation.
 
 00:00:42.500 --> 00:00:49.500
-Three stages: passive world changes, active self-motion, and long-trajectory integration.
+Three stages: passive world change, active self-motion, and long-trajectory integration.
 
 00:00:49.500 --> 00:00:54.500
 108K verifiable interaction QA pairs.
 
 00:00:54.500 --> 00:01:03.500
-Two-stage training: SFT learns local transitions, and on-policy distillation connects them into complete states.
+Two-stage training: SFT learns local transitions; OPD connects them into complete states.
 
 00:01:03.500 --> 00:01:12.500
 A 32-frame trajectory: how far did the camera move?
 
 00:01:12.500 --> 00:01:16.500
-Read local displacements segment by segment, then accumulate them into a complete path: 20 m traveled with only 2 m between the endpoints.
+Local displacements form a 20-meter path; endpoints are 2 meters apart.
 
 00:01:16.500 --> 00:01:22.000
-A different question: what is the motion sequence of the complete trajectory?
+What is the motion sequence of the complete trajectory?
 
 00:01:22.000 --> 00:01:31.500
-Forward, turn left, forward, turn left, forward: five transitions form a complete spatial state.
+Forward, left, forward, left, forward: five transitions form a complete state.
 
 00:01:31.500 --> 00:01:38.500
-One interaction becomes the capability for the next.
+One interaction becomes the next capability.
 
 00:01:38.500 --> 00:01:45.408
-Understand the world through interaction, and keep improving through interaction.
+Understand the world through interaction, and keep improving.
