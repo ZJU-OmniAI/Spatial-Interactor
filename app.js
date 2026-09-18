@@ -54,6 +54,33 @@
   const storyPageTitle = $("story-page-title");
   const storyProgress = $("story-progress");
   const storyThumbs = $("story-thumbs");
+  const languageButtons = [...document.querySelectorAll("[data-presentation-language]")];
+  const introVideo = document.querySelector(".story-deck-film video");
+  const videoSubtitle = $("video-subtitle");
+  const videoCues = [
+    [0, 8.5, "Spatial-Interactor · Learn, interact, reason."],
+    [8.5, 18, "People do not learn space by looking alone."],
+    [18, 29, "Each action changes the world—and the world answers back."],
+    [29, 40, "How do we learn space? By moving, acting, and interacting with the world."],
+    [40, 50, "From local state transitions to long-horizon spatial states."],
+    [50, 60, "Learn one step first, then connect the steps."],
+    [60, 70, "Three stages: passive world changes, active self-motion, and long-trajectory integration."],
+    [70, 80, "Given a trajectory, how far did the camera move?"],
+    [80, 90, "Forward, turn left, move forward... can the model recover the complete spatial state?"],
+    [90, 100, "One interaction becomes the capability for the next."],
+    [100, 105.408, "Spatial-Interactor · Understanding space through interaction."],
+  ];
+  function updateVideoSubtitle() {
+    if (!introVideo || !videoSubtitle) return;
+    const cue = videoCues.find(([start, end]) => introVideo.currentTime >= start && introVideo.currentTime < end);
+    videoSubtitle.textContent = cue ? cue[2] : "";
+    videoSubtitle.classList.toggle("is-visible", Boolean(cue));
+  }
+  if (introVideo) {
+    ["timeupdate", "loadedmetadata", "seeked", "play", "pause"].forEach((eventName) => {
+      introVideo.addEventListener(eventName, updateVideoSubtitle);
+    });
+  }
   if (storySlide && storyPageNumber && storyPageTitle && storyProgress && storyThumbs) {
     const storyViewer = document.querySelector(".story-deck-viewer");
     const storyToggle = $("story-toggle");
@@ -68,9 +95,11 @@
       storyToggle.title = label;
       storyToggle.querySelector("img").src = `assets/icons/${storyPaused ? "play" : "pause"}.svg`;
     }
+    let storyLanguage = "en";
     const storyAsset = (index) => {
       const cacheBust = [1, 3, 17].includes(index) ? "?v=20260916" : "";
-      return `assets/presentation/slide-${String(index + 1).padStart(2, "0")}.webp${cacheBust}`;
+      const suffix = storyLanguage === "zh" ? "-zh" : "";
+      return `assets/presentation/slide-${String(index + 1).padStart(2, "0")}${suffix}.webp${cacheBust}`;
     };
     storyPages.forEach((title, index) => {
       const button = element("button", undefined, "story-thumb");
@@ -90,9 +119,9 @@
       storyIndex = (nextIndex + storyPages.length) % storyPages.length;
       const page = String(storyIndex + 1).padStart(2, "0");
       storySlide.src = storyAsset(storyIndex);
-      storySlide.alt = `Presentation page ${storyIndex + 1} of ${storyPages.length}: ${storyPages[storyIndex]}`;
       storyPageNumber.textContent = page;
       storyPageTitle.textContent = storyPages[storyIndex];
+      storySlide.alt = `${storyLanguage === "zh" ? "Chinese" : "English"} presentation page ${storyIndex + 1} of ${storyPages.length}: ${storyPages[storyIndex]}`;
       storyProgress.style.transform = `scaleX(${(storyIndex + 1) / storyPages.length})`;
       [...storyThumbs.children].forEach((thumb, index) => {
         const active = index === storyIndex;
@@ -101,6 +130,21 @@
       });
       if (animate && !reducedMotion.matches) animateIn(storySlide, 0);
     }
+    function selectLanguage(language) {
+      storyLanguage = language === "zh" ? "zh" : "en";
+      languageButtons.forEach((button) => {
+        const active = button.dataset.presentationLanguage === storyLanguage;
+        button.classList.toggle("is-active", active);
+        button.setAttribute("aria-pressed", String(active));
+      });
+      [...storyThumbs.children].forEach((thumb, index) => {
+        thumb.querySelector("img").src = storyAsset(index);
+      });
+      renderStory(storyIndex, false);
+    }
+    languageButtons.forEach((button) => {
+      button.addEventListener("click", () => selectLanguage(button.dataset.presentationLanguage));
+    });
     function stopStoryAuto() {
       clearTimeout(storyTimer);
     }

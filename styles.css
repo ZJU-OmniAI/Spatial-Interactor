@@ -316,6 +316,7 @@ nav > a.active::after {
   font-size: 17px;
 }
 .story-deck-film {
+  position: relative;
   max-width: 920px;
   margin: 24px auto 28px;
   overflow: hidden;
@@ -330,7 +331,29 @@ nav > a.active::after {
   aspect-ratio: 16 / 9;
   background: #1c1d21;
 }
+.video-subtitle {
+  position: absolute;
+  right: 7%;
+  bottom: 7%;
+  left: 7%;
+  color: rgba(250, 248, 241, 0.96);
+  font-size: clamp(12px, 1.25vw, 18px);
+  font-weight: 520;
+  letter-spacing: 0.035em;
+  line-height: 1.45;
+  text-align: center;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.82), 0 0 12px rgba(0, 0, 0, 0.42);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+}
+.video-subtitle.is-visible {
+  opacity: 1;
+}
 .presentation-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   max-width: 1038px;
   margin: 26px auto 12px;
   color: var(--ink-soft);
@@ -338,6 +361,29 @@ nav > a.active::after {
   font-weight: 750;
   letter-spacing: 0.02em;
   text-align: left;
+}
+.presentation-language-toggle {
+  display: inline-flex;
+  gap: 4px;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+}
+.language-button {
+  min-width: 46px;
+  padding: 5px 10px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-soft);
+  font-size: 12px;
+  font-weight: 750;
+}
+.language-button:hover,
+.language-button.is-active {
+  background: var(--rust);
+  color: #fffaf3;
 }
 .story-deck-viewer {
   display: grid;
@@ -1626,6 +1672,16 @@ dialog[open] {
   }
   .story-deck-intro > p:last-child {
     font-size: 15px;
+  }
+  .presentation-label {
+    gap: 12px;
+    font-size: 13px;
+  }
+  .video-subtitle {
+    right: 5%;
+    bottom: 6%;
+    left: 5%;
+    font-size: 11px;
   }
   .story-deck-viewer {
     grid-template-columns: 30px minmax(0, 1fr) 30px;
