@@ -25,6 +25,7 @@ embeds available original images. Video archives preserve the relative paths
 used by the annotations. See the dataset card for current media coverage and
 source-specific access conditions. Not all sources permit public redistribution.
 `prepare_release_dataset.py --parquet` creates portable JSONL and Parquet exports.
+`data/source_media_manifest.jsonl.gz` maps each QA ID to upstream source identifiers without exposing development-machine paths. Use the corresponding source dataset and its terms to obtain the media; the manifest is not a media license or a download token.
 
 The default annotation export retains only source, scene, task, curriculum level,
 and the SFT inclusion flag alongside the conversation and media references.
