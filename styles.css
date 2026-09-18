@@ -331,25 +331,6 @@ nav > a.active::after {
   aspect-ratio: 16 / 9;
   background: #1c1d21;
 }
-.video-subtitle {
-  position: absolute;
-  right: 7%;
-  bottom: 7%;
-  left: 7%;
-  color: rgba(250, 248, 241, 0.96);
-  font-size: clamp(12px, 1.25vw, 18px);
-  font-weight: 520;
-  letter-spacing: 0.035em;
-  line-height: 1.45;
-  text-align: center;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.82), 0 0 12px rgba(0, 0, 0, 0.42);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 180ms ease;
-}
-.video-subtitle.is-visible {
-  opacity: 1;
-}
 .presentation-label {
   display: flex;
   align-items: center;
@@ -1676,12 +1657,6 @@ dialog[open] {
   .presentation-label {
     gap: 12px;
     font-size: 13px;
-  }
-  .video-subtitle {
-    right: 5%;
-    bottom: 6%;
-    left: 5%;
-    font-size: 11px;
   }
   .story-deck-viewer {
     grid-template-columns: 30px minmax(0, 1fr) 30px;
