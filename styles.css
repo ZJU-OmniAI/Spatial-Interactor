@@ -9,6 +9,9 @@
   color-scheme: light;
   --paper: #f6f2e9;
   --paper-deep: #eee7dc;
+  --paper-light: #fcfaf6;
+  --paper-warm: #f8eee7;
+  --paper-sage: #edf0e6;
   --ink: #3b3933;
   --ink-soft: #625f57;
   --muted: #817b70;
@@ -47,7 +50,7 @@ body {
     Arial,
     sans-serif;
   color: var(--ink);
-  background: var(--paper);
+  background: linear-gradient(180deg, var(--paper-light) 0%, var(--paper) 100%);
 }
 body.modal-open {
   overflow: hidden;
@@ -126,12 +129,16 @@ h3 {
   margin-inline: auto;
 }
 .pale {
-  background: var(--pale);
+  background: var(--paper-sage);
 }
 .section {
+  position: relative;
   padding: 62px 0;
   border-top: 1px solid var(--line);
-  background: var(--paper);
+  background:
+    radial-gradient(ellipse 72% 88% at 100% 0%, rgba(199, 173, 121, 0.08), transparent 68%),
+    radial-gradient(ellipse 70% 92% at 0% 100%, rgba(112, 130, 122, 0.07), transparent 70%),
+    linear-gradient(180deg, var(--paper-light) 0%, var(--paper) 100%);
 }
 .section-title {
   max-width: 1080px;
@@ -161,18 +168,27 @@ h3 {
 #motivation,
 #method,
 #examples {
-  background: #e6e7d8;
+  background:
+    radial-gradient(ellipse 78% 95% at -8% 8%, rgba(196, 141, 117, 0.2), transparent 67%),
+    radial-gradient(ellipse 72% 90% at 105% 92%, rgba(142, 157, 123, 0.17), transparent 68%),
+    linear-gradient(135deg, #faf2ec 0%, #f6f0e7 48%, #eef0e5 100%);
 }
 #construction,
 #analysis {
-  background: #e6e7d8;
+  background:
+    radial-gradient(ellipse 76% 92% at 102% 4%, rgba(112, 130, 122, 0.2), transparent 66%),
+    radial-gradient(ellipse 72% 90% at -5% 96%, rgba(199, 173, 121, 0.16), transparent 69%),
+    linear-gradient(135deg, #f4f3e9 0%, #edf0e6 52%, #f7f2e9 100%);
 }
 #approach,
 #dataset,
 #results,
 #interaction,
 #citation {
-  background: var(--paper);
+  background:
+    radial-gradient(ellipse 74% 90% at 100% 6%, rgba(199, 173, 121, 0.09), transparent 68%),
+    radial-gradient(ellipse 68% 88% at 0% 96%, rgba(112, 130, 122, 0.08), transparent 70%),
+    linear-gradient(180deg, #fcfbf7 0%, #f7f3eb 100%);
 }
 #motivation .eyebrow {
   color: var(--rust);
@@ -228,8 +244,11 @@ h3 {
   position: sticky;
   top: 0;
   z-index: 30;
-  background: rgba(246, 242, 233, 0.96);
+  background: rgba(249, 247, 241, 0.88);
   border-bottom: 1px solid var(--line);
+  box-shadow: 0 8px 28px rgba(70, 62, 49, 0.035);
+  backdrop-filter: blur(18px) saturate(1.08);
+  -webkit-backdrop-filter: blur(18px) saturate(1.08);
 }
 .nav-inner {
   width: min(1280px, calc(100% - 64px));
@@ -289,13 +308,47 @@ nav > a.active::after {
   display: none !important;
 }
 .masthead {
+  position: relative;
+  isolation: isolate;
   text-align: center;
   padding: 50px 0 32px;
+}
+.masthead::before,
+.masthead::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.masthead::before {
+  z-index: -2;
+  inset-block: 0;
+  background:
+    radial-gradient(ellipse 66% 115% at 0% 0%, rgba(112, 130, 122, 0.2), transparent 66%),
+    radial-gradient(ellipse 62% 105% at 100% 4%, rgba(217, 147, 120, 0.19), transparent 65%),
+    radial-gradient(ellipse 48% 80% at 52% 110%, rgba(199, 173, 121, 0.11), transparent 72%),
+    linear-gradient(150deg, #fbfaf6 0%, #f5f1e8 52%, #faf6ef 100%);
+}
+.masthead::after {
+  z-index: -1;
+  inset-block: 0;
+  opacity: 0.72;
+  background-image:
+    linear-gradient(rgba(59, 57, 51, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 57, 51, 0.02) 1px, transparent 1px);
+  background-size: 52px 52px;
+  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent 96%);
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent 96%);
 }
 
 .story-deck {
   padding: 28px 0 70px;
-  background: var(--paper);
+  background:
+    radial-gradient(ellipse 64% 72% at 4% 0%, rgba(112, 130, 122, 0.11), transparent 66%),
+    radial-gradient(ellipse 60% 70% at 96% 2%, rgba(217, 147, 120, 0.1), transparent 67%),
+    linear-gradient(180deg, #f6f1e8 0%, #faf8f2 24%, #f7f3eb 100%);
   border-bottom: 1px solid var(--line);
 }
 .story-deck-intro {
