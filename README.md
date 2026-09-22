@@ -25,11 +25,9 @@ section, with all reported rows expanded by default.
 Content follows the current paper. Multi-step object operations are included in
 L1, not L3. Scores are reported paper results, not an independent evaluation.
 The table export contains the currently selected rows, in their displayed order.
-The masthead exposes four compact release actions: the temporary local PDF
-under the `ArXiv` label, GitHub, the Hugging Face project collection for the dataset
-and released models, and the BibTeX section. Once the paper receives its arXiv
-identifier, replace the single `assets/paper.pdf` href in `index.html` with the
-final `https://arxiv.org/abs/...` URL.
+The masthead exposes four compact release actions: the official
+[arXiv paper](https://arxiv.org/abs/2609.23038), GitHub, the Hugging Face project
+collection for the dataset and released models, and the BibTeX section.
 
 ## Publish
 
