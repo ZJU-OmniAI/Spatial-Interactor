@@ -2,7 +2,7 @@
   <h1><img src="assets/readme/icon.png" alt="Spatial-Interactor icon" height="64" align="absmiddle">&nbsp; Spatial-Interactor</h1>
   <p><strong>Learning Spatial Reasoning through Interaction with the Observable Physical World</strong></p>
   <p>
-    <a href="https://zju-omniai.github.io/Spatial-Interactor/assets/paper.pdf?v=20260918baseline"><img src="https://img.shields.io/badge/-Paper-B31B1B?style=for-the-badge&amp;logo=adobeacrobatreader&amp;logoColor=white" alt="Paper"></a>
+    <a href="https://arxiv.org/abs/2609.23038"><img src="https://img.shields.io/badge/-arXiv-B31B1B?style=for-the-badge&amp;logo=arxiv&amp;logoColor=white" alt="arXiv paper"></a>
     <a href="https://zju-omniai.github.io/Spatial-Interactor/"><img src="https://img.shields.io/badge/-Project_Page-0F5354?style=for-the-badge&amp;logo=googlechrome&amp;logoColor=white" alt="Project page"></a>
     <a href="https://huggingface.co/collections/kagakouko/spatial-interactor"><img src="https://img.shields.io/badge/HF-Models_%26_Data-FFD21E?style=for-the-badge&amp;logo=huggingface&amp;logoColor=FFD21E&amp;labelColor=3A3B45" alt="Models and data on Hugging Face"></a>
     <a href="https://github.com/ZJU-OmniAI/Spatial-Interactor"><img src="https://img.shields.io/badge/-Code-171B1F?style=for-the-badge&amp;logo=github&amp;logoColor=white" alt="Code"></a>
@@ -210,7 +210,10 @@ and maintainers for making these frameworks publicly available.
   title  = {Spatial-Interactor: Learning Spatial Reasoning through Interaction with the Observable Physical World},
   author = {Yao, Kaixiang and Wang, Xu and Pan, Miao and Hu, Xiyue and Wang, Weishi and Dahlmeier, Daniel and Chen, Jintao and Shen, Yongliang and Zhang, Xuhong and Zhang, Wenqi},
   year   = {2026},
-  note   = {Preprint}
+  eprint = {2609.23038},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.AI},
+  url    = {https://arxiv.org/abs/2609.23038}
 }
 ```
 
