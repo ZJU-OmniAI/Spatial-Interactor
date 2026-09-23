@@ -66,10 +66,10 @@
     videoLanguage = selected;
     const wasPlaying = !introVideo.paused;
     introVideoSource.src = selected === "en"
-      ? "assets/presentation/spatial-interactor-intro-en.mp4?v=20260924"
+      ? "assets/presentation/spatial-interactor-intro-en.mp4?v=20260924-faithful"
       : "assets/presentation/spatial-interactor-intro.mp4?v=20260918c";
     introVideo.poster = selected === "en"
-      ? "assets/presentation/spatial-interactor-intro-en-poster.webp?v=20260924"
+      ? "assets/presentation/spatial-interactor-intro-en-poster.webp?v=20260924-faithful"
       : "assets/presentation/spatial-interactor-intro-poster.webp?v=20260916d";
     videoLanguageButtons.forEach((button) => {
       const active = button.dataset.videoLanguage === selected;
