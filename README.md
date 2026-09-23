@@ -15,19 +15,17 @@
 
 <p align="center">
   <a href="assets/presentation/spatial-interactor-intro.mp4">
-    <img src="assets/readme/introduction-preview.webp" width="90%" alt="Spatial-Interactor project introduction">
+    <img src="assets/readme/introduction-preview.webp?v=20260924" width="90%" alt="Spatial-Interactor project introduction in English">
   </a>
 </p>
 
 ## 🎞️ Visual Presentation
 
-The full 20-slide visual presentation is included in the repository. Select
-the preview to open the presentation video, or download the
-[editable deck](assets/presentation/Spatial-Interactor-Visual-Presentation.pptx).
+The full 20-slide English presentation accompanies the English project video above.
 
 <p align="center">
   <a href="assets/presentation/spatial-interactor-presentation.mp4">
-    <img src="assets/readme/presentation-preview.webp" width="90%" alt="Spatial-Interactor visual presentation">
+    <img src="assets/readme/presentation-preview.webp?v=20260924" width="90%" alt="Spatial-Interactor 20-slide English presentation">
   </a>
 </p>
 
