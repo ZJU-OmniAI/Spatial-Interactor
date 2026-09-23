@@ -58,28 +58,30 @@
   const videoLanguageButtons = [...document.querySelectorAll("[data-video-language]")];
   const introVideo = $("intro-video");
   const introVideoSource = $("intro-video-source");
-  const introCaptionTrack = $("intro-caption-track");
+  let videoLanguage = "en";
   function selectVideoLanguage(language) {
     if (!introVideo || !introVideoSource) return;
     const selected = language === "en" ? "en" : "zh";
+    if (selected === videoLanguage) return;
+    videoLanguage = selected;
     const wasPlaying = !introVideo.paused;
-    const currentTime = introVideo.currentTime;
     introVideoSource.src = selected === "en"
-      ? "assets/presentation/spatial-interactor-intro-en.mp4?v=20260918c"
+      ? "assets/presentation/spatial-interactor-intro-en.mp4?v=20260924"
       : "assets/presentation/spatial-interactor-intro.mp4?v=20260918c";
-    if (introCaptionTrack) {
-      introCaptionTrack.mode = selected === "en" ? "hidden" : "disabled";
-    }
+    introVideo.poster = selected === "en"
+      ? "assets/presentation/spatial-interactor-intro-en-poster.webp?v=20260924"
+      : "assets/presentation/spatial-interactor-intro-poster.webp?v=20260916d";
     videoLanguageButtons.forEach((button) => {
       const active = button.dataset.videoLanguage === selected;
       button.classList.toggle("is-active", active);
       button.setAttribute("aria-pressed", String(active));
     });
-    introVideo.load();
-    introVideo.addEventListener("loadedmetadata", () => {
-      introVideo.currentTime = Math.min(currentTime, Math.max(0, introVideo.duration - 0.2));
+    // The rebuilt English film has its own pacing, so each version starts at zero.
+    introVideo.onloadedmetadata = () => {
+      introVideo.currentTime = 0;
       if (wasPlaying) introVideo.play().catch(() => {});
-    }, { once: true });
+    };
+    introVideo.load();
   }
   videoLanguageButtons.forEach((button) => {
     button.addEventListener("click", () => selectVideoLanguage(button.dataset.videoLanguage));

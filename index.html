@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="styles.css?v=20260923-gallery" />
     <script src="data.js" defer></script>
     <script src="examples.js" defer></script>
-    <script src="app.js?v=20260923-gallery" defer></script>
+    <script src="app.js?v=20260924-english" defer></script>
     <script src="media.js" defer></script>
   </head>
   <body>
@@ -157,25 +157,18 @@
                   muted
                   playsinline
                   preload="auto"
-                  poster="assets/presentation/spatial-interactor-intro-poster.webp?v=20260916d"
+                  poster="assets/presentation/spatial-interactor-intro-en-poster.webp?v=20260924"
                   width="1280"
                   height="720"
                 >
-                  <source id="intro-video-source" src="assets/presentation/spatial-interactor-intro.mp4" type="video/mp4" />
-                  <track
-                    id="intro-caption-track"
-                    kind="captions"
-                    srclang="en"
-                    label="English"
-                    src="assets/presentation/spatial-interactor-intro.en.vtt?v=20260918c"
-                  />
+                  <source id="intro-video-source" src="assets/presentation/spatial-interactor-intro-en.mp4?v=20260924" type="video/mp4" />
                 </video>
             </figure>
             <div class="video-language-row">
               <span>Project video</span>
               <span class="presentation-language-toggle" role="group" aria-label="Video language">
-                <button type="button" class="language-button is-active" data-video-language="zh" aria-pressed="true">中文视频</button>
-                <button type="button" class="language-button" data-video-language="en" aria-pressed="false">English</button>
+                <button type="button" class="language-button is-active" data-video-language="en" aria-pressed="true">English</button>
+                <button type="button" class="language-button" data-video-language="zh" aria-pressed="false">中文</button>
               </span>
             </div>
           </div>
