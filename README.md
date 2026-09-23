@@ -14,8 +14,8 @@
 </div>
 
 <p align="center">
-  <a href="assets/presentation/spatial-interactor-intro.mp4">
-    <img src="assets/readme/introduction-preview.webp?v=20260924" width="90%" alt="Spatial-Interactor project introduction in English">
+  <a href="assets/presentation/spatial-interactor-intro.mp4?v=20260924-faithful">
+    <img src="assets/readme/introduction-preview.webp?v=20260924-faithful" width="90%" alt="Spatial-Interactor project introduction in English">
   </a>
 </p>
 
