@@ -282,6 +282,17 @@
     $("example-domain").textContent = example.domain;
     $("example-source").textContent = example.source;
     $("example-id").textContent = id;
+    document.querySelectorAll(".example-thumbnail").forEach((button) => {
+      const selected = button.dataset.example === id;
+      button.setAttribute("aria-current", String(selected));
+      if (selected) {
+        const rail = $("example-thumbnails");
+        const left = button.offsetLeft;
+        if (left < rail.scrollLeft || left + button.offsetWidth > rail.scrollLeft + rail.clientWidth) {
+          rail.scrollTo({ left: left - (rail.clientWidth - button.offsetWidth) / 2, behavior: "instant" });
+        }
+      }
+    });
     $("example-question").textContent = example.question;
     const caption = `${example.title} (${example.source}). ${example.question}`;
     $("example-image").src = `assets/${id}.webp`;
@@ -330,6 +341,30 @@
         return option;
       }),
     );
+    $("example-thumbnails").replaceChildren(
+      ...level.cases.map((id) => {
+        const example = data.cases[id];
+        const button = element("button", undefined, "example-thumbnail");
+        button.type = "button";
+        button.dataset.example = id;
+        button.title = `${id}: ${example.title}`;
+        button.setAttribute("aria-label", `${id}: ${example.title}`);
+        const image = element("img");
+        image.src = `assets/${id}.webp`;
+        image.alt = "";
+        image.loading = "lazy";
+        image.width = 128;
+        image.height = 68;
+        button.append(image, element("span", example.title));
+        return button;
+      }),
+    );
+    renderCase();
+  });
+  $("example-thumbnails").addEventListener("click", (event) => {
+    const button = event.target.closest("button[data-example]");
+    if (!button) return;
+    casePositions[activeLevel] = data.levels[activeLevel].cases.indexOf(button.dataset.example);
     renderCase();
   });
   $("example-select").addEventListener("change", (event) => {
@@ -391,11 +426,24 @@
     return key === "generalization" ? generalColumns : mainColumns;
   }
 
+  function benchmarkGroup(key, index) {
+    return (key === "generalization"
+      ? ["sage", "sage", "rose", "rose", "overall"]
+      : ["sage", "sage", "sage", "wheat", "rose", "rose", "lavender", "overall"])[index];
+  }
+
+  function scoreCell(value, digits = 1) {
+    const cell = element("td");
+    cell.append(element("span", value.toFixed(digits), "score-value"));
+    return cell;
+  }
+
   function sortHeader(key, index, rowSpan = 1) {
     const [shortName, fullName] = resultColumns(key)[index];
     const sort = resultSort[key];
     const th = element("th");
     th.scope = "col";
+    th.dataset.benchmark = benchmarkGroup(key, index);
     if (rowSpan > 1) th.rowSpan = rowSpan;
     th.setAttribute(
       "aria-sort",
@@ -452,9 +500,11 @@
       const vsi = element("th", "VSI-Bench");
       vsi.colSpan = 3;
       vsi.scope = "colgroup";
+      vsi.dataset.benchmark = "sage";
       const vsti = element("th", "VSTI-Bench");
       vsti.colSpan = 2;
       vsti.scope = "colgroup";
+      vsti.dataset.benchmark = "rose";
       top.append(
         vsi,
         sortHeader(key, 3, 2),
@@ -471,13 +521,18 @@
       Math.max(...rows.map((row) => row.values[index])),
     );
     target.querySelector("tbody").replaceChildren(
-      ...visibleRows.map((row) => {
+      ...visibleRows.map((row, rowIndex) => {
         const tr = element("tr", undefined, row.group === "ours" ? "ours" : "");
+        const startsGroup = key === "main"
+          ? row.group !== visibleRows[rowIndex - 1]?.group
+          : key === "generalization" ? row.group === "base" : row.group === "ours";
+        tr.classList.toggle("group-start", sort.index === null && rowIndex > 0 && startsGroup);
         const label = element("th", row.name);
         label.scope = "row";
         tr.append(label);
         row.values.forEach((value, index) => {
-          const td = element("td", value.toFixed(1));
+          const td = scoreCell(value);
+          td.dataset.benchmark = benchmarkGroup(key, index);
           td.classList.toggle("best", value === maxima[index]);
           td.classList.toggle("overall", index === row.values.length - 1);
           tr.append(td);
@@ -544,9 +599,11 @@
   Object.entries(data.interaction).forEach(([key, benchmark]) => {
     const target = $(`${key}-table`);
     const header = element("tr");
-    ["Model", ...benchmark.columns].forEach((name) => {
+    ["Model", ...benchmark.columns].forEach((name, index) => {
       const cell = element("th", name);
       cell.scope = "col";
+      if (index === benchmark.columns.length - 1) cell.dataset.benchmark = "overall";
+      else if (index === benchmark.columns.length) cell.dataset.benchmark = "rose";
       header.append(cell);
     });
     target.querySelector("thead").replaceChildren(header);
@@ -562,7 +619,7 @@
         name.scope = "row";
         tr.append(name);
         row.values.forEach((value, index) => {
-          const td = element("td", value.toFixed(index === last ? 2 : 1));
+          const td = scoreCell(value, index === last ? 2 : 1);
           td.classList.toggle("best", value > 0 && value === best[index]);
           td.classList.toggle("overall", index === last - 1);
           tr.append(td);
