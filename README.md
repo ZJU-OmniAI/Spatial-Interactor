@@ -19,6 +19,22 @@
   </a>
 </p>
 
+<!-- hf-downloads:start -->
+## Hugging Face downloads
+
+All-time download counts as of **2026-10-10 (UTC+8)**. Each count links to the Hugging Face API (`downloadsAllTime`).
+
+| Resource | Type | All-time downloads |
+| :--- | :--- | ---: |
+| [Spatial-Interactor-Qwen2.5-VL-3B](https://huggingface.co/kagakouko/Spatial-Interactor-Qwen2.5-VL-3B) | Model | [144](https://huggingface.co/api/models/kagakouko/Spatial-Interactor-Qwen2.5-VL-3B?expand%5B%5D=downloadsAllTime) |
+| [Spatial-Interactor-Qwen2.5-VL-7B](https://huggingface.co/kagakouko/Spatial-Interactor-Qwen2.5-VL-7B) | Model | [193](https://huggingface.co/api/models/kagakouko/Spatial-Interactor-Qwen2.5-VL-7B?expand%5B%5D=downloadsAllTime) |
+| [Spatial-Interactor-Qwen3-VL-4B](https://huggingface.co/kagakouko/Spatial-Interactor-Qwen3-VL-4B) | Model | [195](https://huggingface.co/api/models/kagakouko/Spatial-Interactor-Qwen3-VL-4B?expand%5B%5D=downloadsAllTime) |
+| [Spatial-Interactor-Qwen3-VL-8B](https://huggingface.co/kagakouko/Spatial-Interactor-Qwen3-VL-8B) | Model | [171](https://huggingface.co/api/models/kagakouko/Spatial-Interactor-Qwen3-VL-8B?expand%5B%5D=downloadsAllTime) |
+| [LSI-108K](https://huggingface.co/datasets/kagakouko/LSI-108K) | Dataset | [1,315](https://huggingface.co/api/datasets/kagakouko/LSI-108K?expand%5B%5D=downloadsAllTime) |
+
+**Total: 2,018 downloads** — models: **703**; dataset: **1,315**.
+<!-- hf-downloads:end -->
+
 ## 🎞️ Visual Presentation
 
 The full 20-slide English presentation accompanies the English project video above.
