@@ -20,19 +20,21 @@
 </p>
 
 <!-- hf-downloads:start -->
+
 ## Hugging Face downloads
 
-All-time download counts as of **2026-10-10 (UTC+8)**. Each count links to the Hugging Face API (`downloadsAllTime`).
+Automatically updated all-time counts from Hugging Face. Cross-repository totals are refreshed every 5 minutes. Badges are cached and may lag behind the source. [Refresh details](https://github.com/ZJU-OmniAI/.github/tree/main/metrics).
 
 | Resource | Type | All-time downloads |
 | :--- | :--- | ---: |
-| [Spatial-Interactor-Qwen2.5-VL-3B](https://huggingface.co/kagakouko/Spatial-Interactor-Qwen2.5-VL-3B) | Model | [144](https://huggingface.co/api/models/kagakouko/Spatial-Interactor-Qwen2.5-VL-3B?expand%5B%5D=downloadsAllTime) |
-| [Spatial-Interactor-Qwen2.5-VL-7B](https://huggingface.co/kagakouko/Spatial-Interactor-Qwen2.5-VL-7B) | Model | [193](https://huggingface.co/api/models/kagakouko/Spatial-Interactor-Qwen2.5-VL-7B?expand%5B%5D=downloadsAllTime) |
-| [Spatial-Interactor-Qwen3-VL-4B](https://huggingface.co/kagakouko/Spatial-Interactor-Qwen3-VL-4B) | Model | [195](https://huggingface.co/api/models/kagakouko/Spatial-Interactor-Qwen3-VL-4B?expand%5B%5D=downloadsAllTime) |
-| [Spatial-Interactor-Qwen3-VL-8B](https://huggingface.co/kagakouko/Spatial-Interactor-Qwen3-VL-8B) | Model | [171](https://huggingface.co/api/models/kagakouko/Spatial-Interactor-Qwen3-VL-8B?expand%5B%5D=downloadsAllTime) |
-| [LSI-108K](https://huggingface.co/datasets/kagakouko/LSI-108K) | Dataset | [1,315](https://huggingface.co/api/datasets/kagakouko/LSI-108K?expand%5B%5D=downloadsAllTime) |
+| [Spatial-Interactor-Qwen2.5-VL-3B](https://huggingface.co/kagakouko/Spatial-Interactor-Qwen2.5-VL-3B) | Model | [![downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fhuggingface.co%2Fapi%2Fmodels%2Fkagakouko%2FSpatial-Interactor-Qwen2.5-VL-3B%3Fexpand%255B%255D%3DdownloadsAllTime&query=%24.downloadsAllTime&label=downloads&color=FFD21E&logo=huggingface&cacheSeconds=300)](https://huggingface.co/kagakouko/Spatial-Interactor-Qwen2.5-VL-3B) |
+| [Spatial-Interactor-Qwen2.5-VL-7B](https://huggingface.co/kagakouko/Spatial-Interactor-Qwen2.5-VL-7B) | Model | [![downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fhuggingface.co%2Fapi%2Fmodels%2Fkagakouko%2FSpatial-Interactor-Qwen2.5-VL-7B%3Fexpand%255B%255D%3DdownloadsAllTime&query=%24.downloadsAllTime&label=downloads&color=FFD21E&logo=huggingface&cacheSeconds=300)](https://huggingface.co/kagakouko/Spatial-Interactor-Qwen2.5-VL-7B) |
+| [Spatial-Interactor-Qwen3-VL-4B](https://huggingface.co/kagakouko/Spatial-Interactor-Qwen3-VL-4B) | Model | [![downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fhuggingface.co%2Fapi%2Fmodels%2Fkagakouko%2FSpatial-Interactor-Qwen3-VL-4B%3Fexpand%255B%255D%3DdownloadsAllTime&query=%24.downloadsAllTime&label=downloads&color=FFD21E&logo=huggingface&cacheSeconds=300)](https://huggingface.co/kagakouko/Spatial-Interactor-Qwen3-VL-4B) |
+| [Spatial-Interactor-Qwen3-VL-8B](https://huggingface.co/kagakouko/Spatial-Interactor-Qwen3-VL-8B) | Model | [![downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fhuggingface.co%2Fapi%2Fmodels%2Fkagakouko%2FSpatial-Interactor-Qwen3-VL-8B%3Fexpand%255B%255D%3DdownloadsAllTime&query=%24.downloadsAllTime&label=downloads&color=FFD21E&logo=huggingface&cacheSeconds=300)](https://huggingface.co/kagakouko/Spatial-Interactor-Qwen3-VL-8B) |
+| [LSI-108K](https://huggingface.co/datasets/kagakouko/LSI-108K) | Dataset | [![downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fhuggingface.co%2Fapi%2Fdatasets%2Fkagakouko%2FLSI-108K%3Fexpand%255B%255D%3DdownloadsAllTime&query=%24.downloadsAllTime&label=downloads&color=FFD21E&logo=huggingface&cacheSeconds=300)](https://huggingface.co/datasets/kagakouko/LSI-108K) |
 
-**Total: 2,018 downloads** — models: **703**; dataset: **1,315**.
+[![models downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FZJU-OmniAI%2F.github%2Fhf-download-stats%2Fdownloads.json&query=%24.projects%5B%22spatial-interactor%22%5D.models&label=models+downloads&color=FFD21E&logo=huggingface&cacheSeconds=300)](https://raw.githubusercontent.com/ZJU-OmniAI/.github/hf-download-stats/downloads.json) [![datasets downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FZJU-OmniAI%2F.github%2Fhf-download-stats%2Fdownloads.json&query=%24.projects%5B%22spatial-interactor%22%5D.datasets&label=datasets+downloads&color=FFD21E&logo=huggingface&cacheSeconds=300)](https://raw.githubusercontent.com/ZJU-OmniAI/.github/hf-download-stats/downloads.json) [![total downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FZJU-OmniAI%2F.github%2Fhf-download-stats%2Fdownloads.json&query=%24.projects%5B%22spatial-interactor%22%5D.total&label=total+downloads&color=FFD21E&logo=huggingface&cacheSeconds=300)](https://raw.githubusercontent.com/ZJU-OmniAI/.github/hf-download-stats/downloads.json)
+
 <!-- hf-downloads:end -->
 
 ## 🎞️ Visual Presentation
