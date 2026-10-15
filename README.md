@@ -1,5 +1,5 @@
 <div align="center">
-  <h1><img src="assets/readme/icon.png" alt="Spatial-Interactor icon" height="64" align="absmiddle">&nbsp; Spatial-Interactor</h1>
+  <h1><img src="https://zju-omniai.github.io/Spatial-Interactor/assets/spatial-interactor-icon.png" alt="Spatial-Interactor icon" height="64" align="absmiddle">&nbsp; Spatial-Interactor</h1>
   <p><strong>Learning Spatial Reasoning through Interaction with the Observable Physical World</strong></p>
   <p>
     <a href="https://arxiv.org/abs/2609.23038"><img src="https://img.shields.io/badge/-arXiv-B31B1B?style=for-the-badge&amp;logo=arxiv&amp;logoColor=white" alt="arXiv paper"></a>
@@ -14,8 +14,8 @@
 </div>
 
 <p align="center">
-  <a href="assets/presentation/spatial-interactor-intro.mp4?v=20260924-faithful">
-    <img src="assets/readme/introduction-preview.webp?v=20260924-faithful" width="90%" alt="Spatial-Interactor project introduction in English">
+  <a href="https://zju-omniai.github.io/Spatial-Interactor/assets/presentation/spatial-interactor-intro-en.mp4">
+    <img src="https://zju-omniai.github.io/Spatial-Interactor/assets/presentation/spatial-interactor-intro-en-poster.webp" width="90%" alt="Spatial-Interactor project introduction in English">
   </a>
 </p>
 
@@ -42,8 +42,8 @@ Automatically updated all-time counts from Hugging Face. Cross-repository totals
 The full 20-slide English presentation accompanies the English project video above.
 
 <p align="center">
-  <a href="assets/presentation/spatial-interactor-presentation.mp4">
-    <img src="assets/readme/presentation-preview.webp?v=20260924" width="90%" alt="Spatial-Interactor 20-slide English presentation">
+  <a href="https://zju-omniai.github.io/Spatial-Interactor/assets/presentation/spatial-interactor-presentation.mp4">
+    <img src="https://zju-omniai.github.io/Spatial-Interactor/assets/presentation/spatial-interactor-presentation-poster.webp" width="90%" alt="Spatial-Interactor 20-slide English presentation">
   </a>
 </p>
 
@@ -62,7 +62,7 @@ The released model receives only the original visual input and question at
 inference time.
 
 <p align="center">
-  <img src="assets/readme/overview.webp" width="94%" alt="Overview of Spatial-Interactor">
+  <img src="https://zju-omniai.github.io/Spatial-Interactor/assets/overview.webp" width="94%" alt="Overview of Spatial-Interactor">
 </p>
 
 ## 🧭 Spatial Interaction Curriculum
@@ -78,7 +78,7 @@ interaction:
   changes into key-motion events and global paths.
 
 <p align="center">
-  <img src="assets/readme/curriculum.webp" width="92%" alt="Three-level spatial interaction curriculum">
+  <img src="https://zju-omniai.github.io/Spatial-Interactor/assets/curriculum.webp" width="92%" alt="Three-level spatial interaction curriculum">
 </p>
 
 ## 🧠 On-Policy Distillation
@@ -91,7 +91,7 @@ reasoning tokens. The privileged trace, teacher branch, reward functions, and
 reference policy are removed after training.
 
 <p align="center">
-  <img src="assets/readme/opd.webp" width="92%" alt="On-Policy Distillation pipeline">
+  <img src="https://zju-omniai.github.io/Spatial-Interactor/assets/opd.webp" width="92%" alt="On-Policy Distillation pipeline">
 </p>
 
 ## 📦 Models and Data
