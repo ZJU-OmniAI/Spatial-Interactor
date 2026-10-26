@@ -21,6 +21,10 @@
 
 <!-- hf-downloads:start -->
 
+## Media Coverage · 媒体报道
+
+- **青稞 AI · 2026.10** — [让大模型从运动和交互中学习空间推理，理解环境变化。浙大团队最新提出Spatial-Interactor](https://www.qingkeai.online/blog/Spatial-Interactor)
+
 ## Hugging Face downloads
 
 Automatically updated all-time counts from Hugging Face. Cross-repository totals are refreshed every 5 minutes. Badges are cached and may lag behind the source. [Refresh details](https://github.com/ZJU-OmniAI/.github/tree/main/metrics).
